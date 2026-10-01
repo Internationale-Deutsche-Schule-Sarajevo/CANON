@@ -67,7 +67,16 @@ const errorMessages: Record<string, string> = {
  * Parse and validate environment variables.
  * Throws an error with clear FATAL message if any required variable is missing.
  */
-const result = envSchema.safeParse(process.env);
+const normalizedEnv = {
+  ...process.env,
+  NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+  NEXT_PUBLIC_SUPABASE_ANON_KEY:
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? process.env.NEXT_ANON_SUPABASE,
+  SUPABASE_SERVICE_ROLE_KEY:
+    process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.NEXT_SERVICEROLE_SUPABASE,
+};
+
+const result = envSchema.safeParse(normalizedEnv);
 
 if (!result.success) {
   const errors = result.error.issues;
