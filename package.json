@@ -1,0 +1,44 @@
+{
+  "name": "web-app-idss-handbook",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "sentry-wizard": "sentry-wizard -i nextjs"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^4.2.0",
+    "@napi-rs/canvas": "^1.0.2",
+    "@sentry/nextjs": "^10.62.0",
+    "@supabase/ssr": "^0.12.0",
+    "@supabase/supabase-js": "^2.110.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "js-tiktoken": "^1.0.21",
+    "lucide-react": "^1.22.0",
+    "mammoth": "^1.8.0",
+    "next": "^16.3.5",
+    "pdf-parse": "^1.1.1",
+    "pdfjs-dist": "^6.1.200",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "tailwind-merge": "^3.6.0",
+    "xlsx": "^0.18.5",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/pdf-parse": "^1.1.4",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.9",
+    "franc": "^6.2.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

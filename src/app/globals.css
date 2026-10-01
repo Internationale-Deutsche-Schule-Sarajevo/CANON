@@ -1,0 +1,602 @@
+@import "tailwindcss";
+
+:root {
+  /* ── IDSS Brand Colours ── */
+  --idss-dark-blue: #16558a;
+  --idss-light-blue: #1cc4e6;
+  --idss-red: #e31b23;
+  --idss-yellow: #ffc600;
+  --idss-black: #000000;
+
+  /* ── Gamification Colours ── */
+  --game-green: #58cc02;
+  --game-green-light: #d7ffb8;
+  --game-green-mid: #4cae02;
+  --game-blue-accent: #1cb0f6;
+  --game-fail-red: #e31b23;
+  --game-fail-dark: #b00018;
+
+  /* ── Neutrals ── */
+  --neutral-graphite: #3c3c3c;
+  --neutral-charcoal: #4b4b4b;
+  --neutral-ash: #777777;
+  --neutral-paper: #ffffff;
+  --neutral-border: #e5e5e5;
+
+  /* ── Typography ── */
+  --font-primary: "Nunito", "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* ── Type Scale ── */
+  --text-caption: 13px;
+  --text-body: 15px;
+  --text-heading-sm: 19px;
+  --text-heading: 32px;
+  --text-display: 48px;
+
+  /* ── Letter Spacing ── */
+  --tracking-body: 0.053em;
+  --tracking-display: -0.02em;
+
+  /* ── Font Weights ── */
+  --weight-medium: 500;
+  --weight-bold: 700;
+
+  /* ── Spacing (base 4px) ── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* ── Border Radius ── */
+  --radius: 12px;
+
+  /* ── Depth (no box-shadow — solid bottom border only) ── */
+  --depth-default: 3px solid #d0d0d0;
+  --depth-correct: 3px solid var(--game-green-mid);
+  --depth-fail: 3px solid var(--game-fail-dark);
+  --depth-primary: 3px solid #0e3d6a;
+
+  /* ── Layout ── */
+  --page-max-width: 1200px;
+  --card-padding: 24px;
+  --nav-height: 64px;
+}
+
+@theme {
+  --color-idss-dark-blue: var(--idss-dark-blue);
+  --color-idss-light-blue: var(--idss-light-blue);
+  --color-idss-red: var(--idss-red);
+  --color-idss-yellow: var(--idss-yellow);
+  --color-idss-black: var(--idss-black);
+  --color-game-green: var(--game-green);
+  --color-game-green-light: var(--game-green-light);
+  --color-game-green-mid: var(--game-green-mid);
+  --color-game-blue-accent: var(--game-blue-accent);
+  --color-game-fail-red: var(--game-fail-red);
+  --color-game-fail-dark: var(--game-fail-dark);
+  --color-neutral-graphite: var(--neutral-graphite);
+  --color-neutral-charcoal: var(--neutral-charcoal);
+  --color-neutral-ash: var(--neutral-ash);
+  --color-neutral-paper: var(--neutral-paper);
+  --color-neutral-border: var(--neutral-border);
+}
+
+/* ── Dark mode ── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --neutral-paper: #0f172a;
+    --neutral-border: #1e293b;
+    --neutral-charcoal: #e2e8f0;
+  }
+}
+
+/* ── Base reset ── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-primary);
+  font-size: var(--text-body);
+  color: var(--neutral-charcoal);
+  background-color: var(--neutral-paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+}
+
+/* ── Typography ── */
+h1 {
+  font-size: var(--text-display);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-display);
+}
+h2 {
+  font-size: var(--text-heading);
+  font-weight: var(--weight-bold);
+}
+h3 {
+  font-size: var(--text-heading-sm);
+  font-weight: var(--weight-bold);
+}
+p {
+  font-size: var(--text-body);
+  line-height: 1.6;
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  background: var(--idss-dark-blue);
+  color: var(--neutral-paper);
+  border: none;
+  border-bottom: var(--depth-primary);
+  border-radius: var(--radius);
+  padding: var(--space-4) var(--space-6);
+  font-family: var(--font-primary);
+  font-size: var(--text-body);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-body);
+  cursor: pointer;
+  transition:
+    transform 0.1s ease,
+    border-bottom-width 0.1s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.btn-primary:hover {
+  opacity: 0.92;
+}
+
+.btn-primary:active {
+  transform: translateY(2px);
+  border-bottom-width: 1px;
+}
+
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-success {
+  background: var(--game-green);
+  color: var(--neutral-paper);
+  border: none;
+  border-bottom: var(--depth-correct);
+  border-radius: var(--radius);
+  padding: var(--space-4) var(--space-6);
+  font-family: var(--font-primary);
+  font-size: var(--text-body);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-body);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.btn-success:active {
+  transform: translateY(2px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--idss-dark-blue);
+  border: 2px solid var(--idss-light-blue);
+  border-radius: var(--radius);
+  padding: var(--space-4) var(--space-6);
+  font-family: var(--font-primary);
+  font-size: var(--text-body);
+  font-weight: var(--weight-bold);
+  cursor: pointer;
+  transition: background 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.btn-ghost:hover {
+  background: var(--idss-light-blue);
+  color: var(--neutral-paper);
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--neutral-paper);
+  border: 1px solid var(--neutral-border);
+  border-radius: var(--radius);
+  padding: var(--card-padding);
+}
+
+/* ── Navigation ── */
+.nav {
+  height: var(--nav-height);
+  background: var(--neutral-paper);
+  border-bottom: 1px solid var(--neutral-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-6);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* ── Dashboard status bar (user, level, streak) ── */
+.nav-status-bar {
+  justify-content: flex-end;
+  gap: var(--space-6);
+}
+
+.nav-user-name {
+  margin-right: auto;
+  font-weight: var(--weight-bold);
+  color: var(--idss-dark-blue);
+}
+
+.level-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.level-badge-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--idss-dark-blue);
+  color: var(--neutral-paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--weight-bold);
+  font-size: var(--text-caption);
+}
+
+.level-badge-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 160px;
+}
+
+.level-badge-name {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-bold);
+  color: var(--neutral-charcoal);
+}
+
+/* Level + streak in the bar are one link to /progress. */
+.nav-status-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--radius);
+}
+
+.nav-status-link:hover {
+  opacity: 0.85;
+}
+
+/* ── /progress page ── */
+/* Own width/spacing rules: the global .container class is unlayered, so it beats
+   Tailwind's max-w-* and p-* utilities and would leave no space under the top bar. */
+.progress-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6);
+}
+
+.progress-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.progress-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.progress-hero-level {
+  flex: none;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--idss-dark-blue);
+  color: var(--neutral-paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-heading);
+  font-weight: var(--weight-bold);
+}
+
+.progress-hero-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.progress-muted {
+  color: var(--neutral-ash);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+}
+
+.progress-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+.progress-stats .card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.progress-next-link {
+  display: block;
+  margin-top: var(--space-3);
+  color: var(--idss-dark-blue);
+  font-weight: var(--weight-bold);
+  text-decoration: underline;
+}
+
+.badge-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.badge-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.badge-icon {
+  flex: none;
+  color: var(--game-green);
+}
+
+.badge-icon.locked {
+  color: var(--neutral-ash);
+}
+
+.badge-item-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.badge-item-name {
+  font-weight: var(--weight-bold);
+  font-size: var(--text-body);
+}
+
+.badge-item-detail {
+  font-size: var(--text-caption);
+  color: var(--neutral-ash);
+}
+
+@media (max-width: 640px) {
+  .progress-stats,
+  .badge-grid {
+    grid-template-columns: 1fr;
+  }
+  .progress-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Narrow screens: keep the bar on one line by dropping the name and the level text. */
+@media (max-width: 640px) {
+  .nav-user-name,
+  .level-badge-name {
+    display: none;
+  }
+  .level-badge-text {
+    min-width: 80px;
+  }
+}
+
+/* ── Logo placeholder (replaced in Sprint 14 with 3D logo) ── */
+.logo-placeholder {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 120px;
+  height: 120px;
+  z-index: 9999;
+  border-radius: var(--radius);
+  background: var(--idss-dark-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--neutral-paper);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-heading-sm);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* ── Progress bars ── */
+.progress-bar-track {
+  width: 100%;
+  height: 8px;
+  background: var(--neutral-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--idss-light-blue);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.progress-bar-fill.quiz {
+  background: var(--game-green);
+  height: 12px;
+}
+
+/* ── Quiz answer buttons ── */
+.quiz-option {
+  width: 100%;
+  background: var(--neutral-paper);
+  border: 2px solid var(--neutral-graphite);
+  border-bottom: var(--depth-default);
+  border-radius: var(--radius);
+  padding: var(--space-4) var(--space-6);
+  font-family: var(--font-primary);
+  font-size: var(--text-body);
+  font-weight: var(--weight-medium);
+  color: var(--neutral-charcoal);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background 0.1s ease,
+    border-color 0.1s ease;
+}
+
+.quiz-option:hover {
+  background: #f0f7ff;
+  border-color: var(--idss-dark-blue);
+}
+
+.quiz-option.selected {
+  background: #e8f4fd;
+  border-color: var(--idss-light-blue);
+}
+
+.quiz-option.correct {
+  background: #d7f5a0;
+  border-color: var(--game-green);
+  border-bottom: var(--depth-correct);
+}
+
+.quiz-option.incorrect {
+  background: #ffe0e0;
+  border-color: var(--game-fail-red);
+  border-bottom: var(--depth-fail);
+}
+
+/* ── Speech bubble (for logo animations in Sprint 15) ── */
+.logo-bubble {
+  position: fixed;
+  top: 148px;
+  left: 20px;
+  background: var(--neutral-paper);
+  border: 2px solid var(--idss-dark-blue);
+  border-radius: var(--radius);
+  padding: 8px 14px;
+  font-size: var(--text-caption);
+  font-weight: var(--weight-bold);
+  color: var(--idss-dark-blue);
+  white-space: nowrap;
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.logo-bubble.success {
+  border-color: var(--game-green);
+  color: #3a8c00;
+}
+.logo-bubble.fail {
+  border-color: var(--game-fail-red);
+  color: var(--game-fail-red);
+}
+.logo-bubble.visible {
+  opacity: 1;
+}
+
+/* ── Streak display ── */
+.streak-display {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-heading-sm);
+  color: var(--idss-dark-blue);
+}
+
+.streak-display.inactive {
+  opacity: 0.4;
+}
+
+.streak-display.high {
+  color: var(--game-green);
+}
+
+/* ── Badges ── */
+.badge-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--game-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.badge-icon.locked {
+  filter: grayscale(1);
+  opacity: 0.4;
+  border-color: var(--neutral-border);
+}
+
+/* ── Utility ── */
+.container {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
