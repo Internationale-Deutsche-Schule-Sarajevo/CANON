@@ -116,21 +116,49 @@ export async function ChapterList({ userId }: ChapterListProps) {
     groups.find((g) => g.chapters.some((c) => c.id === firstIncompleteChapterId))?.section ??
     groups[0].section;
 
+  const remainingCount = chapters.length - completedCount;
+  const nextChapter = chapters.find((chapter) => stateMap.get(chapter.id) !== "completed");
+
   return (
     <div>
-      <div className="mb-6">
-        <div className="flex justify-between text-sm text-gray-600 mb-1">
-          <span>Napredak</span>
-          <span>
-            {completedCount} / {chapters.length} poglavlja
-          </span>
+      <section className="mb-8 overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-[#0b2d4d] via-[#123f63] to-[#0d6b78] p-6 text-white shadow-lg" aria-labelledby="handbook-overview-title">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-xl">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-100">IDSS Knowledge Hub</p>
+            <h2 id="handbook-overview-title" className="text-2xl font-bold tracking-tight sm:text-3xl">Vaš sljedeći korak u učenju</h2>
+            <p className="mt-2 text-sm leading-6 text-slate-100">
+              Čitajte odobrena poglavlja redom, pratite napredak i uvijek se vratite na sadržaj koji je najvažniji za vašu ulogu.
+            </p>
+          </div>
+          <div className="rounded-xl border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-sm">
+            <p className="text-xs text-cyan-100">Ukupan napredak</p>
+            <p className="mt-1 text-3xl font-bold">{progressPercent}%</p>
+          </div>
         </div>
-        <div className="progress-bar-track">
-          <div
-            className="progress-bar-fill"
-            style={{ width: `${progressPercent}%` }}
-          />
+        <div className="mt-6" aria-label={`Napredak: ${completedCount} od ${chapters.length} poglavlja`}>
+          <div className="mb-2 flex justify-between text-xs font-medium text-slate-100">
+            <span>{completedCount} završeno</span>
+            <span>{remainingCount} preostalo</span>
+          </div>
+          <div className="h-2 overflow-hidden rounded-full bg-white/20">
+            <div className="h-full rounded-full bg-cyan-300 transition-all" style={{ width: `${progressPercent}%` }} />
+          </div>
         </div>
+        {nextChapter ? (
+          <Link href={`/handbook/${nextChapter.id}`} className="mt-5 inline-flex items-center rounded-lg bg-white px-4 py-2 text-sm font-semibold text-[#0b2d4d] transition hover:bg-cyan-50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#123f63]">
+            Nastavite s učenjem <span aria-hidden="true" className="ml-2">→</span>
+          </Link>
+        ) : (
+          <p className="mt-5 text-sm font-semibold text-cyan-100">Sva poglavlja su završena. Odličan posao.</p>
+        )}
+      </section>
+
+      <div className="mb-5 flex items-center justify-between gap-4">
+        <div>
+          <h2 className="text-lg font-semibold text-idss-dark-blue">Poglavlja priručnika</h2>
+          <p className="text-sm text-gray-600">Odaberite poglavlje da otvorite sadržaj i označite ga kao završeno.</p>
+        </div>
+        <span className="hidden rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600 sm:inline-flex">{chapters.length} poglavlja</span>
       </div>
 
       <div className="space-y-3">
