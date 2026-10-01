@@ -19,27 +19,40 @@ const AUTH_ROUTES = ["/login", "/register"];
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   let response = NextResponse.next({ request });
+  const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
+  const supabaseUrl =
+    process.env.NEXT_PUBLIC_SUPABASE_URL ??
+    "https://olavwiuswsjwpikmpkfk.supabase.co";
+  const supabaseKey =
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
+    process.env.NEXT_ANON_SUPABASE ??
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
-  const supabase = createServerClient(
-    (process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://olavwiuswsjwpikmpkfk.supabase.co")!,
-    (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? process.env.NEXT_ANON_SUPABASE)!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) =>
-            request.cookies.set(name, value),
-          );
-          response = NextResponse.next({ request });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options),
-          );
-        },
+  // Do not construct the client with an undefined key. This keeps public
+  // routes available during initial deployment while still protecting the
+  // dashboard until the Supabase variables are present.
+  if (!supabaseKey) {
+    return isPublicRoute
+      ? response
+      : NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  const supabase = createServerClient(supabaseUrl, supabaseKey, {
+    cookies: {
+      getAll() {
+        return request.cookies.getAll();
+      },
+      setAll(cookiesToSet) {
+        cookiesToSet.forEach(({ name, value }) =>
+          request.cookies.set(name, value),
+        );
+        response = NextResponse.next({ request });
+        cookiesToSet.forEach(({ name, value, options }) =>
+          response.cookies.set(name, value, options),
+        );
       },
     },
-  );
+  });
 
   const {
     data: { user },

@@ -15,12 +15,7 @@ export const clientEnv = {
   NEXT_PUBLIC_SUPABASE_URL:
     process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://olavwiuswsjwpikmpkfk.supabase.co",
   NEXT_PUBLIC_SUPABASE_ANON_KEY:
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? process.env.NEXT_ANON_SUPABASE!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ??
+    "preview-missing-supabase-key",
 } as const;
-
-if (!clientEnv.NEXT_PUBLIC_SUPABASE_URL || !clientEnv.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-  throw new Error(
-    "FATAL: NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY is missing. " +
-      "These must be set in .env for client-side Supabase access.",
-  );
-}
