@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { loginAction } from "@/features/authentication/actions";
 import { useRouter } from "next/navigation";
@@ -39,20 +40,26 @@ export default function LoginPage() {
         <div style={{ textAlign: "center", marginBottom: "var(--space-8)" }}>
           <div
             style={{
-              width: "64px",
-              height: "64px",
+              width: "min(260px, 100%)",
+              height: "78px",
               background: "var(--idss-dark-blue)",
               borderRadius: "var(--radius)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               margin: "0 auto var(--space-4)",
-              color: "white",
-              fontWeight: "var(--weight-bold)",
-              fontSize: "var(--text-heading-sm)",
+              padding: "10px 16px",
+              overflow: "hidden",
             }}
           >
-            IDSS
+            <Image
+              src="/idss-logo-whiteout.png"
+              alt="Internationale Deutsche Schule Sarajevo"
+              width={1460}
+              height={443}
+              priority
+              style={{ width: "100%", height: "100%", objectFit: "contain" }}
+            />
           </div>
           <h1
             style={{

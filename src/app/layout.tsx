@@ -21,6 +21,11 @@ export const metadata: Metadata = {
   title: "IDSS Handbook",
   description:
     "Institucionalni priručnik — P.U. Internationale Deutsche Schule Sarajevo",
+  icons: {
+    icon: "/idss-logo-whiteout.png",
+    shortcut: "/idss-logo-whiteout.png",
+    apple: "/idss-logo-whiteout.png",
+  },
 };
 
 export default function RootLayout({

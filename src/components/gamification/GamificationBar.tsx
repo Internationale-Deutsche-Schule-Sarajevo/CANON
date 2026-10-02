@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { unstable_rethrow } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/db/supabase";
@@ -43,6 +44,15 @@ export async function GamificationBar() {
 
     return (
       <header className="nav nav-status-bar">
+        <Link href="/handbook" className="nav-brand" aria-label="IDSS Handbook početna stranica">
+          <Image
+            src="/idss-logo-whiteout.png"
+            alt="Internationale Deutsche Schule Sarajevo"
+            width={1460}
+            height={443}
+            priority
+          />
+        </Link>
         <span className="nav-user-name">{dbUser.full_name}</span>
         <Link href="/progress" className="nav-status-link" title="Moj napredak">
           <LevelBadge
