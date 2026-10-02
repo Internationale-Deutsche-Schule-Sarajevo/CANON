@@ -12,34 +12,29 @@ import { z } from 'zod';
 const envSchema = z.object({
   // Supabase
   NEXT_PUBLIC_SUPABASE_URL: z.string().min(1),
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
-  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
+  // These are validated when a Supabase operation is invoked. Keeping a
+  // string default prevents module evaluation from crashing public routes
+  // while Vercel injects the project's configured variable names.
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().default(''),
+  SUPABASE_SERVICE_ROLE_KEY: z.string().default(''),
 
   // AI Provider
-  AI_PROVIDER: z.string().min(1),
-  GEMINI_API_KEY_1: z.string().min(1),
-  GEMINI_API_KEY_2: z.string().min(1),
-  GEMINI_API_KEY_3: z.string().min(1),
-  GEMINI_API_KEY_4: z.string().min(1),
-  GEMINI_API_KEY_5: z.string().min(1),
-  GEMINI_API_KEY_6: z.string().min(1),
-  GEMINI_API_KEY_7: z.string().min(1),
-  GEMINI_API_KEY_8: z.string().min(1),
+  AI_PROVIDER: z.string().default(''),
+  GEMINI_API_KEY_1: z.string().default(''),
+  GEMINI_API_KEY_2: z.string().default(''),
+  GEMINI_API_KEY_3: z.string().default(''),
+  GEMINI_API_KEY_4: z.string().default(''),
+  GEMINI_API_KEY_5: z.string().default(''),
+  GEMINI_API_KEY_6: z.string().default(''),
+  GEMINI_API_KEY_7: z.string().default(''),
+  GEMINI_API_KEY_8: z.string().default(''),
 
-  // Email
-  RESEND_API_KEY: z.string().min(1),
-  RESEND_FROM_EMAIL: z.string().min(1),
-
-  // OCR
-  OCR_SPACE_API_KEY: z.string().min(1),
-
-  // Error tracking
-  SENTRY_DSN: z.string().min(1),
-
-  // Pipeline automation -- shared secret Vercel Cron sends as
-  // `Authorization: Bearer <CRON_SECRET>`; every other admin route is
-  // session-gated only, which a cron invocation cannot satisfy.
-  CRON_SECRET: z.string().min(1),
+  // Optional services remain disabled until their credentials are configured.
+  RESEND_API_KEY: z.string().default(''),
+  RESEND_FROM_EMAIL: z.string().default(''),
+  OCR_SPACE_API_KEY: z.string().default(''),
+  SENTRY_DSN: z.string().default(''),
+  CRON_SECRET: z.string().default(''),
 });
 
 // Custom error messages for each missing key
@@ -69,12 +64,18 @@ const errorMessages: Record<string, string> = {
  */
 const normalizedEnv = {
   ...process.env,
+  // Vercel may provide the project variables under the legacy names used by
+  // the existing deployment. Treat blank values as missing and use the
+  // canonical public URL only as a safe project default.
   NEXT_PUBLIC_SUPABASE_URL:
-    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://olavwiuswsjwpikmpkfk.supabase.co",
+    process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() ||
+    "https://olavwiuswsjwpikmpkfk.supabase.co",
   NEXT_PUBLIC_SUPABASE_ANON_KEY:
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? process.env.NEXT_ANON_SUPABASE,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim() ||
+    process.env.NEXT_ANON_SUPABASE?.trim(),
   SUPABASE_SERVICE_ROLE_KEY:
-    process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.NEXT_SERVICEROLE_SUPABASE,
+    process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() ||
+    process.env.NEXT_SERVICEROLE_SUPABASE?.trim(),
 };
 
 const result = envSchema.safeParse(normalizedEnv);
