@@ -8,6 +8,9 @@ import { getLevelForPoints, getNextLevel } from "@/constants/gamification";
 import { StreakDisplay } from "./StreakDisplay";
 import { LevelBadge } from "./LevelBadge";
 
+/* The fallback must catch server data failures while preserving Next signals. */
+/* eslint-disable react-hooks/error-boundaries */
+
 /**
  * Top status bar for every (dashboard) page: user name, level + progress,
  * learning streak. Server component. Purely additive and fail-safe — if the

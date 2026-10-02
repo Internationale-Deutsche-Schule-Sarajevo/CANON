@@ -52,7 +52,8 @@ export function QuizCard({ chapterId }: QuizCardProps) {
   }
 
   useEffect(() => {
-    loadQuestions();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void loadQuestions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chapterId]);
 

@@ -295,7 +295,7 @@ async function getSourceDocument(
 }
 
 type CallOutcome =
-  | { status: number; body: any; durationMs: number }
+  | { status: number; body: unknown; durationMs: number }
   | { networkError: string; durationMs: number };
 
 async function callGenerateContent(
@@ -349,7 +349,7 @@ async function callGenerateContent(
   };
 }
 
-// ── Quiz mode ────────────────────────────────────────────────────────────
+// ── Quiz mode ──────────────────────────────────────���─────────────────────
 
 type QuizTestResult = {
   label: string;

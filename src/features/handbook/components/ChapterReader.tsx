@@ -133,6 +133,8 @@ export function ChapterReader({
 
       {expanded ? (
         <div className="space-y-4 text-gray-800 leading-relaxed">
+          {/* paragraphs is derived once from immutable chapter content. */}
+          {/* eslint-disable-next-line react-hooks/refs */}
           {paragraphs.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
           ))}

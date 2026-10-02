@@ -81,8 +81,10 @@ export function DocumentReviewPanel() {
     }
   }
 
+  // Initial data loading intentionally updates local state from an external API.
   useEffect(() => {
-    fetchStaging();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void fetchStaging();
   }, []);
 
   async function handleApprove(id: string) {

@@ -57,9 +57,11 @@ export function PipelineStatusView({
     }
   }
 
+  // Polling intentionally synchronizes local state with the external API.
   useEffect(() => {
-    fetchStatus();
-    const interval = setInterval(fetchStatus, 15000);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void fetchStatus();
+    const interval = setInterval(() => void fetchStatus(), 15000);
     return () => clearInterval(interval);
   }, []);
 

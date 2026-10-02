@@ -7,7 +7,9 @@
  */
 import { createSupabaseDirectAdmin } from "../src/lib/db/supabase";
 
-async function count(filters: (q: any) => any): Promise<number> {
+type QueryBuilder = ReturnType<ReturnType<typeof createSupabaseDirectAdmin>["from"]>;
+
+async function count(filters: (q: QueryBuilder) => QueryBuilder): Promise<number> {
   const supabase = createSupabaseDirectAdmin();
   let q = supabase.from("document_chunks").select("*", { count: "exact", head: true });
   q = filters(q);

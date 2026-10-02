@@ -11,6 +11,9 @@ import { getLevelForPoints, getNextLevel } from "@/constants/gamification";
 import { ProgressView } from "@/components/gamification/ProgressView";
 import { levelProgressPercent } from "@/components/gamification/LevelBadge";
 
+/* The fallback must catch server data failures while preserving Next signals. */
+/* eslint-disable react-hooks/error-boundaries */
+
 /**
  * Personal progress overview (Phase 2b step 7): level and points, learning
  * streak, chapter progress, the next chapter to open, and all badges.
