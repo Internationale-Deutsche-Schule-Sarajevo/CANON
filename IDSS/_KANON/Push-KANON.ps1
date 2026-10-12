@@ -1,4 +1,3 @@
-```powershell
 # ==========================================
 # DAVOR_IDSS _KANON -> GitHub CANON
 # Potpuna zamjena sadržaja foldera IDSS/_KANON
@@ -129,4 +128,3 @@ catch {
 finally {
     Set-Location $env:USERPROFILE
 }
-```
