@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-c/4rvTMMx866ktcp3/V8zuZsE06RSDh/zrTCLY6EuwM=' 'sha256-EUsrmLLlN8CD1Uas5ZeFzGeYzJ3WRrDV+qgITA+gm+4=' 'sha256-FBcsSa+B8+JXWeth1G0RB3+nZ8TPE79qCWEccxRaSOU='; style-src 'unsafe-inline'; img-src https://idss.edu.ba data:; connect-src https://*.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-c/4rvTMMx866ktcp3/V8zuZsE06RSDh/zrTCLY6EuwM=' 'sha256-KOgU4/EeqCz4TsMZFUHKbPsEAqq27CQAckmiYOYyD00=' 'sha256-FBcsSa+B8+JXWeth1G0RB3+nZ8TPE79qCWEccxRaSOU=' 'sha256-cZvt9fvwC+Icdnk1yqzCAUxeQxAzjbXtsLkJ2KR8MO8='; style-src 'unsafe-inline'; img-src https://idss.edu.ba data:; connect-src https://mundbastjijqnhpvdtzj.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'">
 <title>IDSS Pedagog · Mjesečni izvještaj</title>
 <style>
 :root{
@@ -265,6 +265,7 @@ body{font-feature-settings:"tnum" 0,"cv11" 1;-webkit-font-smoothing:antialiased;
 <noscript><p style="padding:1rem">Za rad aplikacije potrebno je uključiti JavaScript.</p></noscript>
 <div id="aplikacija"></div>
 <script>if(window.top!==window.self){document.documentElement.style.display='none';try{window.top.location=window.self.location}catch(e){}}</script>
+<script>window.IDSS_CONFIG={"url": "https://mundbastjijqnhpvdtzj.supabase.co", "kljuc": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11bmRiYXN0amlqcW5ocHZkdHpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE5MTUwMjgsImV4cCI6MjEwNzQ5MTAyOH0.heAD1dBGnagNd98Np0HuiBE-FEWHXBiDeVZnfHmmOzE", "produkcija": true};</script>
 <script>/* =====================================================================
    LOGIKA — validacija, KPI pokazatelji, IDSS bodovi, rokovi.
    Ovo je tačno ogledalo SQL funkcija iz supabase/002_validacija_bodovi.sql.
@@ -1081,7 +1082,7 @@ const Api = (() => {
     postavi, konfigurisano, MREZA,
     nacin: () => nacin,
     uloga: () => (nacin === 'demo' ? D.uloga() : null),
-    demo(uloga) { nacin = 'demo'; D.aktiviraj(uloga); },
+    demo(uloga) { if (typeof window !== 'undefined' && window.IDSS_CONFIG && window.IDSS_CONFIG.produkcija === true) return; nacin = 'demo'; D.aktiviraj(uloga); },
     demoReset() { D.reset(); },
     supabase() { nacin = 'supabase'; },
     obnovi: () => (nacin === 'demo' ? Promise.resolve(false) : Supa.obnovi()),
@@ -1609,6 +1610,7 @@ const UI = (() => {
   };
 
   /* ---------- pokretanje i prijava ---------- */
+  const PROD = () => !!(window.IDSS_CONFIG && window.IDSS_CONFIG.produkcija === true);
   function prijavaEkran() {
     const cfgSpremljen = (() => { try { return JSON.parse(LS.get('idss_cfg') || 'null'); } catch (e) { return null; } })();
     const url = h('input', { type: 'url', id: 'cfg-url', value: (cfgSpremljen && cfgSpremljen.url) || (window.IDSS_CONFIG && window.IDSS_CONFIG.url) || '', autocomplete: 'off' });
@@ -1634,13 +1636,13 @@ const UI = (() => {
       h('img', { src: 'https://idss.edu.ba/wp-content/uploads/2024/03/logo_white.png', alt: 'IDSS', onerror: e => { e.target.style.display = 'none'; } }),
       h('h1', {}, 'IDSS Pedagog'), h('p', { class: 'podnaslov', style: 'margin-bottom:1rem' }, 'Mjesečni izvještaj pedagoga za direktora škole'),
       forma,
-      h('details', { style: 'margin-top:1rem' }, h('summary', {}, 'Postavke veze sa Supabase-om'),
+      PROD() ? null : h('details', { style: 'margin-top:1rem' }, h('summary', {}, 'Postavke veze sa Supabase-om'),
         h('p', { class: 'sitno', style: 'color:var(--ink2)' }, 'Javni „anon“ ključ nije tajna, ali nikad ovdje ne unosite „service_role“ ključ.'),
         h('div', { class: 'polje' }, h('label', { for: 'cfg-url' }, 'Adresa projekta'), url),
         h('div', { class: 'polje', style: 'margin-top:.6rem' }, h('label', { for: 'cfg-kljuc' }, 'Anon (publishable) ključ'), kljuc)),
-      h('hr', { style: 'border:none;border-top:1px solid var(--line);margin:1.2rem 0' }),
-      h('p', { style: 'margin-bottom:.5rem' }, h('strong', {}, 'Probni režim'), ' — izmišljeni podaci, bez servera:'),
-      h('div', { style: 'display:flex;gap:.6rem;flex-wrap:wrap' },
+      PROD() ? null : h('hr', { style: 'border:none;border-top:1px solid var(--line);margin:1.2rem 0' }),
+      PROD() ? null : h('p', { style: 'margin-bottom:.5rem' }, h('strong', {}, 'Probni režim'), ' — izmišljeni podaci, bez servera:'),
+      PROD() ? null : h('div', { style: 'display:flex;gap:.6rem;flex-wrap:wrap' },
         h('button', { type: 'button', class: 'dugme sekund', id: 'demo-ped', onclick: () => { Api.demo('pedagog'); U.pokreni(); } }, 'Uđi kao pedagog'),
         h('button', { type: 'button', class: 'dugme sekund', id: 'demo-dir', onclick: () => { Api.demo('direktor'); U.pokreni(); } }, 'Uđi kao direktor'))));
   }
@@ -1650,8 +1652,9 @@ const UI = (() => {
     A.animacije = true;
     ugasiScene(); prazni(korijen);
     let cfg = null; try { cfg = JSON.parse(LS.get('idss_cfg') || 'null'); } catch (e) { cfg = null; }
-    if (!cfg && window.IDSS_CONFIG) cfg = window.IDSS_CONFIG;
+    if ((!cfg || PROD()) && window.IDSS_CONFIG) cfg = window.IDSS_CONFIG;
     if (cfg) Api.postavi(cfg);
+    if (PROD() && Api.nacin() === 'demo') { try { await Api.odjava(); } catch (e) { /* ignorisano */ } }
     let prijavljen = Api.nacin() === 'demo';
     if (!prijavljen && Api.konfigurisano()) { korijen.appendChild(ucitava('Provjera prijave…')); prijavljen = await Api.obnovi(); prazni(korijen); }
     if (!prijavljen) { document.title = 'Prijava · IDSS Pedagog'; korijen.appendChild(prijavaEkran()); return; }
