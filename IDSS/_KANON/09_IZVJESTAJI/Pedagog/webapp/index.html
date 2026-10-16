@@ -1,0 +1,2124 @@
+<!doctype html>
+<html lang="bs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-c/4rvTMMx866ktcp3/V8zuZsE06RSDh/zrTCLY6EuwM=' 'sha256-EUsrmLLlN8CD1Uas5ZeFzGeYzJ3WRrDV+qgITA+gm+4=' 'sha256-FBcsSa+B8+JXWeth1G0RB3+nZ8TPE79qCWEccxRaSOU='; style-src 'unsafe-inline'; img-src https://idss.edu.ba data:; connect-src https://*.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'">
+<title>IDSS Pedagog · Mjesečni izvještaj</title>
+<style>
+:root{
+  /* Službena paleta IDSS: #000000, #08ABE6, #E8262C, #035EA1, #FFCB29 (+ bijela i neutralne nijanse crne za pozadine i tekst) */
+  --crna:#000000; --svijetloplava:#08ABE6; --crvena:#E8262C; --plava:#035EA1; --zuta:#FFCB29;
+  --p9:#000000; --p8:#000000; --p7:#035EA1; --p6:#035EA1;
+  --brass:#FFCB29; --brass-l:#FFCB29; --brass-d:#000000;
+  --porc:#F4F7FA; --paper:#fff; --ink:#000000; --ink2:#474747; --line:#cfd6dc; --line2:#e6ebef;
+  --red:#E8262C; --red-bg:#FDE9EA; --green:#035EA1; --green-bg:#E6EFF6; --amber:#000000; --amber-bg:#FFF2C4; --blue:#035EA1; --blue-bg:#E1F5FC;
+  --g1:#FFCB29; --g2:#08ABE6; --g3:#ffffff; --g4:#E8262C;
+  --sans:"Segoe UI Variable Text","Segoe UI Variable","Segoe UI",system-ui,-apple-system,"SF Pro Text","Helvetica Neue",Roboto,Arial,sans-serif;
+  --serif:"Segoe UI Variable Display","Segoe UI Variable","Segoe UI",system-ui,-apple-system,"SF Pro Display","Helvetica Neue",Roboto,Arial,sans-serif;
+  --r:8px; --senka:0 1px 2px rgba(0,0,0,.08),0 6px 18px rgba(0,0,0,.07);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--porc);color:var(--ink);font:16px/1.5 var(--sans);min-height:100vh}
+h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.2;margin:0 0 .5em;letter-spacing:-.012em}
+h1{font-size:1.75rem} h2{font-size:1.3rem} h3{font-size:1.08rem}
+p{margin:0 0 .8em}
+a{color:var(--blue)}
+.skok{position:absolute;left:-999px;top:0;background:var(--brass);color:#000000;padding:.6rem 1rem;z-index:100}
+.skok:focus{left:8px;top:8px}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:3px}
+.sakriveno{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+button{font:inherit;cursor:pointer}
+.tabular{font-variant-numeric:tabular-nums}
+
+/* ---------- gornja traka ---------- */
+.traka{background:var(--p9);color:#ededed;border-bottom:3px solid var(--brass)}
+.traka-u{max-width:none;margin:0;padding:.6rem var(--gut);display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.marka{display:flex;align-items:center;gap:.8rem;min-width:0}
+.marka img{height:38px;width:auto;display:block}
+.marka .tekst{font-family:var(--serif);font-size:1.15rem;line-height:1.1}
+.marka .tekst small{display:block;font:.78rem var(--sans);color:#aeaeae;letter-spacing:.02em}
+.traka .razmak{flex:1}
+.korisnik{font-size:.88rem;text-align:right;line-height:1.25}
+.korisnik b{display:block;font-weight:600}
+.uloga{display:inline-block;background:var(--p7);border:1px solid var(--p6);border-radius:99px;padding:.05rem .6rem;font-size:.76rem;color:#dadada}
+.dugme-traka{background:transparent;color:#ededed;border:1px solid #5f5f5f;border-radius:var(--r);padding:.4rem .8rem;min-height:40px}
+.dugme-traka:hover{background:var(--p7)}
+.nav{background:#035EA1}
+.nav-u{max-width:none;margin:0;padding:0 var(--gut);display:flex;gap:.25rem;overflow-x:auto}
+.nav a{color:#fff;text-decoration:none;padding:.75rem 1rem;border-bottom:3px solid transparent;white-space:nowrap;display:inline-block}
+.nav a:hover{background:#000}
+.nav a[aria-current=page]{color:#fff;border-bottom-color:var(--brass);background:#000}
+.demo-traka{background:var(--amber-bg);color:#000000;border-bottom:1px solid #FFCB29;font-size:.9rem}
+.demo-traka div{max-width:none;margin:0;padding:.45rem var(--gut);display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
+.demo-traka button{background:#fff;border:1px solid #FFCB29;border-radius:var(--r);padding:.25rem .7rem;min-height:32px}
+
+main{max-width:none;margin:0;padding:1.4rem var(--gut) 4rem}
+.naslov-stranice{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+.naslov-stranice h1{margin:0}
+.podnaslov{color:var(--ink2);margin:.2rem 0 0}
+
+/* ---------- komponente ---------- */
+.kartica{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--senka);padding:1.1rem 1.2rem}
+.kartica>h2:first-child,.kartica>h3:first-child{margin-top:0}
+.mreza{display:grid;gap:1rem}
+.m2{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.m3{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.m4{grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr))}
+.dugme{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:44px;padding:.55rem 1.1rem;border-radius:var(--r);border:1px solid var(--p7);background:var(--p7);color:#fff;font-weight:600;text-decoration:none}
+.dugme:hover{background:var(--p8)}
+.dugme.zlato{background:var(--brass);border-color:var(--brass-d);color:#000000}
+.dugme.zlato:hover{background:var(--brass-l)}
+.dugme.sekund{background:#fff;color:var(--ink);border-color:#ababab}
+.dugme.sekund:hover{background:var(--porc)}
+.dugme.opasno{background:var(--red);border-color:#000000}
+.dugme.zeleno{background:var(--green);border-color:#035EA1}
+.dugme[disabled],.dugme[aria-disabled=true]{opacity:.5;cursor:not-allowed}
+.dugme.malo{min-height:36px;padding:.3rem .8rem;font-size:.9rem}
+.cip{display:inline-flex;align-items:center;gap:.35rem;border-radius:99px;padding:.1rem .65rem;font-size:.82rem;font-weight:600;border:1px solid;white-space:nowrap}
+.cip.nacrt{background:#f0f0f0;color:#424242;border-color:#cacaca}
+.cip.podnesen{background:var(--blue-bg);color:#035EA1;border-color:#08ABE6}
+.cip.vracen{background:var(--amber-bg);color:var(--amber);border-color:#FFCB29}
+.cip.odobren{background:var(--green-bg);color:var(--green);border-color:#08ABE6}
+.cip.nema{background:#fff;color:#575757;border-color:var(--line);border-style:dashed}
+.cip.kasni{background:var(--red-bg);color:var(--red);border-color:#FDE9EA}
+.cip.ok{background:var(--green-bg);color:var(--green);border-color:#08ABE6}
+.upozorenje,.info,.greska-okvir,.uspjeh{border-left:4px solid;border-radius:4px;padding:.7rem .9rem;margin:.8rem 0;font-size:.95rem}
+.upozorenje{background:var(--amber-bg);border-color:#FFCB29;color:#000000}
+.info{background:var(--blue-bg);border-color:var(--blue);color:#035EA1}
+.greska-okvir{background:var(--red-bg);border-color:var(--red);color:#000000}
+.uspjeh{background:var(--green-bg);border-color:var(--green);color:#035EA1}
+.prazno{text-align:center;color:var(--ink2);padding:1.5rem 1rem}
+.prazno strong{display:block;color:var(--ink);font-family:var(--serif);font-size:1.1rem;margin-bottom:.3rem}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:.55rem .6rem;border-bottom:1px solid var(--line2);vertical-align:top}
+th{font-weight:600;color:var(--ink2);font-size:.85rem;border-bottom:1px solid var(--line)}
+td.br,th.br{text-align:right}
+.tabela-omot{overflow-x:auto}
+.plocica{display:flex;flex-direction:column;gap:.15rem}
+.plocica .br{font:700 2rem/1 var(--serif);font-variant-numeric:tabular-nums}
+.plocica .on{color:var(--ink2);font-size:.9rem}
+.plocica.opasno .br{color:var(--red)}
+.plocica.pazi .br{color:var(--amber)}
+
+/* ---------- hero sa 3D scenom ---------- */
+.hero{background:radial-gradient(120% 100% at 30% 0%,#035EA1 0%,var(--p8) 45%,var(--p9) 100%);color:#ededed;border-radius:10px;border:1px solid #000000;box-shadow:0 10px 30px rgba(0,0,0,.25);display:grid;grid-template-columns:minmax(260px,420px) 1fr;gap:1rem;overflow:hidden}
+.hero .platno{position:relative;min-height:300px}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .tekst{padding:1.4rem 1.4rem 1.4rem 0;align-self:center}
+.hero h2{color:#fff;font-size:1.5rem}
+.hero .velik{font:700 3.4rem/1 var(--serif);color:var(--brass-l);font-variant-numeric:tabular-nums}
+.hero .velik small{font-size:1.1rem;color:#aeaeae;font-weight:400}
+.hero p{color:#d0d0d0}
+.rez-grupe{list-style:none;margin:.8rem 0 0;padding:0;display:grid;gap:.45rem}
+.rez-grupe li{display:grid;grid-template-columns:9.5rem 1fr auto;gap:.6rem;align-items:center;font-size:.92rem}
+.traka-b{height:9px;border-radius:99px;background:rgba(255,255,255,.14);overflow:hidden}
+.traka-b i{display:block;height:100%;border-radius:99px;transition:width .5s}
+.svjetla .traka-b{background:#e8e8e8}
+.bez-3d{display:flex;align-items:center;justify-content:center;height:100%;padding:1rem}
+@media (max-width:760px){.hero{grid-template-columns:1fr}.hero .tekst{padding:0 1.2rem 1.4rem}.hero .platno{min-height:240px}.rez-grupe li{grid-template-columns:7.5rem 1fr auto}}
+
+/* ---------- staza mjeseci ---------- */
+.staza{display:grid;gap:.6rem}
+.mjesec{display:grid;grid-template-columns:7.5rem 1fr auto;gap:.8rem;align-items:center;background:var(--paper);border:1px solid var(--line);border-left:5px solid #c2c2c2;border-radius:var(--r);padding:.7rem .9rem}
+.mjesec.nacrt{border-left-color:#898989}.mjesec.podnesen{border-left-color:var(--blue)}.mjesec.vracen{border-left-color:#FFCB29}.mjesec.odobren{border-left-color:var(--green)}.mjesec.kasni{border-left-color:var(--red)}
+.mjesec .naziv{font:700 1.05rem var(--serif)}
+.mjesec .sitno{color:var(--ink2);font-size:.88rem}
+.mjesec .bod{font:700 1.35rem var(--serif);text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:640px){.mjesec{grid-template-columns:1fr auto}.mjesec .naziv{grid-column:1/-1}}
+.znacke{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.6rem;list-style:none;margin:0;padding:0}
+.znacka{border:1px solid var(--line);border-radius:var(--r);padding:.6rem .7rem;background:#fff;display:flex;gap:.6rem;align-items:flex-start;font-size:.88rem}
+.znacka .ikona{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:#e6e6e6;color:#686868;border:2px dashed #ababab}
+.znacka.stecena .ikona{background:radial-gradient(circle at 35% 30%,#FFCB29,var(--brass) 60%,#FFCB29);color:#000000;border:2px solid var(--brass-d)}
+.znacka b{display:block}
+.znacka .sitno{color:var(--ink2)}
+.znacka:not(.stecena){color:#575757}
+
+/* ---------- uređivač ---------- */
+.uredjivac{display:grid;grid-template-columns:240px minmax(0,1fr) 300px;gap:1rem;align-items:start}
+.bocna{position:sticky;top:.8rem;display:flex;flex-direction:column;gap:1rem}
+.bocna-s{position:sticky;top:.8rem}
+.korak-lista{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.15rem}
+.korak-lista a{display:grid;grid-template-columns:1.7rem 1fr auto;gap:.4rem;align-items:center;padding:.55rem .6rem;border-radius:var(--r);text-decoration:none;color:var(--ink);border:1px solid transparent;min-height:44px}
+.korak-lista a:hover{background:var(--porc)}
+.korak-lista a[aria-current=step]{background:#eeeeee;border-color:#c6c6c6;font-weight:600}
+.korak-lista .br{width:1.7rem;height:1.7rem;border-radius:50%;display:grid;place-items:center;font-size:.8rem;background:#e8e8e8;color:#404040;font-weight:700}
+.korak-lista .gotov .br{background:var(--green);color:#fff}
+.korak-lista .nedostaje{font-size:.78rem;color:var(--red);font-weight:600}
+.forma-sek{display:flex;flex-direction:column;gap:1rem}
+.polje{display:flex;flex-direction:column;gap:.3rem}
+.polje>label,.polje>.oznaka{font-weight:600;font-size:.95rem}
+.polje .pomoc{color:var(--ink2);font-size:.86rem;flex:1 0 auto}
+.polje>label:not(:has(+.pomoc)):not(:last-child){flex:1 0 auto}
+.polje>label:last-child{flex:0 0 auto}
+.polje .gr{color:var(--red);font-size:.88rem;font-weight:600;min-height:0}
+input[type=text],input[type=number],input[type=date],select,textarea,input[type=email],input[type=password],input[type=url]{font:inherit;color:var(--ink);background:#fff;border:1px solid #9b9b9b;border-radius:var(--r);padding:.5rem .65rem;min-height:44px;width:100%}
+textarea{min-height:120px;resize:vertical;line-height:1.45}
+input[type=number]{max-width:100%}
+input:disabled,select:disabled,textarea:disabled{background:#f0f0f0;color:#565656}
+.ima-gr input,.ima-gr select,.ima-gr textarea{border-color:var(--red);box-shadow:0 0 0 1px var(--red)}
+.brojac-znakova{font-size:.82rem;color:var(--ink2);text-align:right}
+.brojac-znakova.mali{color:var(--amber)}
+.red-polja{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));gap:1rem 1.25rem;align-items:stretch}
+.izbor{display:flex;flex-wrap:wrap;gap:.45rem}
+.izbor label{display:inline-flex;align-items:center;gap:.4rem;border:1px solid #ababab;border-radius:99px;padding:.3rem .8rem;background:#fff;min-height:40px;cursor:pointer;font-weight:400}
+.izbor input{width:1.05rem;height:1.05rem;margin:0}
+.izbor label:has(input:checked){background:#E1F5FC;border-color:var(--p6);font-weight:600}
+.izbor label:has(input:disabled){opacity:.6;cursor:not-allowed}
+.stavka-k{border:1px solid var(--line);border-radius:var(--r);background:#fff;padding:.9rem;display:flex;flex-direction:column;gap:.8rem}
+.stavka-k header{display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap}
+.stavka-k header b{font-family:var(--serif)}
+.status-spremanja{display:inline-flex;align-items:center;gap:.45rem;border-radius:99px;padding:.15rem .75rem;font-size:.86rem;font-weight:600;border:1px solid}
+.status-spremanja i{width:9px;height:9px;border-radius:50%;background:currentColor;display:inline-block}
+.ss-ok{color:var(--green);background:var(--green-bg);border-color:#08ABE6}
+.ss-nesp{color:var(--amber);background:var(--amber-bg);border-color:#FFCB29}
+.ss-radi{color:#035EA1;background:var(--blue-bg);border-color:#08ABE6}
+.ss-gr{color:var(--red);background:var(--red-bg);border-color:#FDE9EA}
+.ss-radi i{animation:puls 1s infinite}
+@keyframes puls{50%{opacity:.25}}
+.pano{display:flex;gap:.6rem;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:1rem}
+.bodovi-ploca h3{margin-bottom:.2rem}
+.bodovi-ploca canvas{width:100%;height:210px;display:block;background:radial-gradient(120% 100% at 50% 0,#035EA1,var(--p9));border-radius:8px}
+.bodovi-ploca .ukupno{font:700 2.1rem/1 var(--serif);font-variant-numeric:tabular-nums;margin:.6rem 0 .2rem}
+.bodovi-ploca .ukupno small{font:.9rem var(--sans);color:var(--ink2)}
+.pr-lista{list-style:none;margin:.5rem 0 0;padding:0;display:grid;gap:.5rem;font-size:.9rem}
+.pr-lista li{display:grid;grid-template-columns:1fr auto;gap:.2rem .5rem}
+.pr-lista .traka-b{grid-column:1/-1;background:#e8e8e8}
+.nacin{display:flex;gap:.5rem;align-items:center;margin-top:.6rem;font-size:.88rem}
+@media (max-width:1100px){.uredjivac{grid-template-columns:220px minmax(0,1fr)}.bocna-s{grid-column:1/-1;position:static;order:-1}}
+@media (max-width:780px){.uredjivac{grid-template-columns:1fr}.bocna{position:static}.korak-lista{flex-direction:row;overflow-x:auto}.korak-lista a{min-width:8.5rem}.korak-lista .nedostaje{display:none}}
+
+/* ---------- prijava ---------- */
+.prijava-omot{min-height:100vh;display:grid;place-items:center;background:radial-gradient(120% 90% at 50% 0,#035EA1,var(--p9));padding:1rem}
+.prijava{background:#fff;border-radius:10px;padding:1.8rem;max-width:440px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,.35);border-top:4px solid var(--brass)}
+.prijava img{height:46px;background:var(--p9);padding:.4rem .7rem;border-radius:6px;margin-bottom:1rem}
+.prijava form{display:flex;flex-direction:column;gap:.9rem}
+
+/* ---------- modal ---------- */
+dialog{border:none;border-radius:10px;padding:0;max-width:min(560px,calc(100vw - 2rem));width:100%;box-shadow:0 20px 60px rgba(0,0,0,.4);color:var(--ink)}
+dialog::backdrop{background:rgba(0,0,0,.62)}
+dialog .okvir{padding:1.3rem 1.4rem}
+dialog .okvir h2{margin-top:0}
+dialog .dugmad{display:flex;gap:.6rem;justify-content:flex-end;flex-wrap:wrap;margin-top:1.1rem}
+dialog.sirok{max-width:min(760px,calc(100vw - 2rem))}
+.slavlje-canvas{width:100%;height:260px;display:block;background:radial-gradient(120% 100% at 50% 0,#035EA1,var(--p9));border-radius:8px;margin:.6rem 0}
+.toast-sp{position:fixed;left:50%;bottom:1.2rem;transform:translateX(-50%);z-index:90;display:flex;flex-direction:column;gap:.5rem;align-items:center;pointer-events:none;width:min(520px,calc(100vw - 2rem))}
+.toast{background:var(--p9);color:#fff;border-left:4px solid var(--brass);padding:.7rem 1rem;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,.3);pointer-events:auto;font-size:.95rem;width:100%}
+.toast.greska{border-left-color:#FDE9EA}
+.ucitava{display:grid;place-items:center;min-height:40vh;color:var(--ink2)}
+.vrti{width:28px;height:28px;border-radius:50%;border:3px solid #d6d6d6;border-top-color:var(--p7);animation:vrt 1s linear infinite;margin-bottom:.6rem}
+@keyframes vrt{to{transform:rotate(360deg)}}
+.pregled-sek{display:grid;gap:.5rem}
+.pregled-sek dl{display:grid;grid-template-columns:minmax(150px,260px) 1fr;gap:.35rem 1rem;margin:0}
+.pregled-sek dt{color:var(--ink2);font-size:.92rem}
+.pregled-sek dd{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+@media (max-width:640px){.pregled-sek dl{grid-template-columns:1fr}.pregled-sek dd{margin-bottom:.5rem}}
+.ocjena{display:flex;gap:.4rem;flex-wrap:wrap}
+.ocjena label{display:inline-flex;align-items:center;justify-content:center;border:1px solid #ababab;border-radius:var(--r);min-width:46px;min-height:46px;cursor:pointer;font-weight:700;background:#fff}
+.ocjena label:has(input:checked){background:var(--brass);border-color:var(--brass-d)}
+.ocjena input{position:absolute;opacity:0}
+.ocjena label:has(input:focus-visible){outline:3px solid var(--blue);outline-offset:2px}
+.vremenska{list-style:none;margin:0;padding:0;border-left:2px solid var(--line);margin-left:.4rem}
+.vremenska li{padding:.1rem 0 .8rem 1rem;position:relative}
+.vremenska li::before{content:"";position:absolute;left:-.45rem;top:.35rem;width:.75rem;height:.75rem;border-radius:50%;background:var(--p7)}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
+@media print{.traka,.nav,.bocna,.bocna-s,.demo-traka,.dugme,.toast-sp{display:none!important}body{background:#fff}.kartica{box-shadow:none}}
+.uredjivac>*{min-width:0}
+@media (max-width:780px){.bocna .kartica{overflow-x:auto;padding:.5rem}.korak-lista li{flex:0 0 auto}}
+
+:root{--gut:max(clamp(1rem,2.4vw,3rem),env(safe-area-inset-left),env(safe-area-inset-right))}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{min-height:100vh;min-height:100dvh}
+.korisnik .kontakt{display:block;font-size:.78rem;opacity:.8;font-weight:400}
+@media (max-width:900px){.korisnik .kontakt{display:none}}
+@media (max-width:760px){input,select,textarea{font-size:16px}}
+@media (min-width:1700px){html{font-size:106%}}
+@media (min-width:2300px){html{font-size:118%}}
+[hidden]{display:none!important}
+
+body{font-feature-settings:"tnum" 0,"cv11" 1;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.tabular,.plocica .br,.hero .velik,.bod,.ukupno{font-feature-settings:"tnum" 1;font-weight:800}
+/* kontrast: fokus na tamnim površinama, greške crnim tekstom uz crveni naglasak */
+.traka :focus-visible,.nav :focus-visible,.hero :focus-visible,.demo-traka :focus-visible{outline-color:#FFCB29}
+.polje .gr{color:#000}
+.polje .gr:not(:empty){border-left:4px solid #E8262C;padding-left:.5rem}
+.greska-okvir{color:#000;border-left:5px solid #E8262C}
+.traka-b{background:#000}
+.hero .traka-b{background:rgba(255,255,255,.24)}
+.hero{background:linear-gradient(135deg,#035EA1 0%,#000 78%)}
+.bodovi-ploca canvas{background:linear-gradient(135deg,#035EA1 0%,#000 80%)}
+.korak-lista .nedostaje{background:#E8262C;color:#fff;border-radius:99px;min-width:1.5rem;text-align:center;padding:0 .4rem;font-size:.78rem;font-weight:700}
+.korak-lista .nedostaje:empty{display:none}
+.korak-lista a[aria-current=step]{background:#E1F5FC;border-color:#035EA1;color:#000}
+.cip.odobren{background:#08ABE6;color:#000;border-color:#08ABE6}
+.cip.vracen{background:#FFCB29;color:#000;border-color:#FFCB29}
+.cip.kasni{background:#E8262C;color:#fff;border-color:#E8262C}
+.dugme.zeleno{background:#08ABE6;color:#000;border-color:#08ABE6}
+.dugme.opasno{background:#E8262C;color:#fff;border-color:#E8262C}
+.forma-sek>p{margin:0 0 .6rem}
+
+</style>
+</head>
+<body>
+<noscript><p style="padding:1rem">Za rad aplikacije potrebno je uključiti JavaScript.</p></noscript>
+<div id="aplikacija"></div>
+<script>if(window.top!==window.self){document.documentElement.style.display='none';try{window.top.location=window.self.location}catch(e){}}</script>
+<script>/* =====================================================================
+   LOGIKA — validacija, KPI pokazatelji, IDSS bodovi, rokovi.
+   Ovo je tačno ogledalo SQL funkcija iz supabase/002_validacija_bodovi.sql.
+   Server je mjerodavan; ovdje se samo računa za trenutni prikaz i demo-režim.
+   Paritet JS <-> SQL provjerava tests/30_paritet.mjs.
+   ===================================================================== */
+const Logika = (() => {
+  'use strict';
+  const ENUM = {
+    teme: ['Ponašanje','Učenje i ocjene','Emocionalna podrška','Socijalna integracija','Daroviti učenici',
+           'Inkluzivna podrška','Adaptacija novih učenika','Prelazak u viši razred',
+           'Vršnjačko nasilje i sigurnost','Profesionalna orijentacija'],
+    daNe: ['Da','Ne'],
+    ednevnik: ['Uredno','U toku','Zahtijeva intervenciju'],
+    grupe: ['učenici','nastavnici','roditelji'],
+    radStatus: ['održano','otkazano','prebačeno'],
+    usavrsavanje: ['seminar','webinar','stručni skup','mentorski rad','samostalno učenje','ostalo'],
+    kategorija: ['Pedagoški / Ponašanje','Akademski','Sigurnosni / Zaštita djece','Organizacijski'],
+    ozbiljnost: ['Nizak','Srednji','Visok','Kritičan'],
+    statusRizika: ['Otvoreno','U toku','Riješeno','Eskalirano'],
+    utjecaj: ['Nema troškova','Potreban budžet','Kadrovska odluka','Organizacijska izmjena'],
+    odluka: ['Na čekanju','Odobreno','Odbijeno','Potrebna dorada'],
+  };
+  const MJESECI = ['januar','februar','mart','april','maj','juni','juli','august','septembar','oktobar','novembar','decembar'];
+  const MJESECI_G = ['januara','februara','marta','aprila','maja','juna','jula','augusta','septembra','oktobra','novembra','decembra'];
+
+  const isObj = x => x !== null && typeof x === 'object' && !Array.isArray(x);
+  const len = s => Array.from(String(s)).length;                 // broj znakova (kao char_length)
+  const btrim = s => String(s).replace(/^ +| +$/g, '');          // kao PostgreSQL btrim: samo razmaci
+  const G = (polje, kod, poruka) => ({ polje, kod, poruka });
+  const ci = (o, k) => (o && typeof o[k] === 'number' && Number.isInteger(o[k]) && Math.abs(o[k]) <= 2147483647) ? o[k] : null;
+  const tk = (o, k) => (o && typeof o[k] === 'string') ? btrim(o[k]) : null;
+  const obj = (s, k) => (isObj(s) && isObj(s[k])) ? s[k] : {};
+  const nil = v => v === undefined || v === null;
+  const pad2 = n => String(n).padStart(2, '0');
+
+  function jeDatum(t) {
+    if (typeof t !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(t)) return false;
+    const [y, m, d] = t.split('-').map(Number);
+    const dt = new Date(Date.UTC(y, m - 1, d));
+    return dt.getUTCFullYear() === y && dt.getUTCMonth() === m - 1 && dt.getUTCDate() === d;
+  }
+  const jeUuid = t => typeof t === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(t);
+  function fmtDatum(iso) {            // 2026-10-06 -> 06.10.2026.
+    if (!iso) return '';
+    const [y, m, d] = String(iso).slice(0, 10).split('-');
+    return `${d}.${m}.${y}.`;
+  }
+  const krajMjeseca = (g, m) => { const d = new Date(Date.UTC(g, m, 0)); return `${g}-${pad2(m)}-${pad2(d.getUTCDate())}`; };
+
+  /* ---------- element-validatori (isti poruke i kodovi kao SQL) ---------- */
+  function eCijeli(o, k, naziv, mn, mx, obavezno, put) {
+    const v = o[k];
+    if (nil(v)) return obavezno ? [G(`${put}.${k}`, 'OBAVEZNO', `${naziv} je obavezno polje (unesite 0 ako nema aktivnosti).`)] : [];
+    if (typeof v !== 'number' || !Number.isInteger(v)) return [G(`${put}.${k}`, 'TIP', `${naziv} mora biti cijeli broj.`)];
+    if (v < mn || v > mx) return [G(`${put}.${k}`, 'RASPON', `${naziv} mora biti između ${mn} i ${mx}.`)];
+    return [];
+  }
+  function eTekst(o, k, naziv, mn, mx, obavezno, put) {
+    const v = o[k];
+    if (nil(v)) return obavezno ? [G(`${put}.${k}`, 'OBAVEZNO', `${naziv} je obavezno polje.`)] : [];
+    if (typeof v !== 'string') return [G(`${put}.${k}`, 'TIP', `${naziv} mora biti tekst.`)];
+    const tt = btrim(v);
+    if (/[\x01-\x08\x0B\x0C\x0E-\x1F]/.test(v)) return [G(`${put}.${k}`, 'ZNAKOVI', `${naziv} sadrži nedozvoljene kontrolne znakove.`)];
+    if (len(v) > mx) return [G(`${put}.${k}`, 'PRODUGO', `${naziv} može imati najviše ${mx} znakova.`)];
+    if (obavezno) {
+      if (tt === '') return [G(`${put}.${k}`, 'OBAVEZNO', `${naziv} je obavezno polje.`)];
+      if (len(tt) < mn) return [G(`${put}.${k}`, 'PREKRATKO', `${naziv} mora imati najmanje ${mn} znakova (trenutno ${len(tt)}).`)];
+    }
+    return [];
+  }
+  function eEnum(o, k, naziv, dozv, obavezno, put) {
+    const v = o[k];
+    if (nil(v)) return obavezno ? [G(`${put}.${k}`, 'OBAVEZNO', `${naziv} je obavezno polje.`)] : [];
+    if (typeof v !== 'string' || !dozv.includes(v)) return [G(`${put}.${k}`, 'VRIJEDNOST', `${naziv} ima nedozvoljenu vrijednost.`)];
+    return [];
+  }
+  function eVise(o, k, naziv, dozv, mn, obavezno, put) {
+    const v = o[k];
+    if (nil(v)) return obavezno ? [G(`${put}.${k}`, 'OBAVEZNO', `${naziv} je obavezno polje.`)] : [];
+    if (!Array.isArray(v)) return [G(`${put}.${k}`, 'TIP', `${naziv} mora biti lista.`)];
+    const dobri = v.filter(e => typeof e === 'string' && dozv.includes(e)).length;
+    const razl = new Set(v.map(e => (typeof e === 'string' ? 's:' + e : 'x:' + JSON.stringify(e)))).size;
+    if (dobri !== v.length) return [G(`${put}.${k}`, 'VRIJEDNOST', `${naziv} sadrži nedozvoljenu vrijednost.`)];
+    if (razl !== v.length) return [G(`${put}.${k}`, 'DUPLIKAT', `${naziv} sadrži ponovljene vrijednosti.`)];
+    if (obavezno && v.length < mn) return [G(`${put}.${k}`, 'OBAVEZNO', `${naziv}: odaberite najmanje ${mn}.`)];
+    return [];
+  }
+  function eDatum(o, k, naziv, obavezno, put, od, doo) {
+    const v = o[k];
+    if (nil(v) || (typeof v === 'string' && btrim(v) === '')) return obavezno ? [G(`${put}.${k}`, 'OBAVEZNO', `${naziv} je obavezno polje.`)] : [];
+    if (typeof v !== 'string' || !jeDatum(v)) return [G(`${put}.${k}`, 'TIP', `${naziv} mora biti ispravan datum (GGGG-MM-DD).`)];
+    if (od && v < od) return [G(`${put}.${k}`, 'RASPON', `${naziv} ne smije biti prije ${fmtDatum(od)}.`)];
+    if (doo && v > doo) return [G(`${put}.${k}`, 'RASPON', `${naziv} ne smije biti poslije ${fmtDatum(doo)}.`)];
+    return [];
+  }
+
+  /* ---------- Validacija sadržaja ---------- */
+  function provjeriSadrzaj(s, strogo, godina, mjesec) {
+    if (!isObj(s)) return [G('sadrzaj', 'TIP', 'Sadržaj izvještaja mora biti objekat.')];
+    let e = [];
+    const od = `${godina}-${pad2(mjesec)}-01`, doo = krajMjeseca(godina, mjesec);
+    for (const sek of ['ucenici', 'nastavnici', 'roditelji', 'radionice', 'usavrsavanje', 'administracija', 'zakljucak']) {
+      if (sek in s && !(isObj(s[sek]) || s[sek] === null)) e.push(G(sek, 'TIP', `Odjeljak „${sek}“ mora biti objekat.`));
+    }
+    const u = obj(s, 'ucenici'), n = obj(s, 'nastavnici'), r = obj(s, 'roditelji'), rad = obj(s, 'radionice'),
+          usv = obj(s, 'usavrsavanje'), a = obj(s, 'administracija'), z = obj(s, 'zakljucak');
+
+    e = e.concat(
+      eCijeli(u, 'individualni_razgovori', 'Broj individualnih razgovora', 0, 500, strogo, 'ucenici'),
+      eCijeli(u, 'razliciti_ucenici', 'Broj različitih učenika', 0, 500, strogo, 'ucenici'),
+      eCijeli(u, 'grupni_rad', 'Broj grupnih/razrednih aktivnosti', 0, 200, strogo, 'ucenici'),
+      eCijeli(u, 'daroviti_ucenici', 'Broj darovitih učenika u radu', 0, 200, strogo, 'ucenici'));
+    const ind = ci(u, 'individualni_razgovori'), raz = ci(u, 'razliciti_ucenici');
+    e = e.concat(
+      eVise(u, 'teme', 'Teme rada sa učenicima', ENUM.teme, 1, strogo && (ind || 0) > 0, 'ucenici'),
+      eTekst(u, 'sazetak', 'Sažetak rada sa učenicima', 50, 2500, strogo, 'ucenici'));
+    if (ind !== null && raz !== null && raz > ind)
+      e.push(G('ucenici.razliciti_ucenici', 'NEUSKLADJENO', 'Broj različitih učenika ne može biti veći od broja individualnih razgovora.'));
+
+    e = e.concat(
+      eCijeli(n, 'posjete_planirano', 'Planirane posjete časovima', 0, 200, strogo, 'nastavnici'),
+      eCijeli(n, 'posjete_realizirano', 'Realizirane posjete časovima', 0, 200, strogo, 'nastavnici'),
+      eCijeli(n, 'konsultacije', 'Broj konsultacija sa nastavnicima', 0, 500, strogo, 'nastavnici'),
+      eCijeli(n, 'mentorstvo_sati', 'Sati mentorstva i stručne pomoći', 0, 200, strogo, 'nastavnici'),
+      eCijeli(n, 'sastanci_vijeca', 'Broj sjednica vijeća', 0, 50, strogo, 'nastavnici'));
+    const pl = ci(n, 'posjete_planirano'), re = ci(n, 'posjete_realizirano');
+    e = e.concat(
+      eTekst(n, 'razredi', 'Razredi u kojima su posjećeni časovi', 1, 250, strogo && (re || 0) > 0, 'nastavnici'),
+      eTekst(n, 'nalazi', 'Nalazi posjeta časovima', 50, 2500, strogo && (re || 0) > 0, 'nastavnici'),
+      eTekst(n, 'obrazlozenje_prekoracenja', 'Obrazloženje prekoračenja plana posjeta', 20, 1000, strogo && re !== null && pl !== null && re > pl, 'nastavnici'),
+      eTekst(n, 'koordinacija', 'Koordinacija sa nastavnicima i stručnim organima', 30, 2000, strogo, 'nastavnici'));
+
+    e = e.concat(
+      eCijeli(r, 'individualni_razgovori', 'Broj individualnih razgovora sa roditeljima', 0, 500, strogo, 'roditelji'),
+      eCijeli(r, 'roditeljski_sastanci', 'Broj roditeljskih sastanaka', 0, 50, strogo, 'roditelji'),
+      eCijeli(r, 'pisana_komunikacija', 'Broj pisanih komunikacija sa roditeljima', 0, 1000, strogo, 'roditelji'),
+      eTekst(r, 'biljeske', 'Sažetak saradnje sa roditeljima', 30, 2000, strogo, 'roditelji'));
+
+    // Radionice
+    let stavke;
+    if ('stavke' in rad && !Array.isArray(rad.stavke)) { e.push(G('radionice.stavke', 'TIP', 'Radionice moraju biti lista.')); stavke = []; }
+    else stavke = rad.stavke === undefined ? [] : rad.stavke;
+    if (stavke.length > 30) e.push(G('radionice.stavke', 'PREVISE', 'Najviše 30 radionica po izvještaju.'));
+    else {
+      stavke.forEach((x, i) => {
+        const put = `radionice.stavke.${i}`;
+        if (!isObj(x)) { e.push(G(put, 'TIP', 'Radionica mora biti objekat.')); return; }
+        const st = tk(x, 'status');
+        e = e.concat(
+          eEnum(x, 'ciljna_grupa', 'Ciljna grupa radionice', ENUM.grupe, true, put),
+          eTekst(x, 'naslov', 'Naslov radionice', 5, 150, true, put),
+          eDatum(x, 'datum', 'Datum radionice', true, put, od, doo),
+          eCijeli(x, 'trajanje_min', 'Trajanje radionice (minute)', 15, 480, true, put),
+          eEnum(x, 'status', 'Status radionice', ENUM.radStatus, true, put),
+          eCijeli(x, 'ucesnika', 'Broj učesnika', 0, 500, strogo || st === 'održano', put),
+          eTekst(x, 'ishod', 'Ishod radionice', 20, 1000, strogo && st === 'održano', put),
+          eEnum(x, 'qp05_zapis', 'Zavedeno u zapis QP 05 (Evidencija obuke, QP 05.EO-02)', ENUM.daNe, strogo || st === 'održano', put));
+        if (st === 'održano' && (ci(x, 'ucesnika') || 0) < 1 && 'ucesnika' in x)
+          e.push(G(`${put}.ucesnika`, 'RASPON', 'Održana radionica mora imati najmanje jednog učesnika.'));
+      });
+      e = e.concat(eTekst(rad, 'nema_obrazlozenje', 'Obrazloženje izostanka radionica', 20, 1000, strogo && stavke.length === 0, 'radionice'));
+    }
+
+    // Stručno usavršavanje
+    if ('stavke' in usv && !Array.isArray(usv.stavke)) e.push(G('usavrsavanje.stavke', 'TIP', 'Stručno usavršavanje mora biti lista.'));
+    else {
+      const sv = usv.stavke === undefined ? [] : usv.stavke;
+      if (sv.length > 30) e.push(G('usavrsavanje.stavke', 'PREVISE', 'Najviše 30 stavki stručnog usavršavanja.'));
+      else sv.forEach((x, i) => {
+        const put = `usavrsavanje.stavke.${i}`;
+        if (!isObj(x)) { e.push(G(put, 'TIP', 'Stavka mora biti objekat.')); return; }
+        e = e.concat(
+          eTekst(x, 'naslov', 'Naslov usavršavanja', 5, 150, true, put),
+          eEnum(x, 'vrsta', 'Vrsta usavršavanja', ENUM.usavrsavanje, true, put),
+          eCijeli(x, 'sati', 'Broj sati', 1, 100, true, put),
+          eDatum(x, 'datum', 'Datum usavršavanja', true, put, od, doo));
+      });
+    }
+
+    e = e.concat(
+      eCijeli(a, 'kreativni_planirano', 'Kreativni časovi planirani (QP 09.PO-01)', 0, 200, strogo, 'administracija'),
+      eCijeli(a, 'kreativni_odrzano', 'Održani kreativni časovi', 0, 200, strogo, 'administracija'),
+      eCijeli(a, 'kreativni_posjeceno', 'Posjećeni kreativni časovi evidentirani na QP 09.PC-02', 0, 200, strogo, 'administracija'),
+      eEnum(a, 'ednevnik', 'Stanje eDnevnika', ENUM.ednevnik, strogo, 'administracija'),
+      eTekst(a, 'mooks_sazetak', 'Sažetak prepiske sa MOOKS-om', 20, 1500, strogo, 'administracija'),
+      eTekst(a, 'dokumentacija', 'Napomene o dokumentaciji', 1, 1500, false, 'administracija'),
+      eTekst(z, 'postignuca', 'Ključna postignuća u mjesecu', 50, 2000, strogo, 'zakljucak'),
+      eTekst(z, 'plan_sljedeci', 'Plan za sljedeći mjesec', 50, 2000, strogo, 'zakljucak'));
+    const kp = ci(a, 'kreativni_planirano'), ko = ci(a, 'kreativni_odrzano'), kv = ci(a, 'kreativni_posjeceno');
+    if (ko !== null && kv !== null && kv > ko) e.push(G('administracija.kreativni_posjeceno', 'NEUSKLADJENO', 'Broj posjećenih kreativnih časova ne može biti veći od broja održanih.'));
+    e = e.concat(eTekst(a, 'kreativni_napomena', 'Obrazloženje odstupanja kod kreativnih časova', 20, 1000,
+      strogo && kp !== null && ko !== null && kv !== null && (kp !== ko || kv < ko), 'administracija'));
+    return e;
+  }
+
+  function provjeriRizike(r, strogo) {
+    if (!Array.isArray(r)) return [G('rizici', 'TIP', 'Rizici moraju biti lista.')];
+    if (r.length > 100) return [G('rizici', 'PREVISE', 'Najviše 100 rizika po izvještaju.')];
+    let e = []; const ids = [];
+    r.forEach((x, i) => {
+      const put = `rizici.${i}`;
+      if (!isObj(x)) { e.push(G(put, 'TIP', 'Rizik mora biti objekat.')); return; }
+      if ('id' in x && x.id !== null) {
+        if (typeof x.id !== 'string' || !jeUuid(x.id)) e.push(G(`${put}.id`, 'TIP', 'Identifikator rizika nije ispravan.'));
+        else if (ids.includes(x.id)) e.push(G(`${put}.id`, 'DUPLIKAT', 'Isti rizik je naveden više puta.'));
+        else ids.push(x.id);
+      }
+      e = e.concat(
+        eEnum(x, 'kategorija', 'Kategorija rizika', ENUM.kategorija, true, put),
+        eEnum(x, 'ozbiljnost', 'Ozbiljnost rizika', ENUM.ozbiljnost, true, put),
+        eEnum(x, 'status', 'Status rizika', ENUM.statusRizika, true, put),
+        eTekst(x, 'opis', 'Opis rizika', 10, 500, true, put),
+        eTekst(x, 'mjera', 'Korektivna mjera', 10, 500, strogo, put),
+        eDatum(x, 'rok', 'Rok mjere', strogo, put, null, null));
+    });
+    return e;
+  }
+
+  function provjeriPreporuke(p, strogo) {
+    if (!Array.isArray(p)) return [G('preporuke', 'TIP', 'Preporuke moraju biti lista.')];
+    if (p.length > 50) return [G('preporuke', 'PREVISE', 'Najviše 50 preporuka po izvještaju.')];
+    let e = []; const ids = [];
+    p.forEach((x, i) => {
+      const put = `preporuke.${i}`;
+      if (!isObj(x)) { e.push(G(put, 'TIP', 'Preporuka mora biti objekat.')); return; }
+      if ('id' in x && x.id !== null) {
+        if (typeof x.id !== 'string' || !jeUuid(x.id)) e.push(G(`${put}.id`, 'TIP', 'Identifikator preporuke nije ispravan.'));
+        else if (ids.includes(x.id)) e.push(G(`${put}.id`, 'DUPLIKAT', 'Ista preporuka je navedena više puta.'));
+        else ids.push(x.id);
+      }
+      e = e.concat(
+        eTekst(x, 'naslov', 'Naslov preporuke', 5, 150, true, put),
+        eTekst(x, 'obrazlozenje', 'Obrazloženje preporuke', 20, 1000, strogo, put),
+        eEnum(x, 'utjecaj', 'Utjecaj na resurse', ENUM.utjecaj, true, put));
+    });
+    return e;
+  }
+
+  /* ---------- KPI ---------- */
+  function kpi(s, r, godina, mjesec) {
+    const n = obj(s, 'nastavnici'), u = obj(s, 'ucenici');
+    const pl = ci(n, 'posjete_planirano'), re = ci(n, 'posjete_realizirano');
+    const kraj = krajMjeseca(godina, mjesec);
+    const lista = Array.isArray(r) ? r : [];
+    const otvoren = x => x.status !== 'Riješeno';
+    const po = { 'Kritičan': 0, 'Visok': 0, 'Srednji': 0, 'Nizak': 0 };
+    lista.forEach(x => { if (otvoren(x) && x.ozbiljnost in po) po[x.ozbiljnost]++; });
+    return {
+      kpi01: {
+        planirano: pl, realizirano: re,
+        stopa: (pl === null || re === null || pl === 0) ? null : Math.round(1000 * re / pl) / 10,
+        nije_planirano: pl === 0,
+        premaseno: (pl !== null && re !== null && re > pl) ? re - pl : 0,
+      },
+      kpi02: { sesije: ci(u, 'individualni_razgovori') },
+      kpi03: {
+        rijeseno_3a: lista.filter(x => x.status === 'Riješeno').length,
+        preneseno_3b: lista.filter(x => x.prenesen === true).length,
+        aktivno_3c: lista.filter(otvoren).length,
+        po_ozbiljnosti: po,
+        kasne_mjere: lista.filter(x => otvoren(x) && jeDatum(x.rok) && x.rok < kraj).length,
+        novi: lista.filter(x => x.prenesen !== true).length,
+      },
+    };
+  }
+
+  /* ---------- IDSS bodovi ---------- */
+  const rnd = (a, b, c) => Math.floor((2 * a * b + c) / (2 * c));
+  const stavka = (kod, grupa, naziv, bodovi, max, napomena) => ({ kod, grupa, naziv, bodovi, max, napomena });
+  const tekstOd = v => (nil(v) ? '' : (typeof v === 'string' ? v : (typeof v === 'object' ? JSON.stringify(v) : String(v))));
+  const narBodovi = (t, vrh, sred, vrhB, sredB) => { const l = len(btrim(tekstOd(t))); return l >= vrh ? vrhB : (l >= sred ? sredB : 0); };
+
+  function bodovi(s, r, k, godina, mjesec, kasnjenje, ciklus, kasnjenjeDopune) {
+    const u = obj(s, 'ucenici'), n = obj(s, 'nastavnici'), ro = obj(s, 'roditelji'), rad = obj(s, 'radionice'),
+          usv = obj(s, 'usavrsavanje'), a = obj(s, 'administracija'), z = obj(s, 'zakljucak');
+    const greske = provjeriSadrzaj(s, true, godina, mjesec);
+    const kas = Math.max(kasnjenje || 0, 0), kd = Math.max(kasnjenjeDopune || 0, 0);
+    const st = [];
+    const b1 = Math.max(0, 200 - 50 * Math.min(kas, 4));
+    const b2 = ciklus <= 1 ? 50 : Math.max(0, 50 - 25 * Math.min(kd, 2));
+    st.push(stavka('B1', 'blagovremenost', 'Podnošenje izvještaja u roku', b1, 200, kas === 0 ? 'Podneseno u roku.' : `Kašnjenje: ${kas} radnih dana.`));
+    st.push(stavka('B2', 'blagovremenost', 'Dopuna u roku nakon vraćanja', b2, 50,
+      ciklus <= 1 ? 'Izvještaj nije vraćen na dopunu.' : (kd === 0 ? 'Dopuna u roku.' : `Kašnjenje dopune: ${kd} radnih dana.`)));
+
+    const sekcije = ['ucenici', 'nastavnici', 'roditelji', 'radionice', 'administracija', 'zakljucak'];
+    const tezine = [20, 20, 15, 15, 15, 15];
+    let s1 = 0;
+    sekcije.forEach((sek, i) => { if (!greske.some(g => g.polje === sek || g.polje.startsWith(sek + '.'))) s1 += tezine[i]; });
+    st.push(stavka('S1', 'sadrzaj', 'Cjelovitost odjeljaka', s1, 100, 'Odjeljak je cjelovit kada nema nedostataka pri provjeri.'));
+    const s2 = narBodovi(u.sazetak, 150, 80, 15, 8) + narBodovi(n.koordinacija, 150, 80, 15, 8) + narBodovi(ro.biljeske, 150, 80, 15, 8)
+             + narBodovi(a.mooks_sazetak, 150, 80, 15, 8) + narBodovi(z.postignuca, 150, 80, 15, 8);
+    st.push(stavka('S2', 'sadrzaj', 'Konkretnost opisa', s2, 75, 'Opisi od 80 znakova donose dio, a od 150 znakova pun broj bodova.'));
+    const lp = len(btrim(tekstOd(z.plan_sljedeci)));
+    const s3 = lp >= 200 ? 50 : (lp >= 120 ? 35 : (lp >= 50 ? 20 : 0));
+    st.push(stavka('S3', 'sadrzaj', 'Konkretnost plana za sljedeći mjesec', s3, 50, 'Plan od 50, 120 i 200 znakova: 20, 35 i 50 bodova.'));
+    const rl = Array.isArray(r) ? r : [];
+    const ukupnoR = rl.length, kompletno = rl.filter(x => tekstOd(x.mjera) !== '' && jeDatum(x.rok)).length;
+    const s4 = ukupnoR === 0 ? 25 : rnd(25, kompletno, ukupnoR);
+    st.push(stavka('S4', 'sadrzaj', 'Korektivne mjere uz rizike', s4, 25,
+      ukupnoR === 0 ? 'Nema evidentiranih rizika.' : `${kompletno} od ${ukupnoR} rizika ima mjeru i rok.`));
+
+    const pl = ci(n, 'posjete_planirano'), re = ci(n, 'posjete_realizirano');
+    const t1 = (pl || 0) === 0 ? 30 : rnd(60, Math.min(re || 0, pl), pl);
+    st.push(stavka('T1', 'strucnost', 'Posjete časovima', t1, 60,
+      (pl || 0) === 0 ? 'Posjete nisu planirane: polovina bodova.' : `Realizirano ${re || 0} od ${pl} planiranih posjeta (računa se najviše do punog plana).`));
+    const rs = Array.isArray(rad.stavke) ? rad.stavke : [];
+    const odrz = rs.filter(x => isObj(x) && x.status === 'održano');
+    const odr = odrz.length;
+    const gr = new Set(odrz.filter(x => typeof x.ciljna_grupa === 'string').map(x => x.ciljna_grupa)).size;
+    const ukupnoRad = rs.length;
+    const t2 = Math.min(40, 20 * odr) + (gr >= 2 ? 10 : 0);
+    st.push(stavka('T2', 'strucnost', 'Održane radionice', t2, 50, `Održano radionica: ${odr}; ciljnih grupa: ${gr} (po 20 bodova za prve dvije radionice, +10 za dvije ili više ciljnih grupa).`));
+    const us = Array.isArray(usv.stavke) ? usv.stavke : [];
+    const sati = us.reduce((acc, x) => acc + (isObj(x) && ci(x, 'sati') !== null ? ci(x, 'sati') : 0), 0);
+    const t3 = Math.min(40, 10 * sati);
+    st.push(stavka('T3', 'strucnost', 'Stručno usavršavanje', t3, 40, `Sati usavršavanja: ${sati} (10 bodova po satu, najviše 40).`));
+    const q5 = rs.filter(x => isObj(x) && x.status === 'održano' && x.qp05_zapis === 'Da').length;
+    const t4 = odr === 0 ? 10 : rnd(20, Math.min(q5, odr), odr);
+    st.push(stavka('T4', 'strucnost', 'QP 05: radionice i obuke zavedene u zapis', t4, 20,
+      odr === 0 ? 'Nema održanih radionica ni obuka: polovina bodova.' : `U zapis QP 05 zavedeno ${Math.min(q5, odr)} od ${odr} održanih radionica i obuka.`));
+    const kp = ci(a, 'kreativni_planirano'), ko = ci(a, 'kreativni_odrzano') || 0, kv = ci(a, 'kreativni_posjeceno') || 0;
+    const t5 = ko === 0 ? ((kp || 0) > 0 ? 0 : 10) : rnd(20, Math.min(kv, ko), ko);
+    st.push(stavka('T5', 'strucnost', 'QP 09: posjete kreativnim časovima evidentirane', t5, 20,
+      ko === 0 && (kp || 0) > 0 ? 'Planirani kreativni časovi nisu održani.' : ko === 0 ? 'Nema planiranih ni održanih kreativnih časova: polovina bodova.'
+        : `Evidentirano ${Math.min(kv, ko)} posjeta od ${ko} održanih kreativnih časova.`));
+    const t6 = { 'Uredno': 10, 'U toku': 6, 'Zahtijeva intervenciju': 4 }[a.ednevnik] || 0;
+    st.push(stavka('T6', 'strucnost', 'Stanje eDnevnika', t6, 10, 'Uredno 10, u toku 6, zahtijeva intervenciju 4 boda.'));
+
+    const k3 = (k && k.kpi03) || {};
+    const ra = k3.rijeseno_3a || 0, rb = k3.preneseno_3b || 0, rc = k3.aktivno_3c || 0, rk = k3.kasne_mjere || 0, rn = k3.novi || 0;
+    const base = rb + rn;
+    const e1 = base === 0 ? 60 : rnd(60, Math.min(ra, base), base);
+    st.push(stavka('E1', 'efikasnost', 'Rješavanje rizika', e1, 60, base === 0 ? 'Nema rizika za rješavanje.' : `Riješeno ${ra} od ${base} rizika u razmatranju.`));
+    const e2 = rc === 0 ? 60 : rnd(60, Math.max(rc - rk, 0), rc);
+    st.push(stavka('E2', 'efikasnost', 'Mjere u roku', e2, 60, rc === 0 ? 'Nema aktivnih rizika.' : `${rk} od ${rc} aktivnih rizika ima probijen rok mjere.`));
+    const e3 = ciklus <= 1 ? 40 : (ciklus === 2 ? 20 : 0);
+    st.push(stavka('E3', 'efikasnost', 'Prihvaćeno bez vraćanja', e3, 40, `Podnošenje br. ${ciklus}.`));
+    const e4 = ukupnoRad === 0 ? 20 : rnd(40, odr, ukupnoRad);
+    st.push(stavka('E4', 'efikasnost', 'Realizacija radionica', e4, 40,
+      ukupnoRad === 0 ? 'Nema evidentiranih radionica: polovina bodova.' : `${odr} od ${ukupnoRad} evidentiranih radionica je održano.`));
+
+    const grupa = g => ({ bodovi: st.filter(x => x.grupa === g).reduce((x, y) => x + y.bodovi, 0), max: { blagovremenost: 250, sadrzaj: 250, strucnost: 200, efikasnost: 200 }[g] });
+    return {
+      stavke: st, zbroj: st.reduce((x, y) => x + y.bodovi, 0), max: 900,
+      po_grupama: { blagovremenost: grupa('blagovremenost'), sadrzaj: grupa('sadrzaj'), strucnost: grupa('strucnost'), efikasnost: grupa('efikasnost') },
+    };
+  }
+
+  const rang = p => (p >= 900 ? 'Velemajstor' : p >= 800 ? 'Majstor' : p >= 650 ? 'Stručnjak' : p >= 500 ? 'Saradnik' : 'Pripravnik');
+
+  /* ---------- Rokovi (za demo-režim; server računa sa kalendarom neradnih dana) ---------- */
+  const dodajDane = (iso, n) => { const [y, m, d] = iso.split('-').map(Number); const dt = new Date(Date.UTC(y, m - 1, d + n)); return dt.toISOString().slice(0, 10); };
+  const radniDan = (iso, neradni) => { const [y, m, d] = iso.split('-').map(Number); const w = new Date(Date.UTC(y, m - 1, d)).getUTCDay(); return w !== 0 && w !== 6 && !(neradni || []).includes(iso); };
+  const sljedeciRadni = (iso, neradni) => { let x = iso; while (!radniDan(x, neradni)) x = dodajDane(x, 1); return x; };
+  const dodajRadne = (iso, n, neradni) => { let x = iso, k = 0; while (k < n) { x = dodajDane(x, 1); if (radniDan(x, neradni)) k++; } return x; };
+  const radnihIzmedju = (od, doo, neradni) => { let c = 0, x = od; while (x < doo) { x = dodajDane(x, 1); if (radniDan(x, neradni)) c++; } return c; };
+  const rokPodnosenja = (g, m, neradni, dan = 5) => {
+    const sl = m === 12 ? [g + 1, 1] : [g, m + 1];
+    return sljedeciRadni(`${sl[0]}-${pad2(sl[1])}-${pad2(dan)}`, neradni);
+  };
+  const imeMjeseca = m => MJESECI[m - 1];
+  const naslovPerioda = (g, m) => `${imeMjeseca(m)} ${g}.`;
+  const skolskaGodina = (g, m) => (m >= 9 ? g : g - 1);
+
+  const uuid = () => (crypto && crypto.randomUUID) ? crypto.randomUUID()
+    : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 3 | 8)).toString(16); });
+
+  return { ENUM, MJESECI, MJESECI_G, provjeriSadrzaj, provjeriRizike, provjeriPreporuke, kpi, bodovi, rang, rnd,
+           jeDatum, fmtDatum, krajMjeseca, dodajDane, radniDan, sljedeciRadni, dodajRadne, radnihIzmedju, rokPodnosenja,
+           imeMjeseca, naslovPerioda, skolskaGodina, uuid, len, btrim, isObj };
+})();
+if (typeof module !== 'undefined') module.exports = Logika;
+
+/* =====================================================================
+   API — jedini sloj koji komunicira sa serverom.
+   * SupabaseApi: Auth REST (/auth/v1) + PostgREST RPC (/rest/v1/rpc/idss_*).
+     Ishod operacije je UVIJEK u tijelu odgovora ({ok, kod, poruka}), ne u HTTP statusu.
+   * DemoApi: lokalna simulacija sa SINTETIČKIM podacima (bez mreže), jasno označena u sučelju.
+   Sve odluke o ulozi i pravima donosi server; klijent ih samo prikazuje.
+   ===================================================================== */
+const Api = (() => {
+  'use strict';
+  const MREZA = { ok: false, kod: 'MREZA', poruka: 'Nema veze sa serverom. Provjerite internet i pokušajte ponovo.', mreza: true };
+  const ISTEKLO = { ok: false, kod: 'SESIJA_ISTEKLA', poruka: 'Sesija je istekla. Prijavite se ponovo.' };
+  let nacin = 'supabase';           // 'supabase' | 'demo'
+  let cfg = { url: '', kljuc: '' };
+  let sesija = null;                // { access, refresh, istice }
+  const SS = (() => { try { return window.sessionStorage; } catch (e) { return null; } })();
+  const ssGet = k => { try { return SS && SS.getItem(k); } catch (e) { return null; } };
+  const ssSet = (k, v) => { try { SS && (v === null ? SS.removeItem(k) : SS.setItem(k, v)); } catch (e) { /* privatni prozor */ } };
+
+  function postavi(c) { cfg = { url: String(c.url || '').replace(/\/+$/, ''), kljuc: c.kljuc || '' }; }
+  const konfigurisano = () => /^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(cfg.url) && cfg.kljuc.length > 20;
+
+  async function http(putanja, opcije, bezAuth) {
+    const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 25000);
+    try {
+      const h = { apikey: cfg.kljuc, 'Content-Type': 'application/json' };
+      h.Authorization = 'Bearer ' + ((!bezAuth && sesija) ? sesija.access : cfg.kljuc);
+      const r = await fetch(cfg.url + putanja, { ...opcije, headers: { ...h, ...(opcije.headers || {}) }, signal: ctl.signal });
+      let tijelo = null; try { tijelo = await r.json(); } catch (e) { /* prazno */ }
+      return { status: r.status, tijelo };
+    } catch (e) { return null; } finally { clearTimeout(t); }
+  }
+  async function obnoviToken() {
+    if (!sesija || !sesija.refresh) return false;
+    const r = await http('/auth/v1/token?grant_type=refresh_token', { method: 'POST', body: JSON.stringify({ refresh_token: sesija.refresh }) }, true);
+    if (r && r.status === 200 && r.tijelo && r.tijelo.access_token) { spremiSesiju(r.tijelo); return true; }
+    return false;
+  }
+  function spremiSesiju(t) {
+    sesija = { access: t.access_token, refresh: t.refresh_token, istice: Date.now() + (t.expires_in || 3600) * 1000 };
+    ssSet('idss_sesija', JSON.stringify(sesija));
+  }
+  async function rpc(ime, args, drugiPut) {
+    if (sesija && sesija.istice - Date.now() < 30000 && !drugiPut) { if (!(await obnoviToken())) { sesija = null; ssSet('idss_sesija', null); return ISTEKLO; } }
+    const r = await http('/rest/v1/rpc/' + ime, { method: 'POST', body: JSON.stringify(args || {}) });
+    if (!r) return MREZA;
+    if (r.status === 401 || (r.tijelo && (r.tijelo.code === 'PGRST301' || /JWT/i.test(r.tijelo.message || '')))) {
+      if (!drugiPut && await obnoviToken()) return rpc(ime, args, true);
+      sesija = null; ssSet('idss_sesija', null); return ISTEKLO;
+    }
+    if (r.status === 404 || (r.tijelo && r.tijelo.code === 'PGRST202'))
+      return { ok: false, kod: 'NIJE_POSTAVLJENO', poruka: 'Baza nije pripremljena: pokrenite SQL datoteku iz mape „supabase“ u Supabase SQL Editoru.' };
+    if (r.status === 403 || (r.tijelo && r.tijelo.code === '42501'))
+      return { ok: false, kod: 'NEOVLASTEN', poruka: 'Pristup nije dozvoljen.' };
+    if (r.status >= 500 || !r.tijelo || typeof r.tijelo.ok !== 'boolean')
+      return { ok: false, kod: 'GRESKA_SERVERA', poruka: 'Došlo je do greške na serveru. Pokušajte ponovo.' };
+    return r.tijelo;
+  }
+
+  const Supa = {
+    async obnovi() {
+      const s = ssGet('idss_sesija'); if (!s) return false;
+      try { sesija = JSON.parse(s); } catch (e) { return false; }
+      if (sesija.istice < Date.now() + 5000) return obnoviToken();
+      return true;
+    },
+    async prijava(email, lozinka) {
+      const r = await http('/auth/v1/token?grant_type=password', { method: 'POST', body: JSON.stringify({ email, password: lozinka }) }, true);
+      if (!r) return { ok: false, kod: 'MREZA', poruka: 'Nema veze sa Supabase-om (mreža, adresa projekta ili blokiran pristup). Provjerite adresu projekta i internet vezu.' };
+      if (r.status !== 200 || !r.tijelo || !r.tijelo.access_token) {
+        const t = r.tijelo || {}, kod = t.error_code || t.code || '', msg = String(t.msg || t.message || t.error_description || '');
+        let poruka = 'E-pošta ili lozinka nisu ispravni.';
+        if (kod === 'email_not_confirmed' || /not confirmed/i.test(msg)) poruka = 'E-pošta ovog računa nije potvrđena. U Supabase-u (Authentication → Users) potvrdite korisnika ili ga kreirajte uz opciju „Auto Confirm User“.';
+        else if (/invalid api key|apikey/i.test(msg) || r.status === 401) poruka = 'Supabase odbija ključ projekta. Provjerite da je unesen javni „anon“ ključ tačnog projekta.';
+        else if (kod === 'over_request_rate_limit' || r.status === 429) poruka = 'Previše pokušaja prijave. Pričekajte nekoliko minuta i pokušajte ponovo.';
+        else if (kod === 'user_banned') poruka = 'Ovaj račun je onemogućen u Supabase-u.';
+        else if (kod === 'validation_failed' || kod === 'bad_json') poruka = 'Unesite ispravnu e-poštu i lozinku.';
+        return { ok: false, kod: 'PRIJAVA', poruka: poruka + ` (tehnički podatak: HTTP ${r.status}${kod ? ', ' + kod : ''})` };
+      }
+      spremiSesiju(r.tijelo); return { ok: true };
+    },
+    async odjava() {
+      if (sesija) await http('/auth/v1/logout', { method: 'POST' });
+      sesija = null; ssSet('idss_sesija', null); return { ok: true };
+    },
+    profil: () => rpc('idss_profil'),
+    pocetna: () => rpc('idss_pocetna'),
+    ucitaj: a => rpc('idss_ucitaj', { p_id: a.id || null, p_godina: a.godina || null, p_mjesec: a.mjesec || null }),
+    kreiraj: (g, m, z) => rpc('idss_kreiraj', { p_godina: g, p_mjesec: m, p_zahtjev: z || null }),
+    spremi: (id, rev, s, r, p, z) => rpc('idss_spremi', { p_id: id, p_revizija: rev, p_sadrzaj: s, p_rizici: r, p_preporuke: p, p_zahtjev: z || null }),
+    podnesi: (id, rev, z) => rpc('idss_podnesi', { p_id: id, p_revizija: rev, p_zahtjev: z || null }),
+    vrati: (id, rev, nap, z) => rpc('idss_vrati', { p_id: id, p_revizija: rev, p_napomena: nap, p_zahtjev: z || null }),
+    odluka: (pid, odl, kom) => rpc('idss_odluka', { p_preporuka: pid, p_odluka: odl, p_komentar: kom || null }),
+    odobri: (id, rev, ocj, kom, z) => rpc('idss_odobri', { p_id: id, p_revizija: rev, p_ocjena: ocj, p_komentar: kom || null, p_zahtjev: z || null }),
+    trag: id => rpc('idss_trag', { p_id: id }),
+    arhiva: () => rpc('idss_arhiva'),
+  };
+
+  /* ============================ DEMO (sintetički podaci) ============================ */
+  const D = (() => {
+    const L = Logika; let S = null; let uloga = null;
+    const KLJUC = 'idss_demo_v2';
+    const danasIso = () => {
+      const d = new Date(); const p = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Sarajevo' }).format(d); return p;   // GGGG-MM-DD
+    };
+    const kopija = o => JSON.parse(JSON.stringify(o));
+    const spremiSve = () => ssSet(KLJUC, JSON.stringify(S));
+    const pb = (g, m) => g * 12 + m;
+    const period = iso => ({ g: +iso.slice(0, 4), m: +iso.slice(5, 7) });
+    const greska = (kod, poruka, extra) => Object.assign({ ok: false, kod, poruka }, extra || {});
+    const ISPRAVAN = greska('GRESKA_SERVERA', 'Došlo je do greške u probnom režimu.');
+
+    function sadrzajDemo(g, m, jaci) {
+      const p = n => `${g}-${String(m).padStart(2, '0')}-${String(n).padStart(2, '0')}`;
+      return {
+        ucenici: { individualni_razgovori: 22, razliciti_ucenici: 16, grupni_rad: 3, daroviti_ucenici: 2, teme: ['Ponašanje', 'Učenje i ocjene', 'Adaptacija novih učenika'],
+          sazetak: 'Većina razgovora odnosila se na organizaciju učenja i prilagodbu novih učenika. Uz podršku razrednika dogovoreni su individualni planovi rada za nekoliko učenika. (Probni podaci)' },
+        nastavnici: { posjete_planirano: 8, posjete_realizirano: jaci ? 8 : 6, razredi: 'Razredi 1, 3, 4 i 5', nalazi: 'Posjećeni časovi imaju jasnu strukturu i aktivno uključivanje učenika; preporučena je veća diferencijacija zadataka. (Probni podaci)',
+          obrazlozenje_prekoracenja: '', konsultacije: 12, mentorstvo_sati: 5, sastanci_vijeca: 2,
+          koordinacija: 'Usklađen je raspored pisanih provjera i dogovorena podrška nastavnicima novim u školi, uz plan posjeta časovima. (Probni podaci)' },
+        roditelji: { individualni_razgovori: 8, roditeljski_sastanci: 2, pisana_komunikacija: 10,
+          biljeske: 'Roditelji su najviše pitali o kućnim zadacima i prilagodbi djece. Dogovorene su smjernice za dnevni ritam učenja. (Probni podaci)' },
+        radionice: { stavke: [
+          { ciljna_grupa: 'učenici', naslov: 'Kako učimo: tehnike pamćenja', datum: p(18), trajanje_min: 45, ucesnika: 22, status: 'održano', ishod: 'Učenici su izradili kartice za učenje i dogovorili plan ponavljanja.', qp05_zapis: 'Da' },
+          { ciljna_grupa: 'roditelji', naslov: 'Podrška djetetu pri učenju kod kuće', datum: p(25), trajanje_min: 60, ucesnika: 17, status: 'održano', ishod: 'Roditelji su dobili praktične smjernice za razgovor o školi.', qp05_zapis: 'Ne' }], nema_obrazlozenje: '' },
+        usavrsavanje: { stavke: [{ naslov: 'Webinar o inkluzivnom obrazovanju', vrsta: 'webinar', sati: 3, datum: p(10) }] },
+        administracija: { kreativni_planirano: 3, kreativni_odrzano: 3, kreativni_posjeceno: 2, kreativni_napomena: 'Jedan kreativni čas nije posjećen zbog preklapanja sa posjetom časovima drugog razreda. (Probni podaci)', ednevnik: 'Uredno', mooks_sazetak: 'Dostavljen je mjesečni statistički izvještaj; nije bilo posebnih zahtjeva Ministarstva.', dokumentacija: '' },
+        zakljucak: { postignuca: 'Uspostavljeno je praćenje prilagodbe novih učenika, održane su dvije radionice i završen je plan posjeta časovima za polugodište, u skladu s planom.',
+          plan_sljedeci: 'U sljedećem mjesecu planiram deset posjeta časovima, radionicu za nastavnike o diferencijaciji, razgovore sa roditeljima i evaluaciju planova podrške za učenike.' },
+      };
+    }
+    function pocetnoStanje() {
+      const danas = danasIso(); const { g, m } = period(danas);
+      let g2 = g, m2 = m - 2; if (m2 < 1) { m2 += 12; g2--; }
+      let g1 = g, m1 = m - 1; if (m1 < 1) { m1 += 12; g1--; }
+      S = { danas, neradni: [], izvjestaji: [], brojac: {}, trag: [], prviPeriod: pb(g2, m2) };
+      // Odobren izvještaj prije dva mjeseca, sa jednim otvorenim rizikom koji se prenosi
+      const rid = L.uuid();
+      const i2 = novi(g2, m2); i2.sadrzaj = sadrzajDemo(g2, m2, true);
+      i2.rizici = [{ id: rid, kod: `RSK-${g2}-001`, kategorija: 'Akademski', opis: 'Pad uspjeha iz matematike u petom razredu (probni podatak)', ozbiljnost: 'Visok',
+        mjera: 'Dodatna nastava i praćenje napretka tokom tri sedmice', rok: L.dodajDane(i2.rok_podnosenja, 20), status: 'U toku', kreiran: pb(g2, m2) }];
+      i2.preporuke = [{ id: L.uuid(), naslov: 'Dodatni sat podrške iz matematike', obrazlozenje: 'Veći broj učenika petog razreda ima slabije rezultate; potreban je dodatni sat sedmično.', utjecaj: 'Potreban budžet', odluka: 'Odobreno', komentar_direktora: 'Odobreno za polugodište.', odlucio_u: null }];
+      S.brojac[g2] = 1;
+      podnesiInterno(i2, i2.rok_podnosenja, 0); odobriInterno(i2, 4, 'Cjelovit i konkretan izvještaj. (probni podatak)'); i2.podnesen_u = L.dodajDane(i2.rok_podnosenja, -1) + 'T09:30:00.000Z'; i2.odobren_u = new Date(Date.now() - 40 * 864e5).toISOString();
+      // Podnesen izvještaj prošlog mjeseca (čeka odluku direktora)
+      const i1 = novi(g1, m1); i1.sadrzaj = sadrzajDemo(g1, m1, false);
+      i1.sadrzaj.nastavnici.obrazlozenje_prekoracenja = '';
+      i1.rizici = [{ id: rid, kod: `RSK-${g2}-001`, kategorija: 'Akademski', opis: 'Pad uspjeha iz matematike u petom razredu (probni podatak)', ozbiljnost: 'Visok',
+        mjera: 'Dodatna nastava i praćenje napretka tokom tri sedmice', rok: L.dodajDane(i1.rok_podnosenja, -25), status: 'Otvoreno', kreiran: pb(g2, m2) }];
+      i1.preporuke = [{ id: L.uuid(), naslov: 'Radionica za nastavnike o diferencijaciji', obrazlozenje: 'Nalazi posjeta časovima pokazuju potrebu za zajedničkom radionicom u okviru stručnog usavršavanja.', utjecaj: 'Nema troškova', odluka: 'Na čekanju', komentar_direktora: null, odlucio_u: null }];
+      podnesiInterno(i1, L.dodajDane(i1.rok_podnosenja, -1), 0); i1.podnesen_u = L.dodajDane(i1.rok_podnosenja, -1) + 'T10:15:00.000Z';
+      spremiSve();
+    }
+    function novi(g, m) {
+      const i = { id: L.uuid(), godina: g, mjesec: m, status: 'nacrt', revizija: 1, ciklus: 0, sadrzaj: {}, rizici: [], preporuke: [], rok_podnosenja: L.rokPodnosenja(g, m, S.neradni),
+        rok_dopune: null, podnesen_u: null, vracen_u: null, odobren_u: null, direktor_napomena: null, direktor_ocjena: null, na_vrijeme: null, prvo_kasnjenje: null, kasnjenje_dopune: null, bodovi: null, snimci: [], zahtjev: null };
+      S.izvjestaji.push(i); return i;
+    }
+    const rizikJson = (i, r) => {
+      const pre = predhodnoStanje(r.id, pb(i.godina, i.mjesec));
+      return { id: r.id, kod: r.kod, kategorija: r.kategorija, opis: r.opis, ozbiljnost: r.ozbiljnost, mjera: r.mjera, rok: r.rok, status: r.status,
+        prenesen: !!(pre && pre.status !== 'Riješeno'), kreiran_period: Math.floor(r.kreiran / 12) * 100 + (r.kreiran % 12 || 12) };
+    };
+    function predhodnoStanje(rid, brojPerioda) {
+      let naj = null, njb = -1;
+      for (const i of S.izvjestaji) { const b = pb(i.godina, i.mjesec); if (b >= brojPerioda) continue;
+        const r = i.rizici.find(x => x.id === rid); if (r && b > njb) { naj = r; njb = b; } }
+      return naj;
+    }
+    const prenesenih = i => {
+      const b = pb(i.godina, i.mjesec); const ids = new Set();
+      S.izvjestaji.forEach(x => x.rizici.forEach(r => ids.add(r.id)));
+      const out = [];
+      ids.forEach(id => { const p = predhodnoStanje(id, b); if (p && p.status !== 'Riješeno') out.push({ id, kod: p.kod }); });
+      return out;
+    };
+    const rizici = i => i.rizici.map(r => rizikJson(i, r)).sort((a, b) => a.kod < b.kod ? -1 : 1);
+    const dopuna = i => (i.status === 'vracen' ? L.radnihIzmedju(i.rok_dopune, S.danas, S.neradni) : null);
+    const kasnjenjePrvo = i => (i.ciklus === 0 ? L.radnihIzmedju(i.rok_podnosenja, S.danas, S.neradni) : (i.prvo_kasnjenje || 0));
+
+    function stanje(i) {
+      const vlasnik = uloga === 'pedagog';
+      let sad, riz, prep;
+      if (vlasnik) { sad = i.sadrzaj; riz = rizici(i); prep = i.preporuke; }
+      else if (uloga === 'direktor' && i.status !== 'nacrt') {
+        const sn = i.snimci[i.snimci.length - 1]; sad = sn.sadrzaj; riz = sn.rizici;
+        prep = sn.preporuke.map(x => { const z = i.preporuke.find(p => p.id === x.id) || x; return { ...x, odluka: z.odluka, komentar_direktora: z.komentar_direktora, odlucio_u: z.odlucio_u }; });
+      } else return null;
+      const kp = L.kpi(sad, riz, i.godina, i.mjesec);
+      const uredjivo = vlasnik && ['nacrt', 'vracen'].includes(i.status);
+      let prov = [], pregled = null;
+      const kas = kasnjenjePrvo(i), kd = dopuna(i);
+      if (uredjivo) { prov = provjeriSve(i, sad, riz, prep, true); pregled = L.bodovi(sad, riz, kp, i.godina, i.mjesec, kas, i.ciklus + 1, kd); }
+      return kopija({ id: i.id, godina: i.godina, mjesec: i.mjesec, status: i.status, revizija: i.revizija, ciklus: i.ciklus,
+        rok_podnosenja: i.rok_podnosenja, rok_dopune: i.rok_dopune, podnesen_u: i.podnesen_u, vracen_u: i.vracen_u, odobren_u: i.odobren_u,
+        direktor_napomena: i.direktor_napomena, direktor_ocjena: i.direktor_ocjena, na_vrijeme: i.na_vrijeme,
+        pedagog: { ime: S.ime }, moje: vlasnik, moze_urediti: uredjivo, moze_podnijeti: uredjivo && prov.length === 0,
+        moze_odluciti: !vlasnik && uloga === 'direktor' && i.status === 'podnesen',
+        kasnjenje_prvo: kas, kasnjenje_dopune_sada: kd, ciklus_sljedeci: i.ciklus + 1,
+        sadrzaj: sad, rizici: riz, preporuke: prep, kpi: kp, provjera: prov, bodovi_pregled: pregled, bodovi: i.bodovi, danas: S.danas });
+    }
+    function provjeriBaza(i, riz, prep) {
+      const e = []; const b = pb(i.godina, i.mjesec); const prisutni = [];
+      riz.forEach((x, idx) => {
+        const put = `rizici.${idx}`;
+        if (!x.id) return;
+        let ident = null;
+        for (const j of S.izvjestaji) { const r = j.rizici.find(q => q.id === x.id); if (r) { ident = r; break; } }
+        if (!ident || pb(...Object.values(period(`${Math.floor(ident.kreiran / 12 - (ident.kreiran % 12 === 0 ? 1 : 0))}-01-01`)).slice(0, 0)) < -1) { /* nastavlja */ }
+        if (!ident) { e.push({ polje: put + '.id', kod: 'NEPOZNAT', poruka: 'Rizik ne postoji među Vašim rizicima.' }); return; }
+        if (ident.kreiran > b) { e.push({ polje: put + '.id', kod: 'NEPOZNAT', poruka: 'Rizik je kreiran u kasnijem periodu.' }); return; }
+        prisutni.push(x.id);
+        if (ident.kreiran < b) {
+          const pre = predhodnoStanje(x.id, b);
+          if (!pre || pre.status === 'Riješeno') e.push({ polje: put + '.id', kod: 'RIZIK_RIJESEN', poruka: `Rizik ${ident.kod} je ranije riješen i ne može se ponovo navoditi.` });
+          if (ident.kategorija !== x.kategorija || ident.opis !== L.btrim(x.opis)) e.push({ polje: put + '.opis', kod: 'NEPROMJENJIVO', poruka: `Kategorija i opis rizika ${ident.kod} ne mijenjaju se nakon prvog perioda.` });
+        }
+        const staro = i.rizici.find(q => q.id === x.id);
+        const kasnije = S.izvjestaji.some(j => pb(j.godina, j.mjesec) > b && j.rizici.some(q => q.id === x.id));
+        if (kasnije && x.status === 'Riješeno' && !(staro && staro.status === 'Riješeno'))
+          e.push({ polje: put + '.status', kod: 'KASNIJI_PERIOD', poruka: `Rizik ${ident.kod} već postoji u kasnijem izvještaju; status se ovdje ne može zatvoriti.` });
+      });
+      prenesenih(i).forEach(p => { if (!prisutni.includes(p.id)) e.push({ polje: 'rizici', kod: 'PRENESENI_RIZIK_NEDOSTAJE', poruka: `Preneseni otvoreni rizik ${p.kod} mora ostati u izvještaju.` }); });
+      i.rizici.forEach(r => { if (!prisutni.includes(r.id) && S.izvjestaji.some(j => pb(j.godina, j.mjesec) > b && j.rizici.some(q => q.id === r.id)))
+        e.push({ polje: 'rizici', kod: 'KASNIJI_PERIOD', poruka: `Rizik ${r.kod} postoji u kasnijem izvještaju i ne može se ukloniti.` }); });
+      prep.forEach((x, idx) => {
+        if (!x.id) return; const p = i.preporuke.find(q => q.id === x.id);
+        if (!p) { e.push({ polje: `preporuke.${idx}.id`, kod: 'NEPOZNAT', poruka: 'Preporuka ne postoji u ovom izvještaju.' }); return; }
+        if (['Odobreno', 'Odbijeno'].includes(p.odluka) && (p.naslov !== L.btrim(x.naslov) || p.obrazlozenje !== L.btrim(x.obrazlozenje) || p.utjecaj !== x.utjecaj))
+          e.push({ polje: `preporuke.${idx}`, kod: 'ODLUKA_ZAKLJUCANA', poruka: 'Preporuka o kojoj je direktor odlučio ne može se mijenjati.' });
+      });
+      i.preporuke.filter(p => ['Odobreno', 'Odbijeno'].includes(p.odluka)).forEach(p => {
+        if (!prep.some(y => y.id === p.id)) e.push({ polje: 'preporuke', kod: 'ODLUKA_ZAKLJUCANA', poruka: `Preporuka „${p.naslov}“ ima odluku direktora i ne može se ukloniti.` });
+      });
+      return e;
+    }
+    function provjeriSve(i, sad, riz, prep, strogo) {
+      let e = [].concat(L.provjeriSadrzaj(sad, strogo, i.godina, i.mjesec), L.provjeriRizike(riz, strogo), L.provjeriPreporuke(prep, strogo));
+      if (!L.provjeriRizike(riz, false).length && !L.provjeriPreporuke(prep, false).length) e = e.concat(provjeriBaza(i, riz, prep));
+      return e;
+    }
+    const upisiTrag = (akcija, i, sazetak) => S.trag.push({ vrijeme: new Date().toISOString(), akcija, izvjestaj_id: i.id, akter: S.ime, uloga, sazetak: sazetak || {} });
+
+    function podnesiInterno(i, danas, kd) {
+      const rz = rizici(i); const kp = L.kpi(i.sadrzaj, rz, i.godina, i.mjesec);
+      const c = i.ciklus + 1; const kas = i.ciklus === 0 ? L.radnihIzmedju(i.rok_podnosenja, danas, S.neradni) : (i.prvo_kasnjenje || 0);
+      const bod = L.bodovi(i.sadrzaj, rz, kp, i.godina, i.mjesec, kas, c, i.status === 'vracen' ? kd : null);
+      bod.direktor = 0; bod.ukupno = bod.zbroj; bod.konacno = false;
+      i.snimci.push({ ciklus: c, sadrzaj: kopija(i.sadrzaj), rizici: kopija(rz), preporuke: kopija(i.preporuke), kpi: kp, bodovi: bod });
+      i.na_vrijeme = i.ciklus === 0 ? kas === 0 : i.na_vrijeme; i.prvo_kasnjenje = kas; i.kasnjenje_dopune = kd;
+      i.status = 'podnesen'; i.ciklus = c; i.podnesen_u = new Date().toISOString(); i.revizija++; i.bodovi = bod;
+    }
+    function odobriInterno(i, ocjena, kom) {
+      const bod = kopija(i.bodovi);
+      bod.stavke.push({ kod: 'D1', grupa: 'direktor', naziv: 'Ocjena direktora o kvalitetu', bodovi: ocjena * 20, max: 100, napomena: `Ocjena ${ocjena} od 5 (po 20 bodova).` });
+      bod.direktor = ocjena * 20; bod.ukupno = bod.zbroj + ocjena * 20; bod.konacno = true; bod.max = 1000;
+      i.bodovi = bod; i.status = 'odobren'; i.odobren_u = new Date().toISOString(); i.direktor_ocjena = ocjena; i.direktor_napomena = kom || i.direktor_napomena; i.revizija++;
+    }
+    function ocisti(s) { return JSON.parse(JSON.stringify(s), (k, v) => typeof v === 'string' ? L.btrim(v) : v); }
+
+    return {
+      aktiviraj(u) {
+        uloga = u;
+        const s = ssGet(KLJUC);
+        if (s) { try { S = JSON.parse(s); } catch (e) { S = null; } }
+        if (!S) pocetnoStanje();
+        S.danas = danasIso(); S.ime = u === 'pedagog' ? 'Amina Demić (probni račun)' : 'Direktor škole (probni račun)'; S.imePedagoga = 'Amina Demić (probni račun)'; S.ime = S.imePedagoga;
+      },
+      reset() { ssSet(KLJUC, null); S = null; },
+      uloga: () => uloga,
+      async profil() { return { ok: true, ime: uloga === 'pedagog' ? S.imePedagoga : 'Direktor škole (probni račun)', uloga, danas: S.danas }; },
+      async kreiraj(g, m) {
+        if (uloga !== 'pedagog') return greska('ZABRANJENO', 'Izvještaj može kreirati samo pedagog.');
+        const t = period(S.danas);
+        if (pb(g, m) > pb(t.g, t.m)) return greska('BUDUCI_PERIOD', 'Izvještaj se ne može kreirati za period koji još nije počeo.');
+        if (pb(g, m) < S.prviPeriod) return greska('PERIOD_PRIJE_POCETKA', 'Period je prije početka izvještavanja u ovom sistemu.');
+        const postojeci = S.izvjestaji.find(i => i.godina === g && i.mjesec === m);
+        if (postojeci) return { ok: true, ponovljeno: true, izvjestaj: stanje(postojeci) };
+        const prev = S.izvjestaji.filter(i => pb(i.godina, i.mjesec) < pb(g, m)).sort((a, b) => pb(b.godina, b.mjesec) - pb(a.godina, a.mjesec))[0];
+        if (prev && prev.status === 'nacrt') return greska('PRETHODNI_NACRT', `Prethodni izvještaj (${String(prev.mjesec).padStart(2, '0')}/${prev.godina}) je još nacrt. Podnesite ga prije nastavka.`);
+        const i = novi(g, m);
+        prenesenih(i).forEach(p => { const pre = predhodnoStanje(p.id, pb(g, m)); i.rizici.push({ ...kopija(pre) }); });
+        upisiTrag('KREIRAN_NACRT', i, { godina: g, mjesec: m }); spremiSve();
+        return { ok: true, izvjestaj: stanje(i) };
+      },
+      async ucitaj(a) {
+        const i = a.id ? S.izvjestaji.find(x => x.id === a.id) : S.izvjestaji.find(x => x.godina === a.godina && x.mjesec === a.mjesec);
+        if (!i) return greska('NE_POSTOJI', 'Izvještaj nije pronađen.');
+        const s = stanje(i); if (!s) return greska('ZABRANJENO', 'Nemate pravo pristupa ovom izvještaju.');
+        return { ok: true, izvjestaj: s };
+      },
+      async spremi(id, rev, sad, riz, prep, z) {
+        const i = S.izvjestaji.find(x => x.id === id);
+        if (!i || uloga !== 'pedagog') return greska('ZABRANJENO', 'Nemate pravo mijenjati ovaj izvještaj.');
+        if (z && i.zahtjev === z) return { ok: true, ponovljeno: true, izvjestaj: stanje(i) };
+        if (!['nacrt', 'vracen'].includes(i.status)) return greska('POGRESNO_STANJE', `Izvještaj u stanju „${i.status}“ ne može se mijenjati.`);
+        if (rev !== i.revizija) return greska('SUKOB_VERZIJA', 'Izvještaj je u međuvremenu izmijenjen (drugi tab ili uređaj).', { revizija_servera: i.revizija });
+        riz = riz || []; prep = prep || [];
+        let e = [].concat(L.provjeriSadrzaj(sad, false, i.godina, i.mjesec), L.provjeriRizike(riz, false), L.provjeriPreporuke(prep, false));
+        let s2, r2, p2;
+        if (!e.length) { s2 = ocisti(sad); r2 = ocisti(riz); p2 = ocisti(prep); e = provjeriBaza(i, r2, p2); }
+        if (e.length) return greska('VALIDACIJA', 'Podaci nisu ispravni. Ispravite označena polja.', { greske: e });
+        const b = pb(i.godina, i.mjesec);
+        const nova = r2.map(x => {
+          let ident = null; if (x.id) for (const j of S.izvjestaji) { const r = j.rizici.find(q => q.id === x.id); if (r) { ident = r; break; } }
+          let kod, kreiran, id2 = x.id;
+          if (ident) { kod = ident.kod; kreiran = ident.kreiran; }
+          else { S.brojac[i.godina] = (S.brojac[i.godina] || 0) + 1; kod = `RSK-${i.godina}-${String(S.brojac[i.godina]).padStart(3, '0')}`; kreiran = b; id2 = L.uuid(); }
+          const kat = (ident && ident.kreiran < b) ? ident.kategorija : x.kategorija, op = (ident && ident.kreiran < b) ? ident.opis : x.opis;
+          return { id: id2, kod, kategorija: kat, opis: op, ozbiljnost: x.ozbiljnost, mjera: x.mjera || '', rok: x.rok || null, status: x.status, kreiran };
+        });
+        i.rizici = nova;
+        const stare = i.preporuke;
+        i.preporuke = p2.map(x => {
+          const p = x.id && stare.find(q => q.id === x.id);
+          if (p) { if (['Odobreno', 'Odbijeno'].includes(p.odluka)) return p; const reset = p.odluka === 'Potrebna dorada'; return { ...p, naslov: x.naslov, obrazlozenje: x.obrazlozenje || '', utjecaj: x.utjecaj, odluka: reset ? 'Na čekanju' : p.odluka, odlucio_u: reset ? null : p.odlucio_u }; }
+          return { id: L.uuid(), naslov: x.naslov, obrazlozenje: x.obrazlozenje || '', utjecaj: x.utjecaj, odluka: 'Na čekanju', komentar_direktora: null, odlucio_u: null };
+        });
+        i.sadrzaj = s2; i.revizija++; i.zahtjev = z || null;
+        upisiTrag('SPREMLJEN_NACRT', i, { revizija: i.revizija, rizika: nova.length, preporuka: i.preporuke.length }); spremiSve();
+        return { ok: true, izvjestaj: stanje(i) };
+      },
+      async podnesi(id, rev, z) {
+        const i = S.izvjestaji.find(x => x.id === id);
+        if (!i || uloga !== 'pedagog') return greska('ZABRANJENO', 'Nemate pravo podnijeti ovaj izvještaj.');
+        if (z && i.zahtjev === z) return { ok: true, ponovljeno: true, izvjestaj: stanje(i) };
+        if (!['nacrt', 'vracen'].includes(i.status)) return greska('POGRESNO_STANJE', `Izvještaj u stanju „${i.status}“ ne može se podnijeti.`);
+        if (rev !== i.revizija) return greska('SUKOB_VERZIJA', 'Izvještaj je u međuvremenu izmijenjen (drugi tab ili uređaj).', { revizija_servera: i.revizija });
+        const e = provjeriSve(i, i.sadrzaj, rizici(i), i.preporuke, true);
+        if (e.length) return greska('VALIDACIJA', 'Izvještaj nije potpun. Dopunite označena polja prije podnošenja.', { greske: e });
+        const kd = i.status === 'vracen' ? L.radnihIzmedju(i.rok_dopune, S.danas, S.neradni) : null;
+        podnesiInterno(i, S.danas, kd); i.zahtjev = z || null;
+        upisiTrag(i.ciklus === 1 ? 'PODNESEN' : 'PONOVO_PODNESEN', i, { ciklus: i.ciklus, kasnjenje_radnih_dana: i.prvo_kasnjenje, bodovi_zbroj: i.bodovi.zbroj }); spremiSve();
+        return { ok: true, izvjestaj: stanje(i) };
+      },
+      async vrati(id, rev, nap, z) {
+        const i = S.izvjestaji.find(x => x.id === id); nap = L.btrim(nap || '');
+        if (uloga !== 'direktor') return greska('ZABRANJENO', 'Izvještaj može vratiti samo direktor.');
+        if (!i) return greska('NE_POSTOJI', 'Izvještaj nije pronađen.');
+        if (z && i.zahtjev === z) return { ok: true, ponovljeno: true, izvjestaj: stanje(i) };
+        if (i.status !== 'podnesen') return greska('POGRESNO_STANJE', 'Vratiti se može samo podnesen izvještaj.');
+        if (rev !== i.revizija) return greska('SUKOB_VERZIJA', 'Izvještaj je u međuvremenu izmijenjen.', { revizija_servera: i.revizija });
+        if (L.len(nap) < 15 || L.len(nap) > 2000) return greska('VALIDACIJA', 'Obrazloženje mora imati između 15 i 2000 znakova.', { greske: [{ polje: 'napomena', kod: 'DUZINA', poruka: 'Obrazloženje mora imati između 15 i 2000 znakova.' }] });
+        i.status = 'vracen'; i.revizija++; i.vracen_u = new Date().toISOString(); i.rok_dopune = L.dodajRadne(S.danas, 3, S.neradni); i.direktor_napomena = nap; i.zahtjev = z || null;
+        upisiTrag('VRACEN_NA_DOPUNU', i, { ciklus: i.ciklus, rok_dopune: i.rok_dopune }); spremiSve();
+        return { ok: true, izvjestaj: stanje(i) };
+      },
+      async odluka(pid, odl, kom) {
+        if (uloga !== 'direktor') return greska('ZABRANJENO', 'Odluku o preporuci može donijeti samo direktor.');
+        const i = S.izvjestaji.find(x => x.preporuke.some(p => p.id === pid)); if (!i) return greska('NE_POSTOJI', 'Preporuka nije pronađena.');
+        if (i.status !== 'podnesen') return greska('POGRESNO_STANJE', 'Odluka se donosi samo dok je izvještaj podnesen.');
+        kom = L.btrim(kom || '') || null;
+        if (!L.ENUM.odluka.includes(odl) || odl === 'Na čekanju') return greska('VALIDACIJA', 'Odluka nije ispravna.');
+        if (kom && L.len(kom) > 1000) return greska('VALIDACIJA', 'Komentar može imati najviše 1000 znakova.');
+        if (['Odbijeno', 'Potrebna dorada'].includes(odl) && !kom) return greska('VALIDACIJA', `Uz odluku „${odl}“ komentar je obavezan.`);
+        const p = i.preporuke.find(x => x.id === pid); p.odluka = odl; p.komentar_direktora = kom; p.odlucio_u = new Date().toISOString(); i.revizija++;
+        upisiTrag('ODLUKA_O_PREPORUCI', i, { preporuka: pid, odluka: odl }); spremiSve();
+        return { ok: true, izvjestaj: stanje(i) };
+      },
+      async odobri(id, rev, ocj, kom, z) {
+        const i = S.izvjestaji.find(x => x.id === id); kom = L.btrim(kom || '') || null;
+        if (uloga !== 'direktor') return greska('ZABRANJENO', 'Izvještaj može odobriti samo direktor.');
+        if (!i) return greska('NE_POSTOJI', 'Izvještaj nije pronađen.');
+        if (z && i.zahtjev === z) return { ok: true, ponovljeno: true, izvjestaj: stanje(i) };
+        if (i.status !== 'podnesen') return greska('POGRESNO_STANJE', 'Odobriti se može samo podnesen izvještaj.');
+        if (rev !== i.revizija) return greska('SUKOB_VERZIJA', 'Izvještaj je u međuvremenu izmijenjen.', { revizija_servera: i.revizija });
+        if (!Number.isInteger(ocj) || ocj < 0 || ocj > 5) return greska('VALIDACIJA', 'Ocjena kvaliteta mora biti između 0 i 5.');
+        if (i.preporuke.some(p => p.odluka === 'Na čekanju')) return greska('PREPORUKE_BEZ_ODLUKE', 'Prije odobrenja potrebno je odlučiti o svim preporukama.');
+        if (i.preporuke.some(p => p.odluka === 'Potrebna dorada')) return greska('PREPORUKE_TRAZE_DORADU', 'Postoji preporuka označena kao „Potrebna dorada“. Vratite izvještaj na dopunu.');
+        odobriInterno(i, ocj, kom); i.zahtjev = z || null;
+        upisiTrag('ODOBREN', i, { ocjena: ocj, bodovi_ukupno: i.bodovi.ukupno }); spremiSve();
+        return { ok: true, izvjestaj: stanje(i) };
+      },
+      async trag(id) {
+        const i = S.izvjestaji.find(x => x.id === id);
+        if (!i || (uloga === 'direktor' && i.status === 'nacrt')) return greska('ZABRANJENO', 'Nemate pravo pristupa historiji ovog izvještaja.');
+        return { ok: true, dogadjaji: S.trag.filter(t => t.izvjestaj_id === id && (uloga === 'pedagog' || t.akcija !== 'SPREMLJEN_NACRT')) };
+      },
+      async arhiva() {
+        const lista = S.izvjestaji.filter(i => uloga === 'pedagog' || i.status !== 'nacrt').sort((a, b) => pb(b.godina, b.mjesec) - pb(a.godina, a.mjesec))
+          .map(i => ({ id: i.id, pedagog: S.imePedagoga, godina: i.godina, mjesec: i.mjesec, status: i.status, podnesen_u: i.podnesen_u, odobren_u: i.odobren_u, ciklus: i.ciklus,
+            na_vrijeme: i.na_vrijeme, bodovi_ukupno: i.bodovi ? i.bodovi.ukupno : null, konacno: !!(i.bodovi && i.bodovi.konacno) }));
+        return { ok: true, izvjestaji: lista };
+      },
+      async pocetna() {
+        const t = period(S.danas); const danas = S.danas;
+        if (uloga === 'pedagog') {
+          const start = Math.max(S.prviPeriod, pb(t.g, t.m) - 11); const periodi = [];
+          for (let b = pb(t.g, t.m); b >= start; b--) {
+            const g = Math.floor((b - 1) / 12), m = b - g * 12; const i = S.izvjestaji.find(x => x.godina === g && x.mjesec === m);
+            const rok = L.rokPodnosenja(g, m, S.neradni);
+            const kasni = (!i || i.status === 'nacrt') ? danas > rok : (i.status === 'vracen' ? danas > i.rok_dopune : false);
+            periodi.push({ godina: g, mjesec: m, id: i ? i.id : null, status: i ? i.status : 'nema', rok, rok_dopune: i ? i.rok_dopune : null, kasni, na_vrijeme: i ? i.na_vrijeme : null,
+              bodovi_ukupno: i && i.bodovi ? i.bodovi.ukupno : null, konacno: !!(i && i.bodovi && i.bodovi.konacno) });
+          }
+          let serija = 0, prekid = false;
+          for (let b = pb(t.g, t.m); b >= start && !prekid; b--) {
+            const g = Math.floor((b - 1) / 12), m = b - g * 12; const i = S.izvjestaji.find(x => x.godina === g && x.mjesec === m);
+            if (i && i.ciklus > 0 && i.na_vrijeme) serija++; else if (b === pb(t.g, t.m)) { /* tekući još nije dospio */ } else prekid = true;
+          }
+          const sg = L.skolskaGodina(t.g, t.m);
+          const odob = S.izvjestaji.filter(i => i.status === 'odobren' && L.skolskaGodina(i.godina, i.mjesec) === sg);
+          const prosjek = odob.length ? Math.round(odob.reduce((a, i) => a + i.bodovi.ukupno, 0) / odob.length) : 0;
+          const uObradi = S.izvjestaji.filter(i => i.status === 'podnesen' && L.skolskaGodina(i.godina, i.mjesec) === sg).reduce((a, i) => a + i.bodovi.ukupno, 0);
+          const sn = S.izvjestaji.filter(i => ['podnesen', 'odobren'].includes(i.status) && L.skolskaGodina(i.godina, i.mjesec) === sg).map(i => i.snimci[i.snimci.length - 1]);
+          const znacke = [
+            { kod: 'SERIJA_3', naziv: 'Serija od tri', opis: 'Tri uzastopna izvještaja podnesena u roku.', stecena: serija >= 3 },
+            { kod: 'BEZ_VRACANJA', naziv: 'Prvi put dobro', opis: 'Izvještaj odobren bez vraćanja na dopunu.', stecena: odob.some(i => i.ciklus === 1) },
+            { kod: 'PUNE_POSJETE', naziv: 'Puni plan posjeta', opis: 'Realizirane sve planirane posjete časovima u mjesecu.', stecena: sn.some(x => x.kpi.kpi01.stopa !== null && x.kpi.kpi01.stopa >= 100) },
+            { kod: 'RIZICI_ZATVORENI', naziv: 'Zatvoren rizik', opis: 'Barem jedan rizik riješen u mjesečnom izvještaju.', stecena: sn.some(x => x.kpi.kpi03.rijeseno_3a >= 1) },
+            { kod: 'KRUG_RADIONICA', naziv: 'Tri kruga radionica', opis: 'U jednom mjesecu održane radionice za učenike, nastavnike i roditelje.', stecena: sn.some(x => new Set(((x.sadrzaj.radionice || {}).stavke || []).filter(r => r.status === 'održano').map(r => r.ciljna_grupa)).size === 3) }];
+          const sljedeci = odob.length ? [[500, 'Saradnik'], [650, 'Stručnjak'], [800, 'Majstor'], [900, 'Velemajstor']].filter(x => x[0] > prosjek).map(x => ({ naziv: x[1], prag: x[0] }))[0] || null : null;
+          return { ok: true, uloga, ime: S.imePedagoga, danas, tekuci_period: { godina: t.g, mjesec: t.m }, periodi,
+            sezona: { skolska_godina: sg, prosjek: odob.length ? prosjek : null, broj_odobrenih: odob.length, zbroj_potvrdjenih: odob.reduce((a, i) => a + i.bodovi.ukupno, 0), u_obradi: uObradi, rang: odob.length ? L.rang(prosjek) : null, sljedeci_rang: sljedeci },
+            serija, znacke };
+        }
+        const cekaju = S.izvjestaji.filter(i => i.status === 'podnesen').map(i => ({ id: i.id, pedagog: S.imePedagoga, godina: i.godina, mjesec: i.mjesec, podnesen_u: i.podnesen_u, ciklus: i.ciklus, rok: i.rok_podnosenja, bodovi_zbroj: i.bodovi.zbroj }));
+        const kasne = [];
+        const start = Math.max(S.prviPeriod, pb(t.g, t.m) - 11);
+        for (let b = start; b <= pb(t.g, t.m); b++) {
+          const g = Math.floor((b - 1) / 12), m = b - g * 12; const i = S.izvjestaji.find(x => x.godina === g && x.mjesec === m); const rok = L.rokPodnosenja(g, m, S.neradni);
+          if ((!i || i.status === 'nacrt') && danas > rok) kasne.push({ pedagog: S.imePedagoga, godina: g, mjesec: m, status: i ? 'nacrt' : 'nema', rok, kasni_radnih_dana: L.radnihIzmedju(rok, danas, S.neradni) });
+          else if (i && i.status === 'vracen' && danas > i.rok_dopune) kasne.push({ pedagog: S.imePedagoga, godina: g, mjesec: m, status: 'vracen', rok: i.rok_dopune, kasni_radnih_dana: L.radnihIzmedju(i.rok_dopune, danas, S.neradni) });
+        }
+        const stanja = {};
+        S.izvjestaji.filter(i => i.snimci.length).sort((a, b) => pb(a.godina, a.mjesec) - pb(b.godina, b.mjesec)).forEach(i => { i.snimci[i.snimci.length - 1].rizici.forEach(r => { stanja[r.id] = r; }); });
+        const red = { 'Kritičan': 1, 'Visok': 2, 'Srednji': 3, 'Nizak': 4 };
+        const otv = Object.values(stanja).filter(r => r.status !== 'Riješeno').sort((a, b) => red[a.ozbiljnost] - red[b.ozbiljnost] || (a.kod < b.kod ? -1 : 1))
+          .map(r => ({ kod: r.kod, opis: r.opis, kategorija: r.kategorija, ozbiljnost: r.ozbiljnost, status: r.status, rok: r.rok, pedagog: S.imePedagoga }));
+        const po = { 'Kritičan': 0, 'Visok': 0, 'Srednji': 0, 'Nizak': 0 }; otv.forEach(r => po[r.ozbiljnost]++);
+        const prep = []; S.izvjestaji.filter(i => i.status === 'podnesen').forEach(i => i.preporuke.filter(p => p.odluka === 'Na čekanju').forEach(p => prep.push({ preporuka_id: p.id, izvjestaj_id: i.id, naslov: p.naslov, utjecaj: p.utjecaj, godina: i.godina, mjesec: i.mjesec, pedagog: S.imePedagoga })));
+        const zadnji = S.izvjestaji.filter(i => i.status !== 'nacrt').sort((a, b) => pb(b.godina, b.mjesec) - pb(a.godina, a.mjesec)).map(i => ({ id: i.id, pedagog: S.imePedagoga, godina: i.godina, mjesec: i.mjesec, status: i.status, podnesen_u: i.podnesen_u, na_vrijeme: i.na_vrijeme, bodovi_ukupno: i.bodovi ? i.bodovi.ukupno : null, konacno: !!(i.bodovi && i.bodovi.konacno) }));
+        return { ok: true, uloga, ime: 'Direktor škole (probni račun)', danas, tekuci_period: { godina: t.g, mjesec: t.m }, cekaju, kasne, rizici: otv, rizici_po_ozbiljnosti: po, preporuke_na_cekanju: prep, izvjestaji: zadnji };
+      },
+    };
+  })();
+
+  const trenutni = () => (nacin === 'demo' ? D : Supa);
+  const prosljedi = ime => (...a) => trenutni()[ime](...a);
+  return {
+    postavi, konfigurisano, MREZA,
+    nacin: () => nacin,
+    uloga: () => (nacin === 'demo' ? D.uloga() : null),
+    demo(uloga) { nacin = 'demo'; D.aktiviraj(uloga); },
+    demoReset() { D.reset(); },
+    supabase() { nacin = 'supabase'; },
+    obnovi: () => (nacin === 'demo' ? Promise.resolve(false) : Supa.obnovi()),
+    prijava: (e, l) => Supa.prijava(e, l),
+    odjava: async () => { if (nacin === 'demo') { nacin = 'supabase'; return { ok: true }; } return Supa.odjava(); },
+    profil: prosljedi('profil'), pocetna: prosljedi('pocetna'), ucitaj: prosljedi('ucitaj'), kreiraj: prosljedi('kreiraj'),
+    spremi: prosljedi('spremi'), podnesi: prosljedi('podnesi'), vrati: prosljedi('vrati'), odluka: prosljedi('odluka'),
+    odobri: prosljedi('odobri'), trag: prosljedi('trag'), arhiva: prosljedi('arhiva'),
+  };
+})();
+if (typeof module !== 'undefined') module.exports = Api;
+
+/* =====================================================================
+   SCENA 3D — WebGL bez biblioteka. „Kristal bodova“ u središtu i četiri prstena
+   (blagovremenost, sadržaj, stručnost, efikasnost) čije punjenje prati STVARNE
+   IDSS bodove. Slavlje (iskre) se pokreće samo nakon stvarnog događaja
+   (podnošenje, odobrenje). Pri „smanji kretanje“ ili bez WebGL-a prikazuje se
+   mirna slika (jedan okvir), a podaci su uvijek dostupni i kao tekst u sučelju.
+   ===================================================================== */
+const Scena = (() => {
+  'use strict';
+  /* ---- matrice (stupčano, kao u OpenGL-u) ---- */
+  const m4 = {
+    id: () => [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1],
+    mul(a, b) { const o = new Array(16); for (let c = 0; c < 4; c++) for (let r = 0; r < 4; r++) { let s = 0; for (let k = 0; k < 4; k++) s += a[k * 4 + r] * b[c * 4 + k]; o[c * 4 + r] = s; } return o; },
+    persp(fov, asp, n, f) { const t = 1 / Math.tan(fov / 2); return [t / asp,0,0,0, 0,t,0,0, 0,0,(f + n) / (n - f),-1, 0,0,2 * f * n / (n - f),0]; },
+    trans(x, y, z) { const m = m4.id(); m[12] = x; m[13] = y; m[14] = z; return m; },
+    rx(a) { const c = Math.cos(a), s = Math.sin(a); return [1,0,0,0, 0,c,s,0, 0,-s,c,0, 0,0,0,1]; },
+    ry(a) { const c = Math.cos(a), s = Math.sin(a); return [c,0,-s,0, 0,1,0,0, s,0,c,0, 0,0,0,1]; },
+    rz(a) { const c = Math.cos(a), s = Math.sin(a); return [c,s,0,0, -s,c,0,0, 0,0,1,0, 0,0,0,1]; },
+    scale(s) { const m = m4.id(); m[0] = m[5] = m[10] = s; return m; },
+  };
+  const hex = h => [parseInt(h.slice(1, 3), 16) / 255, parseInt(h.slice(3, 5), 16) / 255, parseInt(h.slice(5, 7), 16) / 255];
+  const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+  const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  const norm = v => { const l = Math.hypot(v[0], v[1], v[2]) || 1; return [v[0] / l, v[1] / l, v[2] / l]; };
+
+  /* ---- geometrija kristala (ravne plohe) ---- */
+  function kristal() {
+    const N = 8, A = [], B = [];
+    for (let i = 0; i < N; i++) { const t = i / N * Math.PI * 2 + Math.PI / N; A.push([Math.cos(t) * .78, .3, Math.sin(t) * .78]); B.push([Math.cos(t) * .9, -.08, Math.sin(t) * .9]); }
+    const top = [0, 1.0, 0], bot = [0, -1.25, 0], pos = [], nor = [], idf = [];
+    const tri = (p, q, r, id) => { const n = norm(cross(sub(q, p), sub(r, p))); [p, q, r].forEach(v => { pos.push(...v); nor.push(...n); idf.push(id); }); };
+    let id = 0;
+    for (let i = 0; i < N; i++) {
+      const j = (i + 1) % N;
+      tri(top, A[j], A[i], id++);                      // kruna
+      tri(A[i], A[j], B[j], id++); tri(A[i], B[j], B[i], id++);   // pojas
+      tri(bot, B[i], B[j], id++);                      // paviljon
+    }
+    return { pos: new Float32Array(pos), nor: new Float32Array(nor), idf: new Float32Array(idf) };
+  }
+  /* ---- prsten: traka po kružnici, atribut t 0..1 ---- */
+  function prsten(R, w, seg) {
+    const pos = [], tt = [], nor = [];
+    for (let i = 0; i <= seg; i++) {
+      const a = i / seg * Math.PI * 2, c = Math.cos(a), s = Math.sin(a);
+      for (const dy of [-1, 1]) { pos.push(c * R, dy * w, s * R); nor.push(c, 0, s); tt.push(i / seg); }
+    }
+    const idx = []; for (let i = 0; i < seg; i++) { const k = i * 2; idx.push(k, k + 1, k + 2, k + 1, k + 3, k + 2); }
+    return { pos: new Float32Array(pos), t: new Float32Array(tt), nor: new Float32Array(nor), idx: new Uint16Array(idx) };
+  }
+
+  const VS_K = `attribute vec3 p; attribute vec3 n; attribute float f; uniform mat4 mvp; uniform mat4 mv; uniform float vr;
+    varying vec3 vn; varying vec3 vv; varying float vf; void main(){ vn=normalize((mv*vec4(n,0.)).xyz); vv=(mv*vec4(p,1.)).xyz; vf=f; gl_Position=mvp*vec4(p,1.); }`;
+  const FS_K = `precision mediump float; varying vec3 vn; varying vec3 vv; varying float vf; uniform vec3 c1; uniform vec3 c2; uniform float vr; uniform float pulse;
+    float h(float x){return fract(sin(x*91.3458)*47453.5453);}
+    void main(){ vec3 N=normalize(vn); vec3 V=normalize(-vv); vec3 L=normalize(vec3(.5,.9,.7)); vec3 R=reflect(-V,N);
+      float dif=max(dot(N,L),0.)*.55+.25; float fr=pow(1.-max(dot(N,V),0.),2.6);
+      float spec=pow(max(dot(R,L),0.),42.)*1.1; float env=.5+.5*R.y;
+      float sh=h(vf)*.5+.5; float tw=.5+.5*sin(vr*1.7+vf*1.9); 
+      vec3 base=mix(c1,c2,clamp(env*.8+sh*.25+tw*.1*pulse,0.,1.));
+      vec3 col=base*dif+vec3(1.)*spec+c2*fr*.9; gl_FragColor=vec4(col,1.); }`;
+  const VS_R = `attribute vec3 p; attribute vec3 n; attribute float t; uniform mat4 mvp; uniform mat4 mv; varying float vt; varying vec3 vn; varying vec3 vv;
+    void main(){ vt=t; vn=normalize((mv*vec4(n,0.)).xyz); vv=(mv*vec4(p,1.)).xyz; gl_Position=mvp*vec4(p,1.); }`;
+  const FS_R = `precision mediump float; varying float vt; varying vec3 vn; varying vec3 vv; uniform vec3 col; uniform float fill; uniform float tm;
+    void main(){ float on=step(vt,fill); float edge=smoothstep(fill-.02,fill,vt)*on; vec3 V=normalize(-vv); float fr=pow(1.-abs(dot(normalize(vn),V)),1.5);
+      float shine=.75+.25*sin(vt*40.-tm*2.);
+      vec3 lit=col*(.75+.5*fr)*shine+vec3(1.)*edge*.7; vec3 dim=vec3(.02,.19,.32)*(.7+.3*fr);
+      gl_FragColor=vec4(mix(dim,lit,on),1.); }`;
+  const VS_P = `attribute vec4 p; uniform mat4 mvp; uniform float sz; varying float va; void main(){ gl_Position=mvp*vec4(p.xyz,1.); gl_PointSize=sz*(1.-clamp(gl_Position.w/14.,0.,.7)); va=p.w; }`;
+  const FS_P = `precision mediump float; varying float va; void main(){ vec2 d=gl_PointCoord-.5; float r=length(d); if(r>.5) discard; gl_FragColor=vec4(1.,.8,.16,1.)*(1.-r*1.6)*va; }`;
+
+  function sjenčar(gl, vs, fs) {
+    const mk = (t, s) => { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(o)); return o; };
+    const pr = gl.createProgram(); gl.attachShader(pr, mk(gl.VERTEX_SHADER, vs)); gl.attachShader(pr, mk(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(pr);
+    if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(pr));
+    return pr;
+  }
+  const buf = (gl, data, tip) => { const b = gl.createBuffer(); gl.bindBuffer(tip || gl.ARRAY_BUFFER, b); gl.bufferData(tip || gl.ARRAY_BUFFER, data, gl.STATIC_DRAW); return b; };
+
+  const BOJE = { blagovremenost: '#FFCB29', sadrzaj: '#08ABE6', strucnost: '#ffffff', efikasnost: '#E8262C' };
+
+  function montiraj(canvas, opcije) {
+    opcije = opcije || {};
+    let gl = null;
+    try { gl = canvas.getContext('webgl', { antialias: true, alpha: true, premultipliedAlpha: false }) || canvas.getContext('experimental-webgl'); } catch (e) { gl = null; }
+    if (!gl) return null;
+    let K, R, P;
+    try { K = sjenčar(gl, VS_K, FS_K); R = sjenčar(gl, VS_R, FS_R); P = sjenčar(gl, VS_P, FS_P); } catch (e) { return null; }
+    const kr = kristal(), kb = { p: buf(gl, kr.pos), n: buf(gl, kr.nor), f: buf(gl, kr.idf), n3: kr.pos.length / 3 };
+    const grupe = ['blagovremenost', 'sadrzaj', 'strucnost', 'efikasnost'];
+    const rg = grupe.map((g, i) => { const pr = prsten(1.55 + i * .3, .035, 120); return { g, geo: pr, p: buf(gl, pr.pos), n: buf(gl, pr.nor), t: buf(gl, pr.t), ix: buf(gl, pr.idx, gl.ELEMENT_ARRAY_BUFFER), tilt: [.9, -.7, 1.25, -1.05][i], ofs: i * 1.3 }; });
+    const NP = 90, iskre = new Float32Array(NP * 4), brz = new Float32Array(NP * 3);
+    const pb = gl.createBuffer();
+    const iskraInit = (i, burst) => { const a = Math.random() * 6.283, y = (Math.random() - .5) * 2.2, r = burst ? .3 + Math.random() * .4 : 1.2 + Math.random() * 1.4;
+      iskre[i * 4] = Math.cos(a) * r; iskre[i * 4 + 1] = y; iskre[i * 4 + 2] = Math.sin(a) * r; iskre[i * 4 + 3] = burst ? 1 : .35 + Math.random() * .5;
+      brz[i * 3] = burst ? Math.cos(a) * (.8 + Math.random()) : 0; brz[i * 3 + 1] = burst ? .6 + Math.random() * 1.6 : 0; brz[i * 3 + 2] = burst ? Math.sin(a) * (.8 + Math.random()) : 0; };
+    for (let i = 0; i < NP; i++) iskraInit(i, false);
+    let model = { ukupno: 0, max: 1000, po_grupama: {} };
+    let prikaz = { fill: [0, 0, 0, 0], ukupno: 0 };
+    let slavlje = 0, t0 = performance.now(), raf = 0, zivo = true, mis = [0, 0], rotacija = 0;
+    /* Animacije su uvijek uključene (zahtjev škole); sistemska postavka „smanji kretanje“ se namjerno ne primjenjuje na 3D scenu. */
+    const mirno = () => opcije.mirno === true;
+    let animirano = !mirno();
+
+    function velicina() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2), w = canvas.clientWidth || 300, h = canvas.clientHeight || 300;
+      if (canvas.width !== Math.round(w * dpr) || canvas.height !== Math.round(h * dpr)) { canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr); }
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+    function crtaj(vrijeme) {
+      velicina();
+      const t = (vrijeme - t0) / 1000, dt = 1 / 60;
+      gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      gl.enable(gl.DEPTH_TEST);
+      // ciljno punjenje prstenova (uglađeno)
+      const cilj = grupe.map(g => { const x = model.po_grupama[g]; return x && x.max ? Math.max(0, Math.min(1, x.bodovi / x.max)) : 0; });
+      for (let i = 0; i < 4; i++) prikaz.fill[i] += (cilj[i] - prikaz.fill[i]) * (animirano ? .06 : 1);
+      if (!animirano) prikaz.fill = cilj.slice();
+      const asp = canvas.width / canvas.height;
+      const proj = m4.persp(.8, asp, .1, 40);
+      const view = m4.mul(m4.trans(0, -.1, -6.4), m4.mul(m4.rx(.28 + mis[1] * .12), m4.ry((animirano ? t * .25 : .6) + mis[0] * .3)));
+      const pulse = Math.min(1, model.ukupno / (model.max || 1000) + .2);
+      const c1 = hex('#035EA1'), c2 = model.ukupno >= 800 ? hex('#FFCB29') : model.ukupno >= 500 ? hex('#08ABE6') : hex('#ffffff');
+      // kristal
+      gl.useProgram(K);
+      const mvK = m4.mul(view, m4.mul(m4.ry(animirano ? t * .5 : 0), m4.scale(.92 + (slavlje > 0 ? .08 * Math.sin(slavlje * 12) : 0))));
+      gl.uniformMatrix4fv(gl.getUniformLocation(K, 'mvp'), false, m4.mul(proj, mvK)); gl.uniformMatrix4fv(gl.getUniformLocation(K, 'mv'), false, mvK);
+      gl.uniform3fv(gl.getUniformLocation(K, 'c1'), c1); gl.uniform3fv(gl.getUniformLocation(K, 'c2'), c2);
+      gl.uniform1f(gl.getUniformLocation(K, 'vr'), t); gl.uniform1f(gl.getUniformLocation(K, 'pulse'), pulse);
+      [['p', kb.p, 3], ['n', kb.n, 3], ['f', kb.f, 1]].forEach(([a, b, s]) => { const l = gl.getAttribLocation(K, a); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.enableVertexAttribArray(l); gl.vertexAttribPointer(l, s, gl.FLOAT, false, 0, 0); });
+      gl.drawArrays(gl.TRIANGLES, 0, kb.n3);
+      // prstenovi
+      gl.useProgram(R);
+      rg.forEach((r, i) => {
+        const mv = m4.mul(view, m4.mul(m4.rx(r.tilt), m4.mul(m4.rz(r.ofs), m4.ry(animirano ? t * (.18 + i * .05) * (i % 2 ? -1 : 1) : r.ofs))));
+        gl.uniformMatrix4fv(gl.getUniformLocation(R, 'mvp'), false, m4.mul(proj, mv)); gl.uniformMatrix4fv(gl.getUniformLocation(R, 'mv'), false, mv);
+        gl.uniform3fv(gl.getUniformLocation(R, 'col'), hex(BOJE[r.g])); gl.uniform1f(gl.getUniformLocation(R, 'fill'), prikaz.fill[i]); gl.uniform1f(gl.getUniformLocation(R, 'tm'), t);
+        [['p', r.p, 3], ['n', r.n, 3], ['t', r.t, 1]].forEach(([a, b, s]) => { const l = gl.getAttribLocation(R, a); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.enableVertexAttribArray(l); gl.vertexAttribPointer(l, s, gl.FLOAT, false, 0, 0); });
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, r.ix); gl.drawElements(gl.TRIANGLES, r.geo.idx.length, gl.UNSIGNED_SHORT, 0);
+      });
+      // iskre
+      if (animirano || slavlje > 0) {
+        for (let i = 0; i < NP; i++) {
+          if (slavlje > 0 || brz[i * 3 + 1] !== 0) { iskre[i * 4] += brz[i * 3] * dt; iskre[i * 4 + 1] += brz[i * 3 + 1] * dt; iskre[i * 4 + 2] += brz[i * 3 + 2] * dt; brz[i * 3 + 1] -= 1.2 * dt; iskre[i * 4 + 3] -= .012; if (iskre[i * 4 + 3] <= 0) iskraInit(i, false); }
+          else { const a = Math.atan2(iskre[i * 4 + 2], iskre[i * 4]) + dt * .35; const r = Math.hypot(iskre[i * 4], iskre[i * 4 + 2]); iskre[i * 4] = Math.cos(a) * r; iskre[i * 4 + 2] = Math.sin(a) * r; iskre[i * 4 + 1] += Math.sin(t + i) * .002; }
+        }
+        gl.useProgram(P); gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE); gl.depthMask(false);
+        gl.uniformMatrix4fv(gl.getUniformLocation(P, 'mvp'), false, m4.mul(proj, view)); gl.uniform1f(gl.getUniformLocation(P, 'sz'), 14 * (window.devicePixelRatio || 1));
+        gl.bindBuffer(gl.ARRAY_BUFFER, pb); gl.bufferData(gl.ARRAY_BUFFER, iskre, gl.DYNAMIC_DRAW);
+        const l = gl.getAttribLocation(P, 'p'); gl.enableVertexAttribArray(l); gl.vertexAttribPointer(l, 4, gl.FLOAT, false, 0, 0);
+        gl.drawArrays(gl.POINTS, 0, NP); gl.depthMask(true); gl.disable(gl.BLEND);
+        if (slavlje > 0) slavlje = Math.max(0, slavlje - dt);
+      }
+    }
+    function petlja(v) { if (!zivo) return; crtaj(v); if (animirano || slavlje > 0 || Math.abs(prikaz.fill[0] - 1) > 1e-3) raf = requestAnimationFrame(petlja); else raf = 0; }
+    const pokreni = () => { if (!raf && zivo) raf = requestAnimationFrame(petlja); };
+    const pomak = e => { const b = canvas.getBoundingClientRect(); mis = [((e.clientX - b.left) / b.width - .5) * 2, ((e.clientY - b.top) / b.height - .5) * 2]; if (!animirano) { crtaj(performance.now()); } };
+    canvas.addEventListener('pointermove', pomak);
+    const ro = (typeof ResizeObserver !== 'undefined') ? new ResizeObserver(() => { if (!animirano) crtaj(performance.now()); }) : null; if (ro) ro.observe(canvas);
+    const mq = null;
+    const onMq = () => {};
+    crtaj(performance.now()); pokreni();
+    return {
+      postavi(m) { model = m; if (!animirano) { prikaz.fill = grupe.map(g => (m.po_grupama[g] && m.po_grupama[g].max ? m.po_grupama[g].bodovi / m.po_grupama[g].max : 0)); crtaj(performance.now()); } else pokreni(); },
+      slavlje() { slavlje = 2.6; for (let i = 0; i < NP; i++) iskraInit(i, true); pokreni(); },
+      animacija(uklj) { animirano = !!uklj; opcije.mirno = !uklj; pokreni(); if (!uklj) crtaj(performance.now()); },
+      ugasi() { zivo = false; if (raf) cancelAnimationFrame(raf); canvas.removeEventListener('pointermove', pomak); if (ro) ro.disconnect(); if (mq && mq.removeEventListener) mq.removeEventListener('change', onMq);
+        const e = gl.getExtension('WEBGL_lose_context'); if (e) e.loseContext(); },
+    };
+  }
+  return { montiraj, BOJE };
+})();
+if (typeof module !== 'undefined') module.exports = Scena;
+
+/* =====================================================================
+   UI — osnova: DOM pomoćnici, ruter, prijava, početne stranice, arhiva, pravila bodovanja.
+   Sav korisnički tekst se upisuje isključivo kao textContent (nikad kao HTML).
+   ===================================================================== */
+const UI = (() => {
+  'use strict';
+  const L = Logika;
+  const U = {};
+  U.A = { profil: null, scene: [], animacije: true, cuvar: null };
+
+  /* ---------- DOM ---------- */
+  function h(tag, attrs, ...djeca) {
+    const el = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) {
+      if (v === null || v === undefined || v === false) continue;
+      if (k.startsWith('on') && typeof v === 'function') el.addEventListener(k.slice(2), v);
+      else if (k === 'klasa' || k === 'class') el.className = v;
+      else if (k === 'value') el.value = v;
+      else if (k === 'checked' || k === 'disabled' || k === 'selected' || k === 'open') { if (v) el.setAttribute(k, ''); el[k] = !!v; }
+      else if (v === true) el.setAttribute(k, '');
+      else el.setAttribute(k, String(v));
+    }
+    const dodaj = d => {
+      if (d === null || d === undefined || d === false) return;
+      if (Array.isArray(d)) d.forEach(dodaj);
+      else if (d instanceof Node) el.appendChild(d);
+      else el.appendChild(document.createTextNode(String(d)));
+    };
+    djeca.forEach(dodaj);
+    return el;
+  }
+  const $ = (s, r) => (r || document).querySelector(s);
+  const prazni = el => { while (el.firstChild) el.removeChild(el.firstChild); return el; };
+  U.h = h; U.$ = $; U.prazni = prazni;
+
+  const SS = { get(k) { try { return window.sessionStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { v === null ? window.sessionStorage.removeItem(k) : window.sessionStorage.setItem(k, v); } catch (e) { /* ignorisano */ } } };
+  const LS = { get(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { window.localStorage.setItem(k, v); } catch (e) { /* ignorisano */ } } };
+  U.SS = SS;
+
+  /* ---------- formatiranje ---------- */
+  const fmtVrijeme = iso => { if (!iso) return '—'; try { const d = new Date(iso); if (isNaN(d)) return String(iso); const o = {}; new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Sarajevo', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(d).forEach(x => { o[x.type] = x.value; }); return `${o.day}.${o.month}.${o.year}. u ${o.hour === '24' ? '00' : o.hour}:${o.minute}`; } catch (e) { return String(iso); } };
+  const dana = (a, b) => Math.round((Date.parse(b + 'T00:00:00Z') - Date.parse(a + 'T00:00:00Z')) / 864e5);
+  const mnozina = (n, jedan, vise) => (n === 1 ? jedan : vise);
+  function rokTekst(rok, danas) {
+    const d = dana(danas, rok);
+    if (d > 0) return `za ${d} ${mnozina(d, 'dan', 'dana')}`;
+    if (d === 0) return 'danas je posljednji dan';
+    return `istekao prije ${-d} ${mnozina(-d, 'dan', 'dana')}`;
+  }
+  const STATUS = { nacrt: 'Nacrt', podnesen: 'Podnesen', vracen: 'Vraćen na dopunu', odobren: 'Odobren', nema: 'Nije započet' };
+  const cipStatus = (s, extra) => h('span', { class: 'cip ' + s }, STATUS[s] || s, extra ? ` · ${extra}` : '');
+  const naslovPerioda = (g, m) => `${L.imeMjeseca(m)} ${g}.`;
+  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+  U.fmtVrijeme = fmtVrijeme; U.rokTekst = rokTekst; U.cipStatus = cipStatus; U.naslovPerioda = (g, m) => cap(naslovPerioda(g, m)); U.dana = dana; U.cap = cap; U.STATUS = STATUS;
+  const GRUPE = [['blagovremenost', 'Blagovremenost', '#FFCB29'], ['sadrzaj', 'Sadržaj', '#08ABE6'], ['strucnost', 'Stručnost', '#ffffff'], ['efikasnost', 'Efikasnost', '#E8262C']];
+  U.GRUPE = GRUPE;
+
+  /* ---------- obavijesti i modal ---------- */
+  function obavijesti(tekst, greska) {
+    const sp = $('#toasti'); if (!sp) return;
+    const t = h('div', { class: 'toast' + (greska ? ' greska' : ''), role: greska ? 'alert' : 'status' }, tekst);
+    sp.appendChild(t); setTimeout(() => t.remove(), greska ? 7000 : 4000);
+  }
+  function modal(o) {
+    const dlg = h('dialog', { class: o.sirok ? 'sirok' : '', 'aria-labelledby': 'm-naslov' });
+    const zatvori = () => { try { dlg.close(); } catch (e) { /* vec zatvoren */ } dlg.remove(); if (o.poZatvaranju) o.poZatvaranju(); };
+    const tijelo = h('div', { class: 'okvir' }, h('h2', { id: 'm-naslov' }, o.naslov), o.tijelo,
+      h('div', { class: 'dugmad' }, (o.dugmad || [{ tekst: 'Zatvori', klasa: 'sekund' }]).map(d => {
+        const b = h('button', { type: 'button', class: 'dugme ' + (d.klasa || ''), disabled: d.onemoguceno, onclick: async () => {
+          if (d.klik) { const r = await d.klik(b, dlg); if (r === false) return; }
+          zatvori(); } }, d.tekst);
+        return b; })));
+    dlg.appendChild(tijelo);
+    dlg.addEventListener('cancel', e => { e.preventDefault(); zatvori(); });
+    document.body.appendChild(dlg);
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+    const prvo = $('textarea,input,select', dlg) || $('button', dlg); if (prvo) prvo.focus();
+    return { dlg, zatvori };
+  }
+  U.obavijesti = obavijesti; U.modal = modal;
+
+  /* ---------- 3D scena ---------- */
+  function prstenoviSvg(model) {
+    const ns = 'http://www.w3.org/2000/svg'; const svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', '0 0 200 200'); svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', 'Prikaz bodova po grupama'); svg.style.width = '100%'; svg.style.maxHeight = '260px';
+    GRUPE.forEach(([k, , boja], i) => {
+      const r = 90 - i * 16, o = 2 * Math.PI * r, g = model.po_grupama[k], f = g && g.max ? Math.min(1, g.bodovi / g.max) : 0;
+      const pod = document.createElementNS(ns, 'circle'); pod.setAttribute('cx', 100); pod.setAttribute('cy', 100); pod.setAttribute('r', r); pod.setAttribute('fill', 'none'); pod.setAttribute('stroke', '#000000'); pod.setAttribute('stroke-width', 8);
+      const c = document.createElementNS(ns, 'circle'); c.setAttribute('cx', 100); c.setAttribute('cy', 100); c.setAttribute('r', r); c.setAttribute('fill', 'none'); c.setAttribute('stroke', boja); c.setAttribute('stroke-width', 8);
+      c.setAttribute('stroke-dasharray', `${o * f} ${o}`); c.setAttribute('transform', 'rotate(-90 100 100)'); c.setAttribute('stroke-linecap', 'round');
+      svg.appendChild(pod); svg.appendChild(c);
+    });
+    const t = document.createElementNS(ns, 'text'); t.setAttribute('x', 100); t.setAttribute('y', 108); t.setAttribute('text-anchor', 'middle'); t.setAttribute('fill', '#FFCB29'); t.setAttribute('font-size', 30); t.setAttribute('font-weight', 700);
+    t.textContent = String(model.ukupno); svg.appendChild(t); return svg;
+  }
+  function scena(omot, model, opcije) {
+    prazni(omot);
+    const canvas = h('canvas', { 'aria-hidden': 'true' }); omot.appendChild(canvas);
+    let s = null;
+    try { s = Scena.montiraj(canvas, { mirno: !U.A.animacije }); } catch (e) { s = null; }
+    if (!s) { prazni(omot); omot.appendChild(h('div', { class: 'bez-3d' }, prstenoviSvg(model))); return { postavi(m) { prazni(omot); omot.appendChild(h('div', { class: 'bez-3d' }, prstenoviSvg(m))); }, slavlje() {}, ugasi() {}, animacija() {} }; }
+    s.postavi(model); U.A.scene.push(s); return s;
+  }
+  function ugasiScene() { U.A.scene.forEach(s => { try { s.ugasi(); } catch (e) { /* ignorisano */ } }); U.A.scene = []; }
+  U.scena = scena; U.ugasiScene = ugasiScene;
+  function modelBodova(izv) {
+    const b = izv && (izv.bodovi_pregled || izv.bodovi);
+    if (!b) return { ukupno: 0, max: 1000, po_grupama: {} };
+    return { ukupno: b.ukupno !== undefined ? b.ukupno : b.zbroj, max: b.konacno ? 1000 : 900, po_grupama: b.po_grupama };
+  }
+  U.modelBodova = modelBodova;
+  function redGrupa(model, svjetlo) {
+    return h('ul', { class: 'rez-grupe' }, GRUPE.map(([k, naziv, boja]) => { const g = model.po_grupama[k] || { bodovi: 0, max: k === 'blagovremenost' || k === 'sadrzaj' ? 250 : 200 };
+      return h('li', {}, h('span', {}, naziv), h('span', { class: 'traka-b', role: 'img', 'aria-label': `${naziv}: ${g.bodovi} od ${g.max}` }, h('i', { style: `width:${Math.round(100 * g.bodovi / g.max)}%;background:${boja}` })),
+        h('span', { class: 'tabular' }, `${g.bodovi} / ${g.max}`)); }));
+  }
+  U.redGrupa = redGrupa;
+
+  /* ---------- ljuska aplikacije ---------- */
+  function ljuska() {
+    const A = U.A, ko = A.profil;
+    const demo = Api.nacin() === 'demo';
+    const nav = [];
+    nav.push(h('a', { href: '#/', 'data-ruta': 'pocetna' }, ko.uloga === 'direktor' ? 'Pregled' : 'Moj izvještaj'));
+    nav.push(h('a', { href: '#/arhiva', 'data-ruta': 'arhiva' }, 'Arhiva'));
+    nav.push(h('a', { href: '#/bodovi', 'data-ruta': 'bodovi' }, 'Kako se boduje'));
+    const logo = h('img', { src: 'https://idss.edu.ba/wp-content/uploads/2024/03/logo_white.png', alt: 'IDSS — Internationale Deutsche Schule Sarajevo', onerror: e => { e.target.style.display = 'none'; } });
+    const root = h('div', {},
+      h('a', { class: 'skok', href: '#glavno' }, 'Preskoči na sadržaj'),
+      demo ? h('div', { class: 'demo-traka', role: 'note' }, h('div', {}, h('strong', {}, 'Probni režim:'), 'podaci su izmišljeni i ostaju samo u ovom pregledniku; ništa se ne šalje na server.',
+        h('button', { type: 'button', onclick: () => { Api.demoReset(); U.obavijesti('Probni podaci su vraćeni na početno stanje.'); U.ruta(); } }, 'Vrati probne podatke'))) : null,
+      h('header', { class: 'traka' }, h('div', { class: 'traka-u' },
+        h('div', { class: 'marka' }, logo, h('div', { class: 'tekst' }, 'IDSS Pedagog', h('small', {}, 'Mjesečni izvještaj'))),
+        h('div', { class: 'razmak' }),
+        h('div', { class: 'korisnik', title: [ko.email, ko.telefon].filter(Boolean).join(' · ') }, h('b', {}, ko.ime), h('span', { class: 'uloga' }, ko.uloga === 'direktor' ? 'Direktor' : 'Pedagog'), ko.email ? h('span', { class: 'kontakt' }, [ko.email, ko.telefon].filter(Boolean).join(' · ')) : null),
+        h('button', { type: 'button', class: 'dugme-traka', onclick: async () => { await Api.odjava(); A.profil = null; location.hash = '#/'; U.pokreni(); } }, 'Odjava'))),
+      h('nav', { class: 'nav', 'aria-label': 'Glavna navigacija' }, h('div', { class: 'nav-u' }, nav)),
+      h('main', { id: 'glavno', tabindex: '-1' }),
+      h('div', { class: 'toast-sp', id: 'toasti', 'aria-live': 'polite' }));
+    return root;
+  }
+  function oznaciNav(ruta) { document.querySelectorAll('.nav a').forEach(a => { if (a.dataset.ruta === ruta) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); }); }
+  const glavno = () => $('#glavno');
+  const ucitava = tekst => h('div', { class: 'ucitava', role: 'status' }, h('div', {}, h('div', { class: 'vrti', 'aria-hidden': 'true' }), tekst || 'Učitavanje…'));
+  U.ucitava = ucitava; U.glavno = glavno;
+  function greskaEkran(r, ponovi) {
+    return h('div', { class: 'kartica' }, h('div', { class: 'greska-okvir', role: 'alert' }, h('strong', {}, 'Radnja nije uspjela. '), r.poruka || 'Došlo je do greške.'),
+      ponovi ? h('button', { type: 'button', class: 'dugme', onclick: ponovi }, 'Pokušaj ponovo') : null);
+  }
+  U.greskaEkran = greskaEkran;
+
+  /* ---------- ruter ---------- */
+  async function ruta() {
+    const A = U.A; if (!A.profil) return;
+    if (A.cuvar) { try { await A.cuvar(); } catch (e) { /* ignorisano */ } A.cuvar = null; }
+    ugasiScene();
+    const dijelovi = (location.hash.replace(/^#\/?/, '') || '').split('/');
+    const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if ((dijelovi[0] === 'izvjestaj' && !UUID.test(dijelovi[1] || '')) || (dijelovi[0] === 'novi' && !(/^\d{4}$/.test(dijelovi[1] || '') && /^\d{1,2}$/.test(dijelovi[2] || '')))) { location.replace('#/'); return; }
+    const g = glavno(); if (!g) return;
+    prazni(g); g.appendChild(ucitava());
+    let naziv = 'IDSS Pedagog';
+    try {
+      if (dijelovi[0] === 'arhiva') { oznaciNav('arhiva'); naziv = 'Arhiva'; await arhiva(g); }
+      else if (dijelovi[0] === 'bodovi') { oznaciNav('bodovi'); naziv = 'Kako se boduje'; pravila(g); }
+      else if (dijelovi[0] === 'novi') { oznaciNav('pocetna'); await novi(g, +dijelovi[1], +dijelovi[2]); return; }
+      else if (dijelovi[0] === 'izvjestaj' && dijelovi[1]) { oznaciNav('pocetna'); naziv = 'Izvještaj'; await U.izvjestaj(g, dijelovi[1], dijelovi[2]); }
+      else { oznaciNav('pocetna'); naziv = A.profil.uloga === 'direktor' ? 'Pregled' : 'Moj izvještaj'; await (A.profil.uloga === 'direktor' ? pocetnaDirektor(g) : pocetnaPedagog(g)); }
+    } catch (e) { console.error(e); prazni(g); g.appendChild(greskaEkran({ poruka: 'Neočekivana greška u prikazu. Osvježite stranicu.' })); }
+    document.title = naziv + ' · IDSS Pedagog';
+    const gl = $('h1', g); if (gl) { gl.setAttribute('tabindex', '-1'); }
+  }
+  async function novi(g, god, mj) {
+    const r = await Api.kreiraj(god, mj, L.uuid());
+    if (!r.ok) { prazni(g); g.appendChild(h('div', { class: 'naslov-stranice' }, h('h1', {}, 'Izvještaj nije moguće započeti')));
+      g.appendChild(greskaEkran(r)); g.appendChild(h('p', {}, h('a', { href: '#/' }, 'Nazad na početnu'))); return; }
+    location.replace('#/izvjestaj/' + r.izvjestaj.id);
+  }
+
+  /* ---------- početna: pedagog ---------- */
+  async function pocetnaPedagog(g) {
+    const r = await Api.pocetna();
+    if (!r.ok) { prazni(g); g.appendChild(greskaEkran(r, ruta)); return; }
+    const P = r.periodi;
+    const fokus = P.find(p => p.status === 'vracen') || P.find(p => p.status === 'nacrt') || P.find(p => p.status === 'nema' && p.godina === r.tekuci_period.godina && p.mjesec === r.tekuci_period.mjesec) || P.find(p => p.id) || P[0];
+    let izv = null;
+    if (fokus && fokus.id) { const u = await Api.ucitaj({ id: fokus.id }); if (u.ok) izv = u.izvjestaj; }
+    const model = izv ? modelBodova(izv) : { ukupno: 0, max: 900, po_grupama: {} };
+    const aktivan = fokus && (fokus.status === 'nacrt' || fokus.status === 'nema' || fokus.status === 'vracen');
+    prazni(g);
+    g.appendChild(h('div', { class: 'naslov-stranice' }, h('div', {}, h('h1', {}, 'Moj izvještaj'), h('p', { class: 'podnaslov' }, `Školska godina ${r.sezona.skolska_godina}/${String(r.sezona.skolska_godina + 1).slice(2)}.`))));
+
+    // hero
+    const platno = h('div', { class: 'platno' });
+    const akcija = !fokus ? null : fokus.status === 'nema' ? h('a', { class: 'dugme zlato', href: `#/novi/${fokus.godina}/${fokus.mjesec}` }, 'Započni izvještaj')
+      : (fokus.status === 'nacrt' || fokus.status === 'vracen') ? h('a', { class: 'dugme zlato', href: '#/izvjestaj/' + fokus.id }, fokus.status === 'vracen' ? 'Dopuni izvještaj' : 'Nastavi uređivanje')
+      : h('a', { class: 'dugme zlato', href: '#/izvjestaj/' + fokus.id }, 'Otvori izvještaj');
+    const konacno = izv && izv.bodovi && izv.bodovi.konacno;
+    const hero = h('section', { class: 'hero', 'aria-labelledby': 'hero-n' }, platno, h('div', { class: 'tekst' },
+      h('h2', { id: 'hero-n' }, fokus ? U.naslovPerioda(fokus.godina, fokus.mjesec) : 'Nema izvještaja'),
+      h('div', {}, cipStatus(fokus ? fokus.status : 'nema'), fokus && fokus.kasni ? h('span', { class: 'cip kasni', style: 'margin-left:.4rem' }, 'Kasni') : null),
+      h('p', { class: 'velik', style: 'margin:.7rem 0 .2rem' }, h('span', { id: 'hero-bodovi' }, String(model.ukupno)), h('small', {}, ` IDSS bodova`)),
+      h('p', { style: 'font-size:.92rem' }, !izv ? 'Bodovi se pojavljuju čim započnete izvještaj.' : konacno ? 'Konačan rezultat, uključujući ocjenu direktora.'
+        : fokus && (fokus.status === 'nacrt' || fokus.status === 'vracen') ? 'Trenutni obračun na osnovu unesenog (najviše 900; do 100 bodova dodaje ocjena direktora).'
+        : 'Obračun na osnovu podnesenog izvještaja; do 100 bodova dodaje ocjena direktora.'),
+      redGrupa(model), h('div', { style: 'margin-top:1rem' }, akcija)));
+    g.appendChild(hero); scena(platno, model);
+
+    // rok + sezona
+    const kartice = h('div', { class: 'mreza m2', style: 'margin-top:1rem' });
+    if (fokus && aktivan) {
+      const rok = fokus.status === 'vracen' ? fokus.rok_dopune : fokus.rok; const kasni = dana(r.danas, rok) < 0;
+      kartice.appendChild(h('section', { class: 'kartica' }, h('h2', {}, fokus.status === 'vracen' ? 'Rok za dopunu' : 'Rok za podnošenje'),
+        h('p', { class: 'plocica' }, h('span', { class: 'br ' + (kasni ? 'opasno' : '') }, L.fmtDatum(rok)), h('span', { class: 'on' }, rokTekst(rok, r.danas))),
+        kasni ? h('div', { class: 'upozorenje' }, 'Rok je istekao. Izvještaj se i dalje može podnijeti, ali kašnjenje smanjuje bodove za blagovremenost.') : h('p', { class: 'sitno', style: 'color:var(--ink2)' }, 'Podnošenje u roku donosi 200 bodova za blagovremenost.')));
+    }
+    const s = r.sezona;
+    kartice.appendChild(h('section', { class: 'kartica' }, h('h2', {}, 'Školska godina'),
+      s.broj_odobrenih ? h('div', {}, h('p', { class: 'plocica' }, h('span', { class: 'br' }, `${s.prosjek}`), h('span', { class: 'on' }, `prosjek od ${s.broj_odobrenih} ${mnozina(s.broj_odobrenih, 'odobrenog izvještaja', 'odobrena izvještaja')} · rang ${s.rang}`)),
+        s.sljedeci_rang ? h('p', { class: 'sitno', style: 'color:var(--ink2)' }, `Sljedeći rang „${s.sljedeci_rang.naziv}“ od prosjeka ${s.sljedeci_rang.prag}.`) : h('p', { class: 'sitno' }, 'Najviši rang je dostignut.'))
+        : h('p', { style: 'color:var(--ink2)' }, 'Rang se određuje prosjekom odobrenih izvještaja. Još nema odobrenog izvještaja u ovoj školskoj godini.'),
+      s.u_obradi ? h('p', { class: 'sitno', style: 'color:var(--ink2)' }, `U obradi kod direktora: ${s.u_obradi} bodova (privremeno).`) : null,
+      h('p', { class: 'sitno', style: 'color:var(--ink2)' }, `Uzastopni izvještaji u roku: ${r.serija}.`)));
+    g.appendChild(kartice);
+
+    // staza
+    g.appendChild(h('section', { style: 'margin-top:1.4rem', 'aria-labelledby': 'staza-n' }, h('h2', { id: 'staza-n' }, 'Mjeseci'),
+      h('div', { class: 'staza' }, P.map(p => mjesecRed(p, r.danas)))));
+    g.appendChild(h('section', { style: 'margin-top:1.4rem', 'aria-labelledby': 'znacke-n' }, h('h2', { id: 'znacke-n' }, 'Značke'),
+      h('ul', { class: 'znacke' }, r.znacke.map(z => h('li', { class: 'znacka' + (z.stecena ? ' stecena' : '') }, h('span', { class: 'ikona', 'aria-hidden': 'true' }, z.stecena ? '✓' : '•'),
+        h('span', {}, h('b', {}, z.naziv), h('span', { class: 'sitno' }, z.opis), z.stecena ? h('span', { class: 'sr-samo sakriveno' }, ' (stečena)') : h('span', { class: 'sakriveno' }, ' (nije stečena)')))))));
+    // obavijest o nedavnom odobrenju
+    const odobreni = P.find(p => p.status === 'odobren' && p.konacno);
+    if (odobreni) { const kljuc = 'idss_vidjeno_' + odobreni.id; if (!LS.get(kljuc)) { LS.set(kljuc, '1'); const u = await Api.ucitaj({ id: odobreni.id }); if (u.ok && u.izvjestaj.odobren_u && Date.now() - Date.parse(u.izvjestaj.odobren_u) < 14 * 864e5) U.slavlje(u.izvjestaj, 'Izvještaj je odobren'); } }
+  }
+  function mjesecRed(p, danas) {
+    const akcija = p.status === 'nema' ? h('a', { class: 'dugme malo zlato', href: `#/novi/${p.godina}/${p.mjesec}` }, 'Započni')
+      : h('a', { class: 'dugme malo sekund', href: '#/izvjestaj/' + p.id }, p.status === 'nacrt' ? 'Nastavi' : p.status === 'vracen' ? 'Dopuni' : 'Otvori');
+    const sitno = p.status === 'vracen' ? `Rok za dopunu: ${L.fmtDatum(p.rok_dopune)} (${rokTekst(p.rok_dopune, danas)})`
+      : (p.status === 'nema' || p.status === 'nacrt') ? `Rok: ${L.fmtDatum(p.rok)} (${rokTekst(p.rok, danas)})` : p.na_vrijeme === false ? 'Podneseno nakon roka' : p.na_vrijeme ? 'Podneseno u roku' : '';
+    return h('div', { class: 'mjesec ' + (p.kasni ? 'kasni' : p.status) },
+      h('div', { class: 'naziv' }, U.naslovPerioda(p.godina, p.mjesec)),
+      h('div', {}, cipStatus(p.status), p.kasni ? h('span', { class: 'cip kasni', style: 'margin-left:.4rem' }, 'Kasni') : null, h('div', { class: 'sitno' }, sitno)),
+      h('div', { style: 'display:flex;gap:.8rem;align-items:center' }, p.bodovi_ukupno !== null && p.bodovi_ukupno !== undefined ? h('div', { class: 'bod', title: p.konacno ? 'Konačni bodovi' : 'Privremeni bodovi' }, String(p.bodovi_ukupno), p.konacno ? '' : '*') : null, akcija));
+  }
+
+  /* ---------- početna: direktor ---------- */
+  async function pocetnaDirektor(g) {
+    const r = await Api.pocetna();
+    if (!r.ok) { prazni(g); g.appendChild(greskaEkran(r, ruta)); return; }
+    prazni(g);
+    g.appendChild(h('div', { class: 'naslov-stranice' }, h('div', {}, h('h1', {}, 'Pregled za direktora'), h('p', { class: 'podnaslov' }, 'Podneseni izvještaji, kašnjenja, rizici i preporuke koje čekaju odluku. Sadržaj nacrta nije vidljiv.'))));
+    const kr = r.rizici_po_ozbiljnosti;
+    g.appendChild(h('div', { class: 'mreza m4' },
+      h('div', { class: 'kartica plocica' + (r.cekaju.length ? ' pazi' : '') }, h('span', { class: 'br' }, String(r.cekaju.length)), h('span', { class: 'on' }, 'čeka Vašu odluku')),
+      h('div', { class: 'kartica plocica' + (r.kasne.length ? ' opasno' : '') }, h('span', { class: 'br' }, String(r.kasne.length)), h('span', { class: 'on' }, 'izvještaja kasni')),
+      h('div', { class: 'kartica plocica' + (kr['Kritičan'] ? ' opasno' : '') }, h('span', { class: 'br' }, String(r.rizici.length)), h('span', { class: 'on' }, `aktivnih rizika (kritičnih: ${kr['Kritičan']}, visokih: ${kr['Visok']})`)),
+      h('div', { class: 'kartica plocica' + (r.preporuke_na_cekanju.length ? ' pazi' : '') }, h('span', { class: 'br' }, String(r.preporuke_na_cekanju.length)), h('span', { class: 'on' }, 'preporuka bez odluke'))));
+    const tabela = (zag, redovi) => h('div', { class: 'tabela-omot' }, h('table', {}, h('thead', {}, h('tr', {}, zag.map(z => h('th', { class: z.br ? 'br' : '' }, z.t)))), h('tbody', {}, redovi)));
+    g.appendChild(h('section', { class: 'kartica', style: 'margin-top:1rem' }, h('h2', {}, 'Čekaju Vašu odluku'),
+      r.cekaju.length ? tabela([{ t: 'Pedagog' }, { t: 'Period' }, { t: 'Podneseno' }, { t: 'Podnošenje' }, { t: 'Bodovi (bez ocjene)', br: 1 }, { t: '' }],
+        r.cekaju.map(c => h('tr', {}, h('td', {}, c.pedagog), h('td', {}, U.naslovPerioda(c.godina, c.mjesec)), h('td', {}, fmtVrijeme(c.podnesen_u)), h('td', {}, c.ciklus === 1 ? 'prvo' : `${c.ciklus}. (nakon dopune)`),
+          h('td', { class: 'br tabular' }, String(c.bodovi_zbroj)), h('td', {}, h('a', { class: 'dugme malo', href: '#/izvjestaj/' + c.id }, 'Pregledaj')))))
+        : h('div', { class: 'prazno' }, h('strong', {}, 'Nema izvještaja na čekanju'), 'Novi podneseni izvještaji pojavit će se ovdje.')));
+    g.appendChild(h('section', { class: 'kartica', style: 'margin-top:1rem' }, h('h2', {}, 'Izvještaji koji kasne'),
+      r.kasne.length ? tabela([{ t: 'Pedagog' }, { t: 'Period' }, { t: 'Stanje' }, { t: 'Rok' }, { t: 'Kasni', br: 1 }],
+        r.kasne.map(k => h('tr', {}, h('td', {}, k.pedagog), h('td', {}, U.naslovPerioda(k.godina, k.mjesec)), h('td', {}, k.status === 'nema' ? 'Nije započet' : k.status === 'nacrt' ? 'Nije podnesen' : 'Dopuna nije podnesena'),
+          h('td', {}, L.fmtDatum(k.rok)), h('td', { class: 'br' }, `${k.kasni_radnih_dana} ${mnozina(k.kasni_radnih_dana, 'radni dan', 'radnih dana')}`))))
+        : h('div', { class: 'prazno' }, h('strong', {}, 'Ništa ne kasni'), 'Svi izvještaji su u roku.')));
+    const boja = { 'Kritičan': 'kasni', 'Visok': 'vracen', 'Srednji': 'podnesen', 'Nizak': 'nacrt' };
+    g.appendChild(h('section', { class: 'kartica', style: 'margin-top:1rem' }, h('h2', {}, 'Aktivni rizici'),
+      h('p', { class: 'sitno', style: 'color:var(--ink2)' }, 'Posljednje podneseno stanje svakog rizika. Riješeni rizici nisu prikazani.'),
+      r.rizici.length ? tabela([{ t: 'Šifra' }, { t: 'Ozbiljnost' }, { t: 'Opis' }, { t: 'Stanje' }, { t: 'Rok mjere' }],
+        r.rizici.map(x => h('tr', {}, h('td', {}, x.kod), h('td', {}, h('span', { class: 'cip ' + boja[x.ozbiljnost] }, x.ozbiljnost)), h('td', {}, x.opis, h('div', { class: 'sitno', style: 'color:var(--ink2)' }, x.kategorija)), h('td', {}, x.status), h('td', {}, x.rok ? L.fmtDatum(x.rok) : '—'))))
+        : h('div', { class: 'prazno' }, h('strong', {}, 'Nema aktivnih rizika'), 'Podneseni izvještaji ne sadrže otvorene rizike.')));
+    g.appendChild(h('section', { class: 'kartica', style: 'margin-top:1rem' }, h('h2', {}, 'Preporuke bez odluke'),
+      r.preporuke_na_cekanju.length ? tabela([{ t: 'Pedagog' }, { t: 'Period' }, { t: 'Preporuka' }, { t: 'Utjecaj' }, { t: '' }],
+        r.preporuke_na_cekanju.map(x => h('tr', {}, h('td', {}, x.pedagog), h('td', {}, U.naslovPerioda(x.godina, x.mjesec)), h('td', {}, x.naslov), h('td', {}, x.utjecaj), h('td', {}, h('a', { class: 'dugme malo', href: '#/izvjestaj/' + x.izvjestaj_id }, 'Odluči')))))
+        : h('div', { class: 'prazno' }, h('strong', {}, 'Nema preporuka na čekanju'), 'Odluke se donose u pregledu podnesenog izvještaja.')));
+    g.appendChild(h('section', { class: 'kartica', style: 'margin-top:1rem' }, h('h2', {}, 'Posljednji izvještaji'),
+      r.izvjestaji.length ? tabela([{ t: 'Pedagog' }, { t: 'Period' }, { t: 'Stanje' }, { t: 'U roku' }, { t: 'IDSS bodovi', br: 1 }, { t: '' }],
+        r.izvjestaji.slice(0, 12).map(x => h('tr', {}, h('td', {}, x.pedagog), h('td', {}, U.naslovPerioda(x.godina, x.mjesec)), h('td', {}, cipStatus(x.status)),
+          h('td', {}, x.na_vrijeme === null ? '—' : x.na_vrijeme ? 'Da' : 'Ne'), h('td', { class: 'br tabular' }, x.bodovi_ukupno === null ? '—' : x.bodovi_ukupno + (x.konacno ? '' : '*')), h('td', {}, h('a', { class: 'dugme malo sekund', href: '#/izvjestaj/' + x.id }, 'Otvori')))))
+        : h('div', { class: 'prazno' }, h('strong', {}, 'Još nema podnesenih izvještaja'), '')));
+    g.appendChild(h('p', { class: 'sitno', style: 'color:var(--ink2)' }, '* Privremeni bodovi: konačni iznos se utvrđuje odobrenjem i ocjenom direktora.'));
+  }
+
+  /* ---------- arhiva ---------- */
+  async function arhiva(g) {
+    const r = await Api.arhiva();
+    if (!r.ok) { prazni(g); g.appendChild(greskaEkran(r, ruta)); return; }
+    prazni(g);
+    g.appendChild(h('div', { class: 'naslov-stranice' }, h('div', {}, h('h1', {}, 'Arhiva izvještaja'), h('p', { class: 'podnaslov' }, 'Svi mjesečni izvještaji sa historijom promjena. Podneseni i odobreni izvještaji se čuvaju nepromjenjivo.'))));
+    g.appendChild(h('section', { class: 'kartica' }, r.izvjestaji.length ? h('div', { class: 'tabela-omot' }, h('table', {}, h('thead', {}, h('tr', {}, ['Period', 'Pedagog', 'Stanje', 'Podneseno', 'Podnošenja', 'IDSS bodovi', ''].map((t, i) => h('th', { class: i === 5 ? 'br' : '' }, t)))),
+      h('tbody', {}, r.izvjestaji.map(x => h('tr', {}, h('td', {}, U.naslovPerioda(x.godina, x.mjesec)), h('td', {}, x.pedagog), h('td', {}, cipStatus(x.status)), h('td', {}, fmtVrijeme(x.podnesen_u)),
+        h('td', {}, String(x.ciklus)), h('td', { class: 'br tabular' }, x.bodovi_ukupno === null ? '—' : x.bodovi_ukupno + (x.konacno ? '' : '*')), h('td', {}, h('a', { class: 'dugme malo sekund', href: '#/izvjestaj/' + x.id }, 'Otvori')))))))
+      : h('div', { class: 'prazno' }, h('strong', {}, 'Arhiva je prazna'), 'Izvještaji se pojavljuju čim se kreiraju.')));
+  }
+
+  /* ---------- pravila bodovanja ---------- */
+  function pravila(g) {
+    prazni(g);
+    const tab = (naslov, ukupno, redovi) => h('section', { class: 'kartica' }, h('h2', {}, `${naslov} (najviše ${ukupno})`),
+      h('div', { class: 'tabela-omot' }, h('table', {}, h('thead', {}, h('tr', {}, h('th', {}, 'Stavka'), h('th', { class: 'br' }, 'Najviše'), h('th', {}, 'Kako se računa'))), h('tbody', {}, redovi.map(x => h('tr', {}, h('td', {}, x[0]), h('td', { class: 'br tabular' }, String(x[1])), h('td', {}, x[2])))))));
+    g.appendChild(h('div', { class: 'naslov-stranice' }, h('div', {}, h('h1', {}, 'Kako se boduje'), h('p', { class: 'podnaslov' }, 'IDSS bodovi se računaju iz stvarnog sadržaja izvještaja i rokova. Isti obračun radi server, pa se rezultat ne može izmijeniti u pregledniku.'))));
+    g.appendChild(h('div', { class: 'info' }, 'Najviše 1000 bodova po izvještaju: do 900 računa sistem, a do 100 dodaje ocjena direktora o kvalitetu (0–5, po 20 bodova). Vrijednosti su prijedlog i mogu se prilagoditi odlukom uprave.'));
+    g.appendChild(h('div', { class: 'mreza m2' },
+      tab('Blagovremenost', 250, [['Podnošenje u roku', 200, 'Puni iznos do roka; za svaki radni dan kašnjenja 50 bodova manje (nakon četiri dana 0). Rok je 5. u sljedećem mjesecu, a ako je neradni dan, prvi sljedeći radni dan.'],
+        ['Dopuna u roku', 50, 'Ako izvještaj nije vraćen, 50 bodova. Ako je vraćen, dopuna u roku od 3 radna dana zadržava 50; svaki dan kašnjenja oduzima 25.']]),
+      tab('Sadržaj', 250, [['Cjelovitost odjeljaka', 100, 'Učenici 20, nastavnici 20, roditelji 15, radionice 15, QMS i administracija 15, zaključak i plan 15 — svaki cjelovit odjeljak donosi svoj dio.'],
+        ['Konkretnost opisa', 75, 'Pet narativnih polja po 15 bodova: 8 bodova od 80 znakova, 15 od 150 znakova.'],
+        ['Konkretnost plana', 50, 'Plan za sljedeći mjesec: 20 bodova od 50, 35 od 120 i 50 od 200 znakova.'],
+        ['Mjere uz rizike', 25, 'Svaki evidentirani rizik ima korektivnu mjeru i rok; bez rizika puni iznos.']]),
+      tab('Stručnost', 200, [['Posjete časovima', 60, 'Udio realiziranih u planiranim posjetama (do 100%). Ako posjete nisu planirane, 30 bodova.'],
+        ['Održane radionice', 50, '20 bodova po održanoj radionici (najviše dvije) i +10 ako su radionice održane za najmanje dvije ciljne grupe.'],
+        ['Stručno usavršavanje', 40, '10 bodova po satu usavršavanja, najviše 40.'],
+        ['QP 05: radionice i obuke u zapisu', 20, 'Udio održanih radionica i obuka (za nastavnike, učenike i roditelje) koje su zavedene u zapis QP 05. Bez održanih radionica: 10 bodova.'],
+        ['QP 09: posjete kreativnim časovima', 20, 'Udio održanih kreativnih časova koje je pedagog posjetio i evidentirao na obrascu QP 09.PC-02. Bez planiranih i održanih časova: 10 bodova; planirani, a neodržani: 0.'],
+        ['Stanje eDnevnika', 10, 'Uredno 10, u toku 6, zahtijeva intervenciju 4 boda.']]),
+      tab('Efikasnost', 200, [['Rješavanje rizika', 60, 'Udio riješenih u rizicima koji su razmatrani u mjesecu (preneseni i novi).'],
+        ['Mjere u roku', 60, 'Udio aktivnih rizika kojima rok mjere nije probijen.'],
+        ['Prihvaćeno bez vraćanja', 40, 'Prvo podnošenje 40, nakon jednog vraćanja 20, nakon više vraćanja 0.'],
+        ['Realizacija radionica', 40, 'Udio održanih u evidentiranim radionicama; bez radionica 20 bodova.']])));
+    g.appendChild(h('section', { class: 'kartica', style: 'margin-top:1rem' }, h('h2', {}, 'Rang'),
+      h('p', {}, 'Rang se određuje prosjekom konačnih bodova odobrenih izvještaja u školskoj godini (školska godina počinje u septembru).'),
+      h('ul', {}, [['Pripravnik', 'do 499'], ['Saradnik', '500–649'], ['Stručnjak', '650–799'], ['Majstor', '800–899'], ['Velemajstor', '900 i više']].map(x => h('li', {}, `${x[0]}: ${x[1]}`)))));
+  }
+
+  /* ---------- slavlje (nakon stvarnog događaja) ---------- */
+  U.slavlje = function (izv, naslov) {
+    const model = modelBodova(izv); const platno = h('div', { style: 'height:260px;position:relative' });
+    let sc = null;
+    const m = modal({ naslov, sirok: true, tijelo: h('div', {}, platno,
+      h('p', { class: 'plocica' }, h('span', { class: 'br' }, `${model.ukupno} IDSS bodova`), h('span', { class: 'on' }, izv.bodovi && izv.bodovi.konacno ? 'konačni rezultat' : 'privremeni rezultat, do konačnog obračuna nakon odluke direktora')), redGrupa(model)),
+      dugmad: [{ tekst: 'Nastavi', klasa: 'zlato' }], poZatvaranju: () => { if (sc) sc.ugasi(); } });
+    sc = Scena.montiraj((() => { const c = h('canvas', { style: 'position:absolute;inset:0;width:100%;height:100%', 'aria-hidden': 'true' }); platno.appendChild(c); return c; })(), { mirno: !U.A.animacije });
+    if (sc) { sc.postavi(model); sc.slavlje(); } else platno.appendChild(prstenoviSvg(model));
+    return m;
+  };
+
+  /* ---------- pokretanje i prijava ---------- */
+  function prijavaEkran() {
+    const cfgSpremljen = (() => { try { return JSON.parse(LS.get('idss_cfg') || 'null'); } catch (e) { return null; } })();
+    const url = h('input', { type: 'url', id: 'cfg-url', value: (cfgSpremljen && cfgSpremljen.url) || (window.IDSS_CONFIG && window.IDSS_CONFIG.url) || '', autocomplete: 'off' });
+    const kljuc = h('input', { type: 'text', id: 'cfg-kljuc', value: (cfgSpremljen && cfgSpremljen.kljuc) || (window.IDSS_CONFIG && window.IDSS_CONFIG.kljuc) || '', autocomplete: 'off', spellcheck: 'false' });
+    const email = h('input', { type: 'email', id: 'p-email', required: true, autocomplete: 'username' });
+    const loz = h('input', { type: 'password', id: 'p-loz', required: true, autocomplete: 'current-password' });
+    const poruka = h('div', { id: 'p-poruka', role: 'alert' });
+    const forma = h('form', { onsubmit: async e => {
+        e.preventDefault(); prazni(poruka);
+        Api.postavi({ url: url.value.trim(), kljuc: kljuc.value.trim() });
+        if (!Api.konfigurisano()) { poruka.appendChild(h('div', { class: 'greska-okvir' }, 'Postavke veze nisu potpune: unesite adresu projekta (https://….supabase.co) i javni „anon“ ključ.')); return; }
+        LS.set('idss_cfg', JSON.stringify({ url: url.value.trim(), kljuc: kljuc.value.trim() }));
+        const dug = $('#p-dugme'); dug.disabled = true; dug.textContent = 'Prijava…';
+        const r = await Api.prijava(email.value.trim(), loz.value);
+        dug.disabled = false; dug.textContent = 'Prijavi se';
+        if (!r.ok) { poruka.appendChild(h('div', { class: 'greska-okvir' }, r.poruka)); return; }
+        U.pokreni();
+      } },
+      h('div', { class: 'polje' }, h('label', { for: 'p-email' }, 'E-pošta'), email),
+      h('div', { class: 'polje' }, h('label', { for: 'p-loz' }, 'Lozinka'), loz),
+      poruka, h('button', { type: 'submit', class: 'dugme zlato', id: 'p-dugme' }, 'Prijavi se'));
+    return h('div', { class: 'prijava-omot' }, h('main', { class: 'prijava' },
+      h('img', { src: 'https://idss.edu.ba/wp-content/uploads/2024/03/logo_white.png', alt: 'IDSS', onerror: e => { e.target.style.display = 'none'; } }),
+      h('h1', {}, 'IDSS Pedagog'), h('p', { class: 'podnaslov', style: 'margin-bottom:1rem' }, 'Mjesečni izvještaj pedagoga za direktora škole'),
+      forma,
+      h('details', { style: 'margin-top:1rem' }, h('summary', {}, 'Postavke veze sa Supabase-om'),
+        h('p', { class: 'sitno', style: 'color:var(--ink2)' }, 'Javni „anon“ ključ nije tajna, ali nikad ovdje ne unosite „service_role“ ključ.'),
+        h('div', { class: 'polje' }, h('label', { for: 'cfg-url' }, 'Adresa projekta'), url),
+        h('div', { class: 'polje', style: 'margin-top:.6rem' }, h('label', { for: 'cfg-kljuc' }, 'Anon (publishable) ključ'), kljuc)),
+      h('hr', { style: 'border:none;border-top:1px solid var(--line);margin:1.2rem 0' }),
+      h('p', { style: 'margin-bottom:.5rem' }, h('strong', {}, 'Probni režim'), ' — izmišljeni podaci, bez servera:'),
+      h('div', { style: 'display:flex;gap:.6rem;flex-wrap:wrap' },
+        h('button', { type: 'button', class: 'dugme sekund', id: 'demo-ped', onclick: () => { Api.demo('pedagog'); U.pokreni(); } }, 'Uđi kao pedagog'),
+        h('button', { type: 'button', class: 'dugme sekund', id: 'demo-dir', onclick: () => { Api.demo('direktor'); U.pokreni(); } }, 'Uđi kao direktor'))));
+  }
+
+  U.pokreni = async function () {
+    const korijen = $('#aplikacija'); const A = U.A;
+    A.animacije = true;
+    ugasiScene(); prazni(korijen);
+    let cfg = null; try { cfg = JSON.parse(LS.get('idss_cfg') || 'null'); } catch (e) { cfg = null; }
+    if (!cfg && window.IDSS_CONFIG) cfg = window.IDSS_CONFIG;
+    if (cfg) Api.postavi(cfg);
+    let prijavljen = Api.nacin() === 'demo';
+    if (!prijavljen && Api.konfigurisano()) { korijen.appendChild(ucitava('Provjera prijave…')); prijavljen = await Api.obnovi(); prazni(korijen); }
+    if (!prijavljen) { document.title = 'Prijava · IDSS Pedagog'; korijen.appendChild(prijavaEkran()); return; }
+    const p = await Api.profil();
+    if (!p.ok) {
+      korijen.appendChild(h('div', { class: 'prijava-omot' }, h('main', { class: 'prijava' }, h('h1', {}, 'Pristup nije moguć'),
+        h('div', { class: 'greska-okvir', role: 'alert' }, p.poruka), p.kod === 'NEOVLASTEN' ? h('p', {}, 'Obratite se upravi škole da Vam otvori pristup.') : null,
+        h('button', { type: 'button', class: 'dugme sekund', onclick: async () => { await Api.odjava(); U.pokreni(); } }, 'Nazad na prijavu'))));
+      return;
+    }
+    A.profil = p; korijen.appendChild(ljuska());
+    if (!window.__idssRuter) { window.addEventListener('hashchange', () => { if (U.A.profil) ruta(); }); window.__idssRuter = true; }
+    if (!location.hash) location.hash = '#/'; else ruta();
+  };
+  U.ruta = ruta; U.pocetnaPedagog = pocetnaPedagog;
+  return U;
+})();
+
+/* =====================================================================
+   UI — izvještaj: uređivač (pedagog), pregled i odluke (direktor).
+   ===================================================================== */
+(function (U) {
+  'use strict';
+  const L = Logika, h = U.h, $ = U.$, prazni = U.prazni;
+  const dubok = x => JSON.parse(JSON.stringify(x));
+
+  const KORACI = [
+    { k: 'ucenici', n: 'Rad sa učenicima' }, { k: 'nastavnici', n: 'Saradnja sa nastavnicima' }, { k: 'roditelji', n: 'Saradnja sa roditeljima' },
+    { k: 'radionice', n: 'Radionice' }, { k: 'usavrsavanje', n: 'Stručno usavršavanje' }, { k: 'rizici', n: 'Rizici' },
+    { k: 'preporuke', n: 'Preporuke direktoru' }, { k: 'administracija', n: 'QMS (QP 05, QP 09) i administracija' }, { k: 'zakljucak', n: 'Zaključak i plan' },
+    { k: 'pregled', n: 'Pregled i podnošenje' }];
+  const UVOD = {
+    ucenici: 'Odnos sa učenicima: razgovori, grupne aktivnosti, teme i rad sa darovitim učenicima. Preporuka: izbjegavajte imena učenika.',
+    nastavnici: 'Saradnja sa nastavnicima: posjete časovima, konsultacije, mentorstvo i koordinacija.',
+    roditelji: 'Saradnja sa roditeljima: individualni razgovori, roditeljski sastanci i pisana komunikacija.',
+    radionice: 'Radionice koje ste održali ili planirali za učenike, nastavnike i roditelje. Ako radionica nije bilo, obrazložite izostanak.',
+    usavrsavanje: 'Vaše stručno usavršavanje u mjesecu (seminari, webinari, mentorski rad…). Odjeljak nije obavezan.',
+    rizici: 'Evidencija rizika (pedagoških, akademskih, sigurnosnih i organizacijskih) sa mjerom i rokom. Rizici iz ranijih mjeseci koji nisu riješeni prenose se automatski.',
+    preporuke: 'Preporuke direktoru koje zahtijevaju njegovu odluku. Odjeljak nije obavezan.',
+    administracija: 'IDSS ima implementiran ISO 9001:2015. Za pedagoga su mjerodavne procedure QP 05 Obuka i QP 09 Kreativni čas sa pripadajućim obrascima. Ovdje se unose kreativni časovi, stanje eDnevnika i prepiska sa MOOKS-om.',
+    zakljucak: 'Ključna postignuća mjeseca i konkretan plan za sljedeći mjesec.',
+  };
+  const S_ = (k, l, t, o) => Object.assign({ k, l, t }, o || {});
+  const SPEC = {
+    ucenici: [S_('individualni_razgovori', 'Individualni razgovori sa učenicima', 'b', { max: 500, pomoc: 'Ukupan broj razgovora u mjesecu (0 ako ih nije bilo).' }),
+      S_('razliciti_ucenici', 'Broj različitih učenika', 'b', { max: 500, pomoc: 'Sa koliko je različitih učenika razgovarano; ne može biti više od broja razgovora.' }),
+      S_('grupni_rad', 'Grupne i razredne aktivnosti', 'b', { max: 200 }), S_('daroviti_ucenici', 'Daroviti učenici u radu', 'b', { max: 200 }),
+      S_('teme', 'Teme rada sa učenicima', 'v', { opc: 'teme', pomoc: 'Odaberite barem jednu temu ako je bilo individualnih razgovora.' }),
+      S_('sazetak', 'Sažetak rada sa učenicima', 't', { min: 50, max: 2500, bod: 150, pomoc: 'Ključne teme, ishodi i dogovorene mjere.' })],
+    nastavnici: [S_('posjete_planirano', 'Planirane posjete časovima', 'b', { max: 200 }), S_('posjete_realizirano', 'Realizirane posjete časovima', 'b', { max: 200 }),
+      S_('razredi', 'Razredi u kojima su posjećeni časovi', 's', { max: 250, pomoc: 'Obavezno ako je bilo posjeta.' }),
+      S_('nalazi', 'Nalazi posjeta časovima', 't', { min: 50, max: 2500, pomoc: 'Obavezno ako je bilo posjeta.' }),
+      S_('obrazlozenje_prekoracenja', 'Obrazloženje prekoračenja plana posjeta', 't', { min: 20, max: 1000, uslov: o => (o.posjete_realizirano || 0) > (o.posjete_planirano || 0) && o.posjete_planirano !== undefined }),
+      S_('konsultacije', 'Konsultacije sa nastavnicima', 'b', { max: 500 }), S_('mentorstvo_sati', 'Sati mentorstva i stručne pomoći', 'b', { max: 200 }),
+      S_('sastanci_vijeca', 'Sjednice vijeća', 'b', { max: 50 }),
+      S_('koordinacija', 'Koordinacija sa nastavnicima i stručnim organima', 't', { min: 30, max: 2000, bod: 150 })],
+    roditelji: [S_('individualni_razgovori', 'Individualni razgovori sa roditeljima', 'b', { max: 500 }), S_('roditeljski_sastanci', 'Roditeljski sastanci', 'b', { max: 50 }),
+      S_('pisana_komunikacija', 'Pisana komunikacija sa roditeljima', 'b', { max: 1000 }),
+      S_('biljeske', 'Sažetak saradnje sa roditeljima', 't', { min: 30, max: 2000, bod: 150 })],
+    administracija: [S_('kreativni_planirano', 'Kreativni časovi planirani (QP 09.PO-01)', 'b', { max: 200, pomoc: 'Broj kreativnih časova predviđenih Planom održavanja kreativnih časova (QP 09.PO-01) za ovaj mjesec.' }),
+      S_('kreativni_odrzano', 'Održani kreativni časovi', 'b', { max: 200, pomoc: 'Koliko je kreativnih časova održano u školi u ovom mjesecu.' }),
+      S_('kreativni_posjeceno', 'Posjećeni i evidentirani (QP 09.PC-02)', 'b', { max: 200, pomoc: 'Na koliko održanih kreativnih časova ste bili prisutni i zapis unijeli na obrazac „Ostvareni uvid u odgojno-obrazovni rad – posjeta času“ (QP 09.PC-02).' }),
+      S_('kreativni_napomena', 'Obrazloženje odstupanja kod kreativnih časova', 't', { min: 20, max: 1000, uslov: o => o.kreativni_planirano !== undefined && o.kreativni_odrzano !== undefined && o.kreativni_posjeceno !== undefined && (o.kreativni_planirano !== o.kreativni_odrzano || o.kreativni_posjeceno < o.kreativni_odrzano), pomoc: 'Obavezno kada održano nije jednako planiranom ili kada nije posjećen svaki održani čas.' }),
+      S_('ednevnik', 'Stanje eDnevnika', 'i', { opc: 'ednevnik' }),
+      S_('mooks_sazetak', 'Sažetak prepiske sa MOOKS-om', 't', { min: 20, max: 1500, bod: 150 }),
+      S_('dokumentacija', 'Napomene o dokumentaciji', 't', { min: 1, max: 1500, neobavezno: true })],
+    zakljucak: [S_('postignuca', 'Ključna postignuća u mjesecu', 't', { min: 50, max: 2000, bod: 150 }),
+      S_('plan_sljedeci', 'Plan za sljedeći mjesec', 't', { min: 50, max: 2000, bod: 200, pomoc: 'Što konkretnije: aktivnosti, rokovi, ciljne grupe.' })],
+  };
+  const SPEC_RAD = [S_('ciljna_grupa', 'Ciljna grupa', 'i', { opc: 'grupe' }), S_('naslov', 'Naslov radionice', 's', { min: 5, max: 150 }), S_('datum', 'Datum', 'd'),
+    S_('trajanje_min', 'Trajanje (minuta)', 'b', { min: 15, max: 480 }), S_('status', 'Status', 'i', { opc: 'radStatus' }), S_('ucesnika', 'Broj učesnika', 'b', { max: 500 }),
+    S_('ishod', 'Ishod radionice', 't', { min: 20, max: 1000, uslov: o => o.status === 'održano' }),
+    S_('qp05_zapis', 'Zavedeno u zapis QP 05 (Evidencija obuke, QP 05.EO-02)', 'i', { opc: 'daNe', pomoc: 'Da li je ova radionica ili obuka upisana u zapise koje propisuje procedura QP 05 Obuka.' })];
+  const SPEC_USV = [S_('naslov', 'Naslov usavršavanja', 's', { min: 5, max: 150 }), S_('vrsta', 'Vrsta', 'i', { opc: 'usavrsavanje' }), S_('sati', 'Broj sati', 'b', { min: 1, max: 100 }), S_('datum', 'Datum', 'd')];
+  const SPEC_RIZ = [S_('kategorija', 'Kategorija', 'i', { opc: 'kategorija' }), S_('opis', 'Opis rizika', 't', { min: 10, max: 500 }), S_('ozbiljnost', 'Ozbiljnost', 'i', { opc: 'ozbiljnost' }),
+    S_('status', 'Status rizika', 'i', { opc: 'statusRizika' }), S_('mjera', 'Korektivna mjera', 't', { min: 10, max: 500 }), S_('rok', 'Rok mjere', 'd')];
+  const SPEC_PREP = [S_('naslov', 'Naslov preporuke', 's', { min: 5, max: 150 }), S_('obrazlozenje', 'Obrazloženje', 't', { min: 20, max: 1000 }), S_('utjecaj', 'Utjecaj na resurse', 'i', { opc: 'utjecaj' })];
+  const NASLOV_SEK = { ucenici: 'Rad sa učenicima', nastavnici: 'Saradnja sa nastavnicima', roditelji: 'Saradnja sa roditeljima', administracija: 'QMS (QP 05, QP 09) i administracija', zakljucak: 'Zaključak i plan' };
+  const ENUM_PRIKAZ = {};
+
+  /* ---------- prikaz samo za čitanje ---------- */
+  function vrijednost(o, sp) {
+    const v = o ? o[sp.k] : undefined;
+    if (v === undefined || v === null || v === '' || (Array.isArray(v) && !v.length)) return '—';
+    if (Array.isArray(v)) return v.join(', ');
+    if (sp.t === 'd') return L.fmtDatum(v);
+    return String(v);
+  }
+  function dl(o, spec) {
+    const red = [];
+    spec.filter(sp => !sp.uslov || sp.uslov(o || {})).forEach(sp => { red.push(h('dt', {}, sp.l)); red.push(h('dd', {}, vrijednost(o, sp))); });
+    return h('dl', {}, red);
+  }
+  function stavkeCitanje(lista, spec, naslovFn, prazno) {
+    if (!lista || !lista.length) return h('p', { style: 'color:var(--ink2)' }, prazno);
+    return h('div', { style: 'display:grid;gap:.7rem' }, lista.map((x, i) => h('div', { class: 'stavka-k' }, h('header', {}, h('b', {}, naslovFn(x, i))), dl(x, spec))));
+  }
+  function sadrzajCitanje(izv) {
+    const s = izv.sadrzaj || {}, rr = [];
+    ['ucenici', 'nastavnici', 'roditelji'].forEach(k => rr.push(h('section', { class: 'kartica pregled-sek' }, h('h2', {}, NASLOV_SEK[k]), dl(s[k], SPEC[k]))));
+    const rad = s.radionice || {};
+    rr.push(h('section', { class: 'kartica pregled-sek' }, h('h2', {}, 'Radionice'),
+      stavkeCitanje(rad.stavke, SPEC_RAD, (x, i) => `${i + 1}. ${x.naslov || 'Radionica'}`, 'Nema evidentiranih radionica.'),
+      rad.nema_obrazlozenje ? h('dl', {}, h('dt', {}, 'Obrazloženje izostanka'), h('dd', {}, rad.nema_obrazlozenje)) : null));
+    rr.push(h('section', { class: 'kartica pregled-sek' }, h('h2', {}, 'Stručno usavršavanje'),
+      stavkeCitanje((s.usavrsavanje || {}).stavke, SPEC_USV, (x, i) => `${i + 1}. ${x.naslov || 'Usavršavanje'}`, 'Nema unesenog usavršavanja.')));
+    rr.push(h('section', { class: 'kartica pregled-sek' }, h('h2', {}, 'Rizici'),
+      stavkeCitanje(izv.rizici, SPEC_RIZ.concat([]), (x, i) => `${x.kod || 'Rizik'}${x.prenesen ? ' (prenesen iz ranijeg mjeseca)' : ''}`, 'Nema evidentiranih rizika.')));
+    rr.push(h('section', { class: 'kartica pregled-sek' }, h('h2', {}, 'Administracija i QMS'), dl(s.administracija, SPEC.administracija)));
+    rr.push(h('section', { class: 'kartica pregled-sek' }, h('h2', {}, 'Zaključak i plan'), dl(s.zakljucak, SPEC.zakljucak)));
+    return rr;
+  }
+
+  /* ---------- tabela bodova ---------- */
+  function bodoviTabela(b) {
+    if (!b || !b.stavke) return null;
+    return h('div', { class: 'tabela-omot' }, h('table', {}, h('thead', {}, h('tr', {}, h('th', {}, 'Grupa'), h('th', {}, 'Stavka'), h('th', { class: 'br' }, 'Bodovi'), h('th', {}, 'Obrazloženje'))),
+      h('tbody', {}, b.stavke.map(s => h('tr', {}, h('td', {}, (U.GRUPE.find(g => g[0] === s.grupa) || [0, s.grupa])[1]), h('td', {}, s.naziv), h('td', { class: 'br tabular' }, `${s.bodovi} / ${s.max}`), h('td', {}, s.napomena || ''))))));
+  }
+  function kpiKartica(kp, izv) {
+    if (!kp) return null;
+    const a = kp.kpi01, k3 = kp.kpi03; const sad = (izv && izv.sadrzaj) || {}; const rs = ((sad.radionice || {}).stavke || []).filter(x => x.status === 'održano'); const adm = sad.administracija || {};
+    const q5 = rs.filter(x => x.qp05_zapis === 'Da').length;
+    return h('section', { class: 'kartica' }, h('h2', {}, 'Pokazatelji'),
+      h('div', { class: 'mreza m4' },
+        h('div', { class: 'plocica' + (rs.length && q5 < rs.length ? ' pazi' : '') }, h('span', { class: 'br' }, `${q5} / ${rs.length}`), h('span', { class: 'on' }, 'održanih radionica i obuka zavedeno u zapis QP 05')),
+        h('div', { class: 'plocica' }, h('span', { class: 'br' }, `${adm.kreativni_odrzano === undefined ? '—' : adm.kreativni_odrzano}`), h('span', { class: 'on' }, `održanih kreativnih časova (QP 09); planirano ${adm.kreativni_planirano === undefined ? '—' : adm.kreativni_planirano}, posjećeno i evidentirano na QP 09.PC-02: ${adm.kreativni_posjeceno === undefined ? '—' : adm.kreativni_posjeceno}`)),
+        h('div', { class: 'plocica' }, h('span', { class: 'br' }, a.stopa === null ? '—' : `${a.stopa}%`), h('span', { class: 'on' }, a.nije_planirano ? 'posjete nisu planirane' : `realizirano ${a.realizirano} od ${a.planirano} posjeta časovima`)),
+        h('div', { class: 'plocica' }, h('span', { class: 'br' }, String(kp.kpi02.sesije === null ? '—' : kp.kpi02.sesije)), h('span', { class: 'on' }, 'individualnih razgovora sa učenicima')),
+        h('div', { class: 'plocica' }, h('span', { class: 'br' }, String(k3.aktivno_3c)), h('span', { class: 'on' }, `aktivnih rizika (riješeno: ${k3.rijeseno_3a}, prenesenih: ${k3.preneseno_3b}, rok mjere probijen: ${k3.kasne_mjere})`))));
+  }
+  const TRAG = { KREIRAN_NACRT: 'Izvještaj započet', SPREMLJEN_NACRT: 'Nacrt spremljen', PODNESEN: 'Izvještaj podnesen', PONOVO_PODNESEN: 'Dopunjen izvještaj podnesen',
+    VRACEN_NA_DOPUNU: 'Vraćen na dopunu', ODLUKA_O_PREPORUCI: 'Odluka o preporuci', ODOBREN: 'Izvještaj odobren' };
+  async function tragKartica(id) {
+    const r = await Api.trag(id);
+    const k = h('section', { class: 'kartica' }, h('h2', {}, 'Historija promjena'), h('p', { class: 'sitno', style: 'color:var(--ink2)' }, 'Bilježi se ko je i kada šta uradio; sadržaj izvještaja se ne bilježi u historiju.'));
+    if (!r.ok) { k.appendChild(h('p', {}, r.poruka)); return k; }
+    k.appendChild(h('ul', { class: 'vremenska' }, r.dogadjaji.map(d => h('li', {}, h('b', {}, TRAG[d.akcija] || d.akcija), ` · ${d.akter || ''} · `, h('span', { class: 'sitno' }, U.fmtVrijeme(d.vrijeme))))));
+    return k;
+  }
+
+  /* ================== UREĐIVAČ ================== */
+  function urednik(g, izv, sek0) {
+    const gd = izv.godina, mj = izv.mjesec, id = izv.id;
+    const od = `${gd}-${String(mj).padStart(2, '0')}-01`, doo = L.krajMjeseca(gd, mj);
+    const S = { rev: izv.revizija, sad: dubok(izv.sadrzaj || {}), riz: dubok(izv.rizici || []), prep: dubok(izv.preporuke || []), dirty: false, spremanje: false, verz: 0,
+      touched: new Set(), pokaziSve: false, reg: [], tim: null, korak: 'ucenici', srv: [], blok: null, scena: null };
+    ['ucenici', 'nastavnici', 'roditelji', 'radionice', 'usavrsavanje', 'administracija', 'zakljucak'].forEach(k => { if (!L.isObj(S.sad[k])) S.sad[k] = {}; });
+    ['radionice', 'usavrsavanje'].forEach(k => { if (!Array.isArray(S.sad[k].stavke)) S.sad[k].stavke = []; });
+    if (!Array.isArray(S.sad.administracija.qms_postupci)) S.sad.administracija.qms_postupci = [];
+    if (!Array.isArray(S.sad.ucenici.teme)) S.sad.ucenici.teme = [];
+    const KLJ = 'idss_nacrt_' + id;
+    try { const b = JSON.parse(U.SS.get(KLJ) || 'null'); if (b && b.rev === S.rev && JSON.stringify([b.sad, b.riz, b.prep]) !== JSON.stringify([S.sad, S.riz, S.prep])) { S.sad = b.sad; S.riz = b.riz; S.prep = b.prep; S.dirty = true; setTimeout(() => U.obavijesti('Vraćeni su unosi koji nisu bili spremljeni na server.'), 300); } } catch (e) { /* ignorisano */ }
+    const sacuvajLokalno = () => U.SS.set(KLJ, JSON.stringify({ rev: S.rev, sad: S.sad, riz: S.riz, prep: S.prep }));
+
+    /* --- validacija i bodovi --- */
+    const greske = () => [].concat(L.provjeriSadrzaj(S.sad, true, gd, mj), L.provjeriRizike(S.riz, true), L.provjeriPreporuke(S.prep, true));
+    function obracun() {
+      const kp = L.kpi(S.sad, S.riz, gd, mj);
+      return { kp, b: L.bodovi(S.sad, S.riz, kp, gd, mj, izv.kasnjenje_prvo, izv.ciklus_sljedeci, izv.kasnjenje_dopune_sada) };
+    }
+    const prefKoraka = k => k;
+
+    /* --- polja --- */
+    function polje(o, sp, put, ro) {
+      const fid = 'f-' + put.replace(/[^a-z0-9]/gi, '-'), gr = h('div', { class: 'gr', id: fid + '-g', role: 'alert' });
+      const wrap = h('div', { class: 'polje' });
+      const oz = sp.l + (sp.neobavezno || sp.t === 'b' || sp.uslov ? '' : '');
+      const dodirni = () => { S.touched.add(put); osvjezi(); };
+      const promjena = () => { S.dirty = true; S.verz++; sacuvajLokalno(); osvjezi(); zakazi(); };
+      let ctrl, brojac = null;
+      const common = { id: fid, 'aria-describedby': fid + '-g', disabled: !!ro, onblur: dodirni };
+      if (sp.t === 'b') ctrl = h('input', Object.assign({ type: 'number', inputmode: 'numeric', step: 1, min: sp.min !== undefined ? sp.min : 0, max: sp.max, value: o[sp.k] === undefined ? '' : o[sp.k],
+        oninput: e => { const v = e.target.value; if (v === '') delete o[sp.k]; else o[sp.k] = Number(v); promjena(); } }, common));
+      else if (sp.t === 's') ctrl = h('input', Object.assign({ type: 'text', maxlength: sp.max, value: o[sp.k] || '', autocomplete: 'off', oninput: e => { if (e.target.value === '') delete o[sp.k]; else o[sp.k] = e.target.value; promjena(); } }, common));
+      else if (sp.t === 'd') ctrl = h('input', Object.assign({ type: 'date', min: sp.nema_gr ? null : null, value: o[sp.k] || '', oninput: e => { if (e.target.value === '') delete o[sp.k]; else o[sp.k] = e.target.value; promjena(); } }, common));
+      else if (sp.t === 'i') {
+        ctrl = h('select', Object.assign({ onchange: e => { if (e.target.value === '') delete o[sp.k]; else o[sp.k] = e.target.value; promjena(); } }, common),
+          h('option', { value: '' }, '— odaberite —'), L.ENUM[sp.opc].map(v => h('option', { value: v, selected: o[sp.k] === v }, v)));
+      } else if (sp.t === 'v') {
+        const niz = Array.isArray(o[sp.k]) ? o[sp.k] : (o[sp.k] = []);
+        ctrl = h('div', { class: 'izbor', role: 'group', 'aria-labelledby': fid + '-l' }, L.ENUM[sp.opc].map(v => h('label', {}, h('input', { type: 'checkbox', checked: niz.includes(v), disabled: !!ro,
+          onchange: e => { const i = niz.indexOf(v); if (e.target.checked && i < 0) niz.push(v); else if (!e.target.checked && i >= 0) niz.splice(i, 1); S.touched.add(put); promjena(); } }), v)));
+      } else {
+        brojac = h('div', { class: 'brojac-znakova' });
+        ctrl = h('textarea', Object.assign({ rows: sp.max > 1200 ? 6 : 4, maxlength: sp.max + 200, value: o[sp.k] || '', oninput: e => { if (e.target.value === '') delete o[sp.k]; else o[sp.k] = e.target.value; promjena(); } }, common));
+      }
+      const info = () => {
+        if (!brojac) return;
+        const n = L.len(L.btrim(o[sp.k] || '')), min = sp.min || 0;
+        let t = `${n} znakova`; if (!sp.neobavezno && min) t += ` · najmanje ${min}`; if (sp.bod) t += ` · za pune bodove ${sp.bod}+`;
+        brojac.textContent = t; brojac.className = 'brojac-znakova' + (min && n < min && !sp.neobavezno ? ' mali' : '');
+      };
+      wrap.appendChild(sp.t === 'v' ? h('div', { class: 'oznaka', id: fid + '-l' }, sp.l) : h('label', { for: fid }, oz));
+      if (sp.pomoc) wrap.appendChild(h('div', { class: 'pomoc' }, sp.pomoc));
+      wrap.appendChild(ctrl); if (brojac) wrap.appendChild(brojac); wrap.appendChild(gr);
+      if (sp.t === 'd') { ctrl.min = sp.slobodan ? '' : od; ctrl.max = sp.slobodan ? '' : doo; }
+      S.reg.push({ put, gr, wrap, ctrl, info, o, uslov: sp.uslov }); info(); if (sp.uslov) wrap.hidden = !sp.uslov(o);
+      return wrap;
+    }
+    function grupa(o, spec, pref, ro) {
+      const c = h('div', { class: 'forma-sek' }); const red = h('div', { class: 'red-polja' });
+      spec.forEach(sp => { const p = polje(o, sp, `${pref}.${sp.k}`, ro); (sp.t === 't' || sp.t === 'v' ? c : red).appendChild(p); });
+      const out = h('div', { class: 'forma-sek' }); const brojevi = spec.filter(sp => sp.t !== 't' && sp.t !== 'v');
+      return h('div', { class: 'forma-sek' }, red.children.length ? red : null, Array.from(c.children));
+    }
+
+    /* --- koraci --- */
+    function korakSadrzaj(k) {
+      const sp = SPEC[k];
+      if (sp) return [h('h2', {}, NASLOV_SEK[k]), h('p', { class: 'podnaslov' }, UVOD[k]), k === 'administracija' ? qmsInfo() : null, grupa(S.sad[k], sp, k)];
+      if (k === 'radionice') return [h('h2', {}, 'Radionice'), h('p', { class: 'podnaslov' }, UVOD[k]), h('div', { class: 'info' }, h('strong', {}, 'QP 05 Obuka: '), 'sve radionice i obuke održane u školi (za nastavnike, učenike i roditelje) moraju biti zavedene u zapise koje propisuje QP 05 (Evidencija obuke zaposlenih, QP 05.EO-02; Plan obuke zaposlenih). Za svaku održanu radionicu potvrdite da je zavedena.'), listaRad()];
+      if (k === 'usavrsavanje') return [h('h2', {}, 'Stručno usavršavanje'), h('p', { class: 'podnaslov' }, UVOD[k]), listaGen(S.sad.usavrsavanje.stavke, SPEC_USV, 'usavrsavanje.stavke', 'Usavršavanje', 'Dodaj usavršavanje', () => ({}))];
+      if (k === 'rizici') return [h('h2', {}, 'Rizici'), h('p', { class: 'podnaslov' }, UVOD[k]), listaRiz()];
+      if (k === 'preporuke') return [h('h2', {}, 'Preporuke direktoru'), h('p', { class: 'podnaslov' }, UVOD[k]), listaPrep()];
+      return pregledKorak();
+    }
+    function qmsInfo() {
+      return h('div', { class: 'info' }, h('p', { style: 'margin:0 0 .4rem' }, h('strong', {}, 'QP 05 Obuka: '), 'zapisi: Plan obuke zaposlenih, Evidencija obuke zaposlenih (QP 05.EO-02), Izvještaj o obuci novozaposlenog. Zavedenost radionica potvrđujete u koraku „Radionice“.'),
+        h('p', { style: 'margin:0' }, h('strong', {}, 'QP 09 Kreativni čas: '), 'nastavnik izrađuje Plan održavanja kreativnih časova (QP 09.PO-01), a pedagog posjećuje časove i nalaze bilježi na obrazac Ostvareni uvid u odgojno-obrazovni rad – posjeta času (QP 09.PC-02).'));
+    }
+    function listaGen(niz, spec, pref, naziv, dodaj, nova) {
+      const c = h('div', { class: 'forma-sek' });
+      const crtaj = () => { prazni(c); S.reg = S.reg.filter(r => !r.pripada); const start = S.reg.length;
+        niz.forEach((x, i) => c.appendChild(h('div', { class: 'stavka-k' }, h('header', {}, h('b', {}, `${naziv} ${i + 1}`), h('button', { type: 'button', class: 'dugme malo opasno', onclick: () => { niz.splice(i, 1); S.touched.clear(); promjena0(); crtaj(); } }, 'Ukloni')), grupa(x, spec, `${pref}.${i}`))));
+        S.reg.slice(start).forEach(r => { r.pripada = true; });
+        c.appendChild(h('div', {}, h('button', { type: 'button', class: 'dugme sekund', onclick: () => { niz.push(nova()); promjena0(); crtaj(); } }, '+ ' + dodaj)));
+        osvjezi(); };
+      crtaj(); return c;
+    }
+    function promjena0() { S.dirty = true; S.verz++; sacuvajLokalno(); zakazi(); }
+    function listaRad() {
+      const rad = S.sad.radionice; const c = h('div', { class: 'forma-sek' }); const okvir = h('div');
+      const nema = () => { prazni(okvir); if (!rad.stavke.length) okvir.appendChild(grupa(rad, [S_('nema_obrazlozenje', 'Obrazloženje izostanka radionica', 't', { min: 20, max: 1000, pomoc: 'Obavezno kada nema nijedne radionice.' })], 'radionice')); };
+      const l = listaGen(rad.stavke, SPEC_RAD, 'radionice.stavke', 'Radionica', 'Dodaj radionicu', () => ({ ciljna_grupa: 'učenici', status: 'održano' }));
+      l.addEventListener('click', () => setTimeout(nema, 0)); nema(); c.appendChild(l); c.appendChild(okvir); return c;
+    }
+    function listaRiz() {
+      const c = h('div', { class: 'forma-sek' });
+      const crtaj = () => { prazni(c);
+        S.riz.forEach((x, i) => {
+          const pren = x.prenesen === true; const spec = pren ? SPEC_RIZ.filter(s => ['ozbiljnost', 'status', 'mjera', 'rok'].includes(s.k)) : SPEC_RIZ;
+          c.appendChild(h('div', { class: 'stavka-k' }, h('header', {}, h('b', {}, x.kod ? `${x.kod}${pren ? ' · prenesen' : ''}` : `Novi rizik ${i + 1}`),
+            pren ? null : h('button', { type: 'button', class: 'dugme malo opasno', onclick: () => { S.riz.splice(i, 1); S.touched.clear(); promjena0(); crtaj(); } }, 'Ukloni')),
+            pren ? h('div', { class: 'info' }, h('b', {}, x.kategorija + ': '), x.opis) : null, grupa(x, spec, `rizici.${i}`)));
+        });
+        c.appendChild(h('div', {}, h('button', { type: 'button', class: 'dugme sekund', onclick: () => { S.riz.push({ status: 'Otvoreno' }); promjena0(); crtaj(); } }, '+ Dodaj rizik')));
+        osvjezi(); };
+      crtaj(); return c;
+    }
+    function listaPrep() {
+      const c = h('div', { class: 'forma-sek' });
+      const crtaj = () => { prazni(c);
+        S.prep.forEach((x, i) => {
+          const zakl = ['Odobreno', 'Odbijeno'].includes(x.odluka);
+          c.appendChild(h('div', { class: 'stavka-k' }, h('header', {}, h('b', {}, `Preporuka ${i + 1}`), h('span', { class: 'cip ' + (zakl ? 'odobren' : x.odluka === 'Potrebna dorada' ? 'vracen' : 'nacrt') }, x.odluka || 'Na čekanju'),
+            zakl ? null : h('button', { type: 'button', class: 'dugme malo opasno', onclick: () => { S.prep.splice(i, 1); S.touched.clear(); promjena0(); crtaj(); } }, 'Ukloni')),
+            x.komentar_direktora ? h('div', { class: 'info' }, h('b', {}, 'Komentar direktora: '), x.komentar_direktora) : null,
+            zakl ? h('p', { class: 'sitno' }, 'Direktor je odlučio o ovoj preporuci; više se ne može mijenjati.') : null, grupa(x, SPEC_PREP, `preporuke.${i}`, zakl)));
+        });
+        c.appendChild(h('div', {}, h('button', { type: 'button', class: 'dugme sekund', onclick: () => { S.prep.push({}); promjena0(); crtaj(); } }, '+ Dodaj preporuku')));
+        osvjezi(); };
+      crtaj(); return c;
+    }
+    function pregledKorak() {
+      const ge = greske(), { kp, b } = obracun(); const sad = [];
+      sad.push(h('h2', {}, 'Pregled i podnošenje'));
+      const ima = ge.length > 0;
+      sad.push(ima ? h('div', { class: 'upozorenje' }, h('strong', {}, `Do podnošenja nedostaje još ${ge.length} ${ge.length === 1 ? 'stavka' : 'stavki'}. `), 'Dopunite označene odjeljke:')
+        : h('div', { class: 'uspjeh' }, h('strong', {}, 'Izvještaj je potpun. '), 'Provjerite bodove i podnesite ga.'));
+      if (ima) {
+        const po = {}; ge.forEach(e => { const k = e.polje.split('.')[0]; (po[k] = po[k] || []).push(e); });
+        sad.push(h('ul', {}, Object.keys(po).map(k => h('li', {}, h('a', { href: '#', onclick: ev => { ev.preventDefault(); S.pokaziSve = true; prikaziKorak(k); } }, (KORACI.find(x => x.k === k) || { n: k }).n), `: ${po[k].length}`))));
+      }
+      if (izv.kasnjenje_prvo > 0 && izv.ciklus === 0) sad.push(h('div', { class: 'upozorenje' }, `Rok za podnošenje je istekao (${L.fmtDatum(izv.rok_podnosenja)}). Kašnjenje od ${izv.kasnjenje_prvo} radnih dana smanjuje bodove za blagovremenost.`));
+      sad.push(h('h3', {}, 'Predviđeni IDSS bodovi'), bodoviTabela(b), h('p', { class: 'sitno', style: 'color:var(--ink2)' }, 'Ovo je obračun do ocjene direktora (najviše 900 od 1000). Konačan obračun radi server pri podnošenju.'));
+      sad.push(h('div', { style: 'margin-top:1rem' }, h('button', { type: 'button', class: 'dugme zlato', id: 'dug-podnesi', disabled: ima, onclick: podnesi }, izv.status === 'vracen' ? 'Podnesi dopunjen izvještaj' : 'Podnesi izvještaj direktoru')));
+      return sad;
+    }
+
+    /* --- osvježavanje --- */
+    let panelEl, koraciEl, sadrzajEl, statusEl;
+    function osvjezi() {
+      const ge = greske(); const mapa = {}; ge.forEach(e => { if (!mapa[e.polje]) mapa[e.polje] = e.poruka; });
+      S.reg.forEach(r => { if (r.uslov) r.wrap.hidden = !r.uslov(r.o); r.info(); const p = mapa[r.put]; const vid = p && (S.touched.has(r.put) || S.pokaziSve); r.gr.textContent = vid ? p : ''; r.wrap.classList.toggle('ima-gr', !!vid);
+        if (r.ctrl) { if (vid) r.ctrl.setAttribute('aria-invalid', 'true'); else r.ctrl.removeAttribute('aria-invalid'); } });
+      KORACI.forEach(k => { const a = $('#kor-' + k.k); if (!a) return; const n = k.k === 'pregled' ? ge.length : ge.filter(e => e.polje === k.k || e.polje.startsWith(k.k + '.')).length;
+        a.classList.toggle('gotov', k.k !== 'pregled' && n === 0); const bi = $('.nedostaje', a); if (bi) { bi.textContent = n ? `${n}` : ''; bi.title = n ? `Nedostaje stavki: ${n}` : ''; a.setAttribute('aria-label', KORACI[KORACI.indexOf(k)].n + (n ? `, nedostaje stavki: ${n}` : k.k === 'pregled' ? '' : ', popunjeno')); }
+        const br = $('.br', a); if (br && k.k !== 'pregled') br.textContent = n === 0 ? '✓' : String(KORACI.indexOf(k) + 1); });
+      const dp = $('#dug-podnesi'); if (dp) dp.disabled = ge.length > 0;
+      panel();
+    }
+    function panel() {
+      if (!panelEl) return;
+      const { b } = obracun(); const model = { ukupno: b.zbroj, max: 900, po_grupama: b.po_grupama };
+      if (S.scena) S.scena.postavi(model);
+      $('#pan-uk', panelEl).textContent = String(b.zbroj);
+      const ul = $('#pan-gr', panelEl); prazni(ul); ul.appendChild(U.redGrupa(model));
+      const jos = $('#pan-jos', panelEl); prazni(jos);
+      const praznine = b.stavke.filter(x => x.max - x.bodovi > 0).sort((a, c) => (c.max - c.bodovi) - (a.max - a.bodovi)).slice(0, 4);
+      if (!praznine.length) jos.appendChild(h('li', {}, 'Osvojeni su svi bodovi koje sistem računa.'));
+      praznine.forEach(x => jos.appendChild(h('li', {}, h('span', {}, h('b', {}, `+${x.max - x.bodovi} `), x.naziv, h('span', { class: 'sitno', style: 'display:block;color:var(--ink2)' }, x.napomena)))));
+    }
+    function status(vrsta, tekst) {
+      if (!statusEl) return;
+      statusEl.className = 'status-spremanja ' + ({ ok: 'ss-ok', nesp: 'ss-nesp', radi: 'ss-radi', gr: 'ss-gr' }[vrsta]);
+      statusEl.lastChild.textContent = tekst;
+    }
+
+    /* --- spremanje --- */
+    function zakazi() { status('nesp', 'Nespremljene izmjene'); clearTimeout(S.tim); S.tim = setTimeout(spremi, 1500); }
+    function pripremi() {
+      const e0 = L.provjeriSadrzaj(S.sad, false, gd, mj).filter(e => !/^(radionice|usavrsavanje)\.stavke\.\d+/.test(e.polje));
+      if (e0.length) return { blok: e0[0].poruka };
+      const sad = dubok(S.sad), izostavljeno = [];
+      const dobar = (kljuc, x) => !L.provjeriSadrzaj({ [kljuc]: { stavke: [x] } }, false, gd, mj).some(e => e.polje.startsWith(kljuc + '.stavke.0'));
+      ['radionice', 'usavrsavanje'].forEach(k => { sad[k].stavke = S.sad[k].stavke.filter(x => { const ok = dobar(k, x); if (!ok) izostavljeno.push(1); return ok; }); });
+      const mapaR = [], mapaP = [];
+      const riz = []; for (let i = 0; i < S.riz.length; i++) { const x = S.riz[i]; if (L.provjeriRizike([x], false).length) { if (x.id) return { blok: 'Rizik ' + (x.kod || (i + 1)) + ' nije potpun.' }; izostavljeno.push(1); } else { riz.push(x); mapaR.push(i); } }
+      const prep = []; for (let i = 0; i < S.prep.length; i++) { const x = S.prep[i]; if (L.provjeriPreporuke([x], false).length) { if (x.id) return { blok: 'Preporuka nije potpuna.' }; izostavljeno.push(1); } else { prep.push(x); mapaP.push(i); } }
+      return { sad, riz, prep, mapaR, mapaP, izostavljeno: izostavljeno.length };
+    }
+    async function spremi() {
+      clearTimeout(S.tim); if (S.spremanje) { S.ponovo = true; return true; }
+      if (!S.dirty) return true;
+      const p = pripremi(); if (p.blok) { status('gr', 'Spremanje čeka ispravku: ' + p.blok); return false; }
+      S.spremanje = true; status('radi', 'Spremanje…'); const verz = S.verz;
+      const r = await Api.spremi(id, S.rev, p.sad, p.riz, p.prep, L.uuid());
+      S.spremanje = false;
+      if (r.ok) {
+        S.rev = r.izvjestaj.revizija; S.srv = [];
+        const zauzeto = new Set();
+        S.riz.forEach(x => { if (!x.id) { const m = r.izvjestaj.rizici.find(q => !zauzeto.has(q.id) && L.btrim(q.opis) === L.btrim(x.opis || '')); if (m) { x.id = m.id; x.kod = m.kod; x.prenesen = m.prenesen; zauzeto.add(m.id); } } else zauzeto.add(x.id); });
+        S.prep.forEach(x => { if (!x.id) { const m = r.izvjestaj.preporuke.find(q => !zauzeto.has(q.id) && L.btrim(q.naslov) === L.btrim(x.naslov || '')); if (m) { x.id = m.id; x.odluka = m.odluka; zauzeto.add(m.id); } } });
+        S.dirty = S.verz !== verz || p.izostavljeno > 0;
+        if (!S.dirty) { U.SS.set(KLJ, null); status('ok', 'Sve je spremljeno'); } else { sacuvajLokalno(); if (S.verz !== verz) zakazi(); else status('nesp', `${p.izostavljeno} nedovršena stavka čeka dopunu prije spremanja`); }
+        if (S.ponovo) { S.ponovo = false; zakazi(); }
+        return true;
+      }
+      if (r.kod === 'SUKOB_VERZIJA') { konflikt(r); return false; }
+      if (r.kod === 'VALIDACIJA' || r.kod === 'KASNIJI_PERIOD' || r.kod === 'PRENESENI_RIZIK_NEDOSTAJE' || r.kod === 'POGRESNO_STANJE') { status('gr', 'Server nije prihvatio izmjene'); U.obavijesti(r.poruka + (r.greske && r.greske[0] ? ' ' + r.greske[0].poruka : ''), true); return false; }
+      status('gr', 'Spremanje nije uspjelo; pokušat ću ponovo'); sacuvajLokalno(); S.tim = setTimeout(spremi, 10000); return false;
+    }
+    function konflikt(r) {
+      status('gr', 'Sukob verzija');
+      U.modal({ naslov: 'Izvještaj je izmijenjen na drugom mjestu', tijelo: h('p', {}, 'Ista verzija je u međuvremenu spremljena iz drugog taba ili uređaja. Možete učitati stanje sa servera (Vaše nespremljene izmjene se odbacuju) ili zadržati ono što je ovdje i prepisati nacrt.'),
+        dugmad: [{ tekst: 'Učitaj stanje sa servera', klasa: 'sekund', klik: () => { U.SS.set(KLJ, null); S.dirty = false; U.ruta(); } },
+          { tekst: 'Zadrži moje izmjene', klasa: 'zlato', klik: async () => { S.rev = r.revizija_servera || S.rev; if (!r.revizija_servera) { const u = await Api.ucitaj({ id }); if (u.ok) S.rev = u.izvjestaj.revizija; } S.dirty = true; spremi(); } }] });
+    }
+
+    /* --- podnošenje --- */
+    async function podnesi() {
+      S.pokaziSve = true; osvjezi();
+      if (greske().length) { U.obavijesti('Izvještaj još nije potpun.', true); return; }
+      const ok = await spremi(); if (!ok || S.dirty) { U.obavijesti('Izvještaj nije spremljen na server; podnošenje je zaustavljeno.', true); return; }
+      const { b } = obracun();
+      U.modal({ naslov: 'Podnijeti izvještaj direktoru?', tijelo: h('div', {}, h('p', {}, 'Nakon podnošenja izvještaj se više ne može mijenjati, osim ako ga direktor vrati na dopunu.'),
+        h('p', { class: 'plocica' }, h('span', { class: 'br' }, `${b.zbroj} bodova`), h('span', { class: 'on' }, 'predviđeno prije ocjene direktora (najviše 900)')),
+        izv.kasnjenje_prvo > 0 && izv.ciklus === 0 ? h('div', { class: 'upozorenje' }, `Podnošenje kasni ${izv.kasnjenje_prvo} radnih dana.`) : null),
+        dugmad: [{ tekst: 'Još pregledam', klasa: 'sekund' }, { tekst: 'Podnesi', klasa: 'zlato', klik: async btn => {
+          btn.disabled = true; const r = await Api.podnesi(id, S.rev, L.uuid());
+          if (!r.ok) { btn.disabled = false; U.obavijesti(r.poruka + (r.greske && r.greske[0] ? ' ' + r.greske[0].poruka : ''), true); return false; }
+          U.SS.set(KLJ, null); S.dirty = false; U.A.cuvar = null; location.hash = '#/izvjestaj/' + id; await U.ruta(); U.slavlje(r.izvjestaj, 'Izvještaj je podnesen'); } }] });
+    }
+
+    /* --- sklapanje stranice --- */
+    function prikaziKorak(k) {
+      S.korak = k; S.reg = []; prazni(sadrzajEl); korakSadrzaj(k).forEach(n => { if (n) sadrzajEl.appendChild(n); });
+      KORACI.forEach(x => { const a = $('#kor-' + x.k); if (a) { if (x.k === k) a.setAttribute('aria-current', 'step'); else a.removeAttribute('aria-current'); } });
+      try { history.replaceState(null, '', '#/izvjestaj/' + id + '/' + k); } catch (e) { /* ignorisano */ }
+      const n = KORACI.findIndex(x => x.k === k); const i = KORACI.indexOf(KORACI[n]);
+      sadrzajEl.appendChild(h('div', { style: 'display:flex;justify-content:space-between;gap:.6rem;margin-top:1.2rem' },
+        n > 0 ? h('button', { type: 'button', class: 'dugme sekund', onclick: () => { prikaziKorak(KORACI[n - 1].k); window.scrollTo(0, 0); } }, '← ' + KORACI[n - 1].n) : h('span'),
+        n < KORACI.length - 1 ? h('button', { type: 'button', class: 'dugme', onclick: () => { prikaziKorak(KORACI[n + 1].k); window.scrollTo(0, 0); } }, KORACI[n + 1].n + ' →') : null));
+      osvjezi();
+    }
+    prazni(g);
+    statusEl = h('span', { class: 'status-spremanja ss-ok', role: 'status', 'aria-live': 'polite' }, h('i', {}), 'Sve je spremljeno');
+    g.appendChild(h('div', { class: 'naslov-stranice' }, h('div', {}, h('h1', {}, 'Izvještaj za ' + U.naslovPerioda(gd, mj)), h('p', { class: 'podnaslov' }, 'Rok: ' + L.fmtDatum(izv.status === 'vracen' ? izv.rok_dopune : izv.rok_podnosenja) + ' (' + U.rokTekst(izv.status === 'vracen' ? izv.rok_dopune : izv.rok_podnosenja, izv.danas) + ')')),
+      h('div', { style: 'display:flex;gap:.6rem;align-items:center;flex-wrap:wrap' }, U.cipStatus(izv.status), statusEl)));
+    if (izv.status === 'vracen') g.appendChild(h('div', { class: 'upozorenje', role: 'note' }, h('strong', {}, 'Direktor je vratio izvještaj na dopunu. '), izv.direktor_napomena ? `Napomena: ${izv.direktor_napomena}` : '', ' Rok za dopunu: ' + L.fmtDatum(izv.rok_dopune) + '.'));
+    koraciEl = h('ol', { class: 'korak-lista' }, KORACI.map((k, i) => h('li', {}, h('a', { href: `#/izvjestaj/${id}/${k.k}`, id: 'kor-' + k.k, onclick: e => { e.preventDefault(); prikaziKorak(k.k); } }, h('span', { class: 'br' }, String(i + 1)), h('span', {}, k.n), h('span', { class: 'nedostaje' })))));
+    sadrzajEl = h('section', { class: 'kartica', 'aria-live': 'off' });
+    const platno = h('div', { style: 'position:relative' });
+    panelEl = h('aside', { class: 'kartica bodovi-ploca', 'aria-label': 'Bodovi' }, h('h3', {}, 'IDSS bodovi'), platno,
+      h('div', { class: 'ukupno' }, h('span', { id: 'pan-uk' }, '0'), h('small', {}, ' / 900')), h('div', { id: 'pan-gr' }), h('h3', { style: 'margin-top:.9rem;font-size:1rem' }, 'Gdje još možete osvojiti bodove'), h('ul', { class: 'pr-lista', id: 'pan-jos' }),
+      h('p', { class: 'sitno', style: 'color:var(--ink2);margin-top:.6rem' }, 'Dio bodova (rok, rizici bez kašnjenja mjera) računa se i prije unosa sadržaja, pa broj raste kako popunjavate izvještaj. Do 100 bodova dodaje ocjena direktora nakon pregleda.'));
+    g.appendChild(h('div', { class: 'uredjivac' }, h('nav', { class: 'bocna', 'aria-label': 'Koraci izvještaja' }, h('div', { class: 'kartica' }, koraciEl)), sadrzajEl, h('div', { class: 'bocna-s' }, panelEl)));
+    const { b: b0 } = obracun(); S.scena = U.scena(platno, { ukupno: b0.zbroj, max: 900, po_grupama: b0.po_grupama });
+    platno.firstChild && platno.firstChild.tagName === 'CANVAS' && (platno.style.height = '210px');
+    prikaziKorak(KORACI.some(k => k.k === sek0) ? sek0 : 'ucenici');
+    if (S.dirty) zakazi();
+    U.A.cuvar = async () => { if (S.dirty) { await spremi(); } window.onbeforeunload = null; };
+    window.onbeforeunload = () => (S.dirty ? 'Imate nespremljenih izmjena.' : undefined);
+  }
+
+  /* ================== PREGLED (čitanje i odluke) ================== */
+  async function pregled(g, izv) {
+    const A = U.A, dir = A.profil.uloga === 'direktor', id = izv.id;
+    prazni(g);
+    const model = U.modelBodova(izv); const platno = h('div', { style: 'position:relative;height:210px' });
+    const kons = izv.bodovi && izv.bodovi.konacno;
+    g.appendChild(h('div', { class: 'naslov-stranice' }, h('div', {}, h('h1', {}, `${dir ? izv.pedagog.ime + ' · ' : ''}Izvještaj za ${U.naslovPerioda(izv.godina, izv.mjesec)}`),
+      dir && izv.pedagog && (izv.pedagog.email || izv.pedagog.telefon) ? h('p', { class: 'podnaslov' }, 'Kontakt: ', [izv.pedagog.email, izv.pedagog.telefon].filter(Boolean).join(' · ')) : null,
+      h('p', { class: 'podnaslov' }, `Podneseno: ${U.fmtVrijeme(izv.podnesen_u)} · podnošenje br. ${izv.ciklus}${izv.na_vrijeme === null ? '' : izv.na_vrijeme ? ' · u roku' : ' · nakon roka'}`)), U.cipStatus(izv.status)));
+    if (!dir && izv.status === 'podnesen') g.appendChild(h('div', { class: 'info' }, 'Izvještaj je podnesen i čeka pregled direktora. Bodovi su privremeni do njegove odluke.'));
+    if (izv.status === 'odobren') g.appendChild(h('div', { class: 'uspjeh' }, h('strong', {}, 'Izvještaj je odobren. '), izv.direktor_ocjena !== null ? `Ocjena kvaliteta: ${izv.direktor_ocjena} od 5. ` : '', izv.direktor_napomena ? `Napomena direktora: ${izv.direktor_napomena}` : ''));
+    g.appendChild(h('section', { class: 'kartica bodovi-ploca', style: 'margin-bottom:1rem' }, h('h2', {}, 'IDSS bodovi'), h('div', { class: 'mreza m2' }, platno,
+      h('div', {}, h('div', { class: 'ukupno' }, `${model.ukupno}`, h('small', {}, ` / ${model.max} · ${kons ? 'konačno' : 'privremeno'}`)), U.redGrupa(model)))));
+    U.scena(platno, model);
+    const bt = bodoviTabela(izv.bodovi); if (bt) g.appendChild(h('section', { class: 'kartica', style: 'margin-bottom:1rem' }, h('h2', {}, 'Obračun po stavkama'), bt,
+      izv.bodovi.konacno ? h('p', { class: 'sitno' }, `Ocjena direktora: ${izv.bodovi.direktor} bodova.`) : null));
+    const kk = kpiKartica(izv.kpi, izv); if (kk) g.appendChild(kk);
+    sadrzajCitanje(izv).forEach(n => { n.style.marginTop = '1rem'; g.appendChild(n); });
+    // preporuke
+    const pk = h('section', { class: 'kartica', style: 'margin-top:1rem' }, h('h2', {}, 'Preporuke direktoru'));
+    if (!izv.preporuke.length) pk.appendChild(h('p', { style: 'color:var(--ink2)' }, 'Nema preporuka u ovom izvještaju.'));
+    izv.preporuke.forEach((p, i) => {
+      const kar = h('div', { class: 'stavka-k', style: 'margin-bottom:.7rem' }, h('header', {}, h('b', {}, `${i + 1}. ${p.naslov}`), h('span', { class: 'cip ' + (p.odluka === 'Odobreno' ? 'odobren' : p.odluka === 'Na čekanju' ? 'nacrt' : 'vracen') }, p.odluka)),
+        h('dl', { class: 'pregled-sek' }, h('dt', {}, 'Obrazloženje'), h('dd', {}, p.obrazlozenje || '—'), h('dt', {}, 'Utjecaj'), h('dd', {}, p.utjecaj), p.komentar_direktora ? [h('dt', {}, 'Komentar direktora'), h('dd', {}, p.komentar_direktora)] : null));
+      if (izv.moze_odluciti) {
+        const sel = h('select', { id: 'od-' + i, 'aria-label': 'Odluka o preporuci' }, ['Na čekanju', 'Odobreno', 'Odbijeno', 'Potrebna dorada'].map(v => h('option', { value: v, selected: p.odluka === v }, v)));
+        const kom = h('textarea', { rows: 2, id: 'ok-' + i, placeholder: 'Komentar (obavezan uz odbijanje ili dorada)', 'aria-label': 'Komentar uz odluku' }, p.komentar_direktora || '');
+        kar.appendChild(h('div', { class: 'forma-sek' }, h('div', { class: 'polje' }, h('label', { for: 'od-' + i }, 'Odluka'), sel), kom,
+          h('div', {}, h('button', { type: 'button', class: 'dugme malo', onclick: async () => { const r = await Api.odluka(p.id, sel.value, kom.value); if (!r.ok) { U.obavijesti(r.poruka, true); return; } U.obavijesti('Odluka je spremljena.'); U.ruta(); } }, 'Spremi odluku'))));
+      }
+      pk.appendChild(kar);
+    });
+    g.appendChild(pk);
+    if (izv.moze_odluciti) {
+      g.appendChild(h('section', { class: 'kartica', style: 'margin-top:1rem' }, h('h2', {}, 'Odluka o izvještaju'),
+        h('div', { style: 'display:flex;gap:.6rem;flex-wrap:wrap' },
+          h('button', { type: 'button', class: 'dugme sekund', id: 'dug-vrati', onclick: () => vratiModal(izv) }, 'Vrati na dopunu'),
+          h('button', { type: 'button', class: 'dugme zeleno', id: 'dug-odobri', onclick: () => odobriModal(izv) }, 'Odobri izvještaj'))));
+    }
+    g.appendChild(h('div', { style: 'margin-top:1rem' }, await tragKartica(id)));
+  }
+  function vratiModal(izv) {
+    const nap = h('textarea', { rows: 5, id: 'vr-nap', 'aria-describedby': 'vr-pom' });
+    const gr = h('div', { class: 'gr', role: 'alert', style: 'color:var(--red);font-weight:600' });
+    U.modal({ naslov: 'Vrati izvještaj na dopunu', tijelo: h('div', { class: 'forma-sek' }, h('p', {}, 'Pedagog dobija 3 radna dana za dopunu. Napišite šta treba dopuniti ili ispraviti.'), h('div', { class: 'polje' }, h('label', { for: 'vr-nap' }, 'Obrazloženje (najmanje 15 znakova)'), nap, h('div', { id: 'vr-pom', class: 'pomoc' }, ''), gr)),
+      dugmad: [{ tekst: 'Odustani', klasa: 'sekund' }, { tekst: 'Vrati na dopunu', klasa: 'zlato', klik: async () => {
+        if (L.len(L.btrim(nap.value)) < 15) { gr.textContent = 'Obrazloženje mora imati najmanje 15 znakova.'; return false; }
+        const r = await Api.vrati(izv.id, izv.revizija, nap.value, L.uuid()); if (!r.ok) { gr.textContent = r.poruka; return false; }
+        U.obavijesti('Izvještaj je vraćen na dopunu.'); setTimeout(() => { location.hash = '#/'; U.ruta(); }, 0); } }] });
+  }
+  function odobriModal(izv) {
+    let ocj = null; const gr = h('div', { role: 'alert', style: 'color:var(--red);font-weight:600' });
+    const zbroj = izv.bodovi ? izv.bodovi.zbroj : 0; const pr = h('p', { class: 'plocica' }, h('span', { class: 'br' }, '—'), h('span', { class: 'on' }, 'konačni IDSS bodovi'));
+    const kom = h('textarea', { rows: 3, id: 'od-kom', maxlength: 1000 });
+    const radio = h('div', { class: 'ocjena', role: 'radiogroup', 'aria-label': 'Ocjena kvaliteta' }, [0, 1, 2, 3, 4, 5].map(n => h('label', {}, h('input', { type: 'radio', name: 'ocj', value: n, onchange: () => { ocj = n; prazni(pr); pr.appendChild(h('span', { class: 'br' }, `${zbroj + 20 * n}`)); pr.appendChild(h('span', { class: 'on' }, `${zbroj} (sistem) + ${20 * n} (ocjena ${n} od 5)`)); } }), String(n))));
+    U.modal({ naslov: 'Odobri izvještaj', tijelo: h('div', { class: 'forma-sek' }, h('p', {}, 'Ocijenite kvalitet izvještaja (0–5). Svaki stepen donosi 20 bodova. Nakon odobrenja izvještaj se zaključava.'), radio, pr,
+      h('div', { class: 'polje' }, h('label', { for: 'od-kom' }, 'Napomena (nije obavezna)'), kom), gr),
+      dugmad: [{ tekst: 'Odustani', klasa: 'sekund' }, { tekst: 'Odobri', klasa: 'zeleno', klik: async () => {
+        if (ocj === null) { gr.textContent = 'Odaberite ocjenu kvaliteta.'; return false; }
+        const r = await Api.odobri(izv.id, izv.revizija, ocj, kom.value, L.uuid()); if (!r.ok) { gr.textContent = r.poruka; return false; }
+        U.obavijesti('Izvještaj je odobren.'); setTimeout(() => { location.hash = '#/'; U.ruta(); }, 0); } }] });
+  }
+
+  U.izvjestaj = async function (g, id, sek) {
+    const r = await Api.ucitaj({ id });
+    if (!r.ok) { prazni(g); g.appendChild(h('div', { class: 'naslov-stranice' }, h('h1', {}, 'Izvještaj nije dostupan'))); g.appendChild(U.greskaEkran(r)); return; }
+    const izv = r.izvjestaj;
+    if (izv.moze_urediti) { urednik(g, izv, sek); document.title = 'Uređivanje · IDSS Pedagog'; } else await pregled(g, izv);
+  };
+})(UI);
+</script>
+<script>UI.pokreni();</script>
+</body>
+</html>
