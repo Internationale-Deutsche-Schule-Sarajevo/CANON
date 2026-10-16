@@ -1,0 +1,78 @@
+{
+ "ucenici": {
+  "individualni_razgovori": 24,
+  "razliciti_ucenici": 17,
+  "grupni_rad": 4,
+  "daroviti_ucenici": 3,
+  "teme": [
+   "Ponašanje",
+   "Učenje i ocjene",
+   "Adaptacija novih učenika"
+  ],
+  "sazetak": "Većina razgovora odnosila se na adaptaciju učenika prvog razreda i na organizaciju učenja u četvrtom razredu. Uz podršku razrednika dogovoreni su individualni planovi rada za tri učenika."
+ },
+ "nastavnici": {
+  "posjete_planirano": 8,
+  "posjete_realizirano": 8,
+  "razredi": "Razredi 1, 3, 4 i 5",
+  "nalazi": "Posjećeni časovi pokazuju dobru strukturu i aktivno uključivanje učenika; preporučeno je više diferencijacije zadataka.",
+  "konsultacije": 14,
+  "mentorstvo_sati": 6,
+  "sastanci_vijeca": 2,
+  "koordinacija": "Usklađen je raspored pisanih provjera za oktobar i dogovorena podrška nastavnicima novim u školi, uz plan hospitacija."
+ },
+ "roditelji": {
+  "individualni_razgovori": 9,
+  "roditeljski_sastanci": 2,
+  "pisana_komunikacija": 12,
+  "biljeske": "Roditelji su najviše pitali o kućnim zadacima i o prilagodbi novih učenika. Dogovorene su smjernice za dnevni ritam učenja."
+ },
+ "radionice": {
+  "stavke": [
+   {
+    "ciljna_grupa": "učenici",
+    "naslov": "Kako učimo: tehnike pamćenja",
+    "datum": "2026-09-18",
+    "trajanje_min": 45,
+    "ucesnika": 22,
+    "status": "održano",
+    "ishod": "Učenici su izradili vlastite kartice za učenje i dogovorili plan ponavljanja.",
+    "qp05_zapis": "Da"
+   },
+   {
+    "ciljna_grupa": "roditelji",
+    "naslov": "Podrška djetetu pri učenju kod kuće",
+    "datum": "2026-09-25",
+    "trajanje_min": 60,
+    "ucesnika": 18,
+    "status": "održano",
+    "ishod": "Roditelji su dobili praktične smjernice i listu pitanja za razgovor s djetetom.",
+    "qp05_zapis": "Da"
+   }
+  ],
+  "nema_obrazlozenje": ""
+ },
+ "usavrsavanje": {
+  "stavke": [
+   {
+    "naslov": "Webinar o inkluzivnom obrazovanju",
+    "vrsta": "webinar",
+    "sati": 3,
+    "datum": "2026-09-10"
+   }
+  ]
+ },
+ "administracija": {
+  "ednevnik": "Uredno",
+  "mooks_sazetak": "Dostavljen je mjesečni statistički izvještaj; nije bilo posebnih zahtjeva Ministarstva.",
+  "dokumentacija": "",
+  "kreativni_planirano": 4,
+  "kreativni_odrzano": 4,
+  "kreativni_posjeceno": 3,
+  "kreativni_napomena": "Jedan kreativni čas nije posjećen zbog preklapanja sa posjetom časovima drugog razreda."
+ },
+ "zakljucak": {
+  "postignuca": "Uspostavljen je sistem praćenja adaptacije novih učenika, održane su dvije radionice i završen je plan hospitacija za prvo polugodište u skladu s planom.",
+  "plan_sljedeci": "U oktobru planiram deset posjeta časovima, radionicu za nastavnike o diferencijaciji, individualne razgovore s roditeljima prvaka i evaluaciju planova podrške za učenike s posebnim potrebama."
+ }
+}
