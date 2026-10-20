@@ -1,5 +1,5 @@
 
-name: Deploy IDSS Pedagog Webapp
+name: Deploy IDSS Pedagog and Psiholog Webapps
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
       - main
     paths:
       - 'IDSS/_KANON/09_IZVJESTAJI/Pedagog/webapp/**'
+      - 'IDSS/_KANON/09_IZVJESTAJI/Psiholog/webapp/**'
       - '.github/workflows/deploy-pedagog.yml'
   workflow_dispatch:
 
@@ -34,6 +35,8 @@ jobs:
         run: |
           mkdir -p _site
           cp -R "IDSS/_KANON/09_IZVJESTAJI/Pedagog/webapp/." _site/
+          mkdir -p _site/Psiholog
+          cp "IDSS/_KANON/09_IZVJESTAJI/Psiholog/webapp/index.html" _site/Psiholog/index.html
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

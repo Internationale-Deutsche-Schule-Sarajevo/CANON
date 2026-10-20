@@ -1,0 +1,13 @@
+
+/* ===== Lik psihologa: prozirna pozadina + meko praćenje kursora (glava + zjenice) =====
+   Slike se ubacuju pri izradi (build.py --slika / --oko1 / --oko2); vidi README, odjeljak „Slika psihologa“. */
+@media screen{
+.hero{position:relative}
+.hero::after{content:"";position:absolute;bottom:0;right:1.2rem;--s:.4808;width:calc(447px*var(--s));height:calc(520px*var(--s));background:{{SLOJEVI_HERO}};filter:drop-shadow(0 0 16px rgba(8,171,230,.55)) drop-shadow(0 6px 10px rgba(0,0,0,.5));transform-origin:50% 100%;transform:translate(calc(var(--mx,0)*4px),calc(var(--my,0)*2px)) rotate(calc(var(--mx,0)*1.6deg));pointer-events:none}
+.hero .tekst{padding-right:255px}
+.prijava::before{content:"";display:block;--s:.2115;width:calc(447px*var(--s));height:calc(520px*var(--s));margin:0 auto .8rem;background:{{SLOJEVI_PRIJAVA}};filter:drop-shadow(0 0 12px rgba(8,171,230,.5));transform-origin:50% 100%;transform:translate(calc(var(--mx,0)*4px),calc(var(--my,0)*2px)) rotate(calc(var(--mx,0)*1.6deg))}
+@media (max-width:760px){
+.hero::after{top:.6rem;bottom:auto;right:.8rem;--s:.2308}
+.hero .tekst{padding-right:1.2rem}}
+}
+@media (prefers-reduced-motion:reduce){.hero::after,.prijava::before{transform:none!important}}
