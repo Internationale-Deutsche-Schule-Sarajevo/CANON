@@ -25,3 +25,4 @@ Aplikacija se objavljuje workflowom `.github/workflows/deploy-pedagog.yml` (isti
 cd tests && ./reset.sh && python3 10_tok.py && python3 30_napad.py && python3 40_paritet.py && python3 50_ai_funkcija.py
 cd ../e2e && python3 tok.py && python3 direktor.py
 ```
+
